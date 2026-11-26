@@ -162,6 +162,8 @@
     .fl { opacity: .25; }
     .tw { opacity: .7; }
   }
+  .prize-name { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.prize-detail { font-size: 12px; opacity: .65; line-height: 1.3; }
 </style>
 </head>
 <body>
@@ -315,7 +317,7 @@ function renderTop() {
 
 function renderPrizes() {
   $("prizes").innerHTML = data.prizes.length
-    ? data.prizes.map((p) => `<div class="prize"><span>${esc(p.name)}${p.stock >= 0 ? " <small>(осталось " + p.stock + ")</small>" : ""}</span><span class="pc">${p.chance}%</span></div>`).join("")
+         ? data.prizes.map((p) => `<div class="prize-row"><span class="prize-name">${p.name}${p.detail ? `<div class="prize-detail">${p.detail}</div>` : ""}</span><span class="stock">${p.stock > 0 ? ` <small>(осталось ${p.stock})</small>` : ""}</span><span class="pc">${p.chance}%</span></div>`).join("")
     : '<div class="empty">Призы скоро появятся ✨</div>';
 }
 
