@@ -610,14 +610,9 @@ function setBar(pct){
 
 function updateBar(pts, cost){
   if (pts !== lastPts){ cycleDone = false; lastPts = pts; }
-  const full = pts >= cost;
-  const pct = full ? 100 : (pts % cost) / cost * 100;
+  const step = 100;
+  const pct = (pts % step) / step * 100;
   setBar(pct);
-  if (full && !cycleDone){
-    cycleDone = true;
-    $("bar").classList.add("ready");
-    setTimeout(() => { setBar(0); $("bar").classList.remove("ready"); }, 1900);
-  }
 }
 
 function renderAll(){
@@ -767,8 +762,9 @@ async function doSpin(){
       if (r.points != null && state.data) state.data.user.points = r.points;
       if (r.prizes) state.prizes = r.prizes;
       renderAll();
-      const name = r.prize ? (strip(r.prize.detail) || strip(r.prize.name)) : "—";
-      const bonus = r.nothing_bonus ? ` Начислено +${r.nothing_bonus} баллов.` : "";
+      const name = r.prize ? (strip(r.prize.detail) || strip(r.prize.name) || "подарок") : "подарок";
+const bonus = r.bonus ? ` Начислено ${r.bonus} баллов.` : "";
+showModal("🎁", "Поздравляем", `Вам выпало: ${name}.${bonus} Остаток баллов: ${r.points}.`);
       showModal("🎉", "Поздравляем!", `Вам выпало: ${name}.${bonus} Остаток баллов: ${r.points}.`);
     }, 4800);
   }catch(e){
