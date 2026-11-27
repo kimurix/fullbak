@@ -592,15 +592,14 @@ function spinTo(index, n){
   const seg = 360 / n;
   const center = index * seg + seg / 2;
   const base = state.wheelAngle - (state.wheelAngle % 360);
-  const target = base + 360 * 5 + ((360 - center) % 360);
+  const target = base + 360 * 8 + (360 - center) % 360;
   state.wheelAngle = target;
   const el = document.getElementById("spin");
   if (!el) return;
-  el.style.transition = "transform 4.6s cubic-bezier(.16,.86,.06,1)";
+  el.style.transition = "transform 9s cubic-bezier(.08,.62,.04,1)";
   el.style.transform = `rotate(${target}deg)`;
-  setTimeout(() => { if (idle) idle.style.animation = "idleSpin 80s linear infinite"; }, 4800);
+  setTimeout(() => { if (idle){ idle.style.animation = "idleSpin 80s linear infinite"; } }, 9200);
 }
-
 let lastPts = null, cycleDone = false;
 
 function setBar(pct){
@@ -762,11 +761,12 @@ async function doSpin(){
       if (r.points != null && state.data) state.data.user.points = r.points;
       if (r.prizes) state.prizes = r.prizes;
       renderAll();
+         const icon = ICONS[PICKS[idx % PICKS.length].i] || "🎁";
       const name = r.prize ? (strip(r.prize.detail) || strip(r.prize.name) || "подарок") : "подарок";
-const bonus = r.bonus ? ` Начислено ${r.bonus} баллов.` : "";
-showModal("🎁", "Поздравляем", `Вам выпало: ${name}.${bonus} Остаток баллов: ${r.points}.`);
+      const bonus = r.nothing_bonus ? ` Начислено ${r.nothing_bonus} баллов.` : "";
+      showModal(icon, "Поздравляем", `Вам выпало: ${name}.${bonus} Остаток баллов: ${r.points}.`);
       showModal("🎉", "Поздравляем!", `Вам выпало: ${name}.${bonus} Остаток баллов: ${r.points}.`);
-    }, 4800);
+    }, 9200);
   }catch(e){
     state.spinning = false;
     toast("Ошибка сети, попробуйте ещё раз");
