@@ -41,7 +41,6 @@ text-shadow:0 2px 12px rgba(0,0,0,.45);position:relative}
 .ctitle{font-size:15px;font-weight:800;color:#fff}
 .phead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
 .phead .cost{font-size:12px;color:rgba(247,236,216,.78);white-space:nowrap}
-.phead .cost b{color:#fff;font-weight:800}
 .pval{font-size:44px;font-weight:800;line-height:1;color:#fff;
 text-shadow:0 4px 20px rgba(0,0,0,.55);margin-bottom:14px}
 .barwrap{position:relative;height:18px;margin:0 8px}
@@ -62,9 +61,9 @@ font-size:12px;color:rgba(247,236,216,.72);text-align:center}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
 .stat{position:relative;border-radius:16px;border:1.5px solid rgba(232,201,138,.38);
 background:linear-gradient(180deg,rgba(28,58,36,.55),rgba(14,36,22,.55));
-padding:24px 5px 11px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
-.stat .bow{position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:56px;height:37px;
-filter:drop-shadow(0 4px 7px rgba(0,0,0,.6))}
+padding:22px 5px 11px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.stat .bow{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:44px;height:27px;
+filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
 .stat b{display:block;font-size:24px;font-weight:800;line-height:1.1;color:#fff}
 .stat span{display:block;font-size:10.5px;color:rgba(247,236,216,.7);margin-top:3px}
 .rwrap{display:flex;justify-content:center;margin:20px 0 12px}
@@ -174,7 +173,7 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
   <div class="card points">
     <div class="phead">
       <span class="ctitle">Твои баллы</span>
-      <span class="cost">Вращение — <b><span id="cost">100</span></b> баллов</span>
+      <span class="cost">Вращение — <span id="cost">100</span> баллов</span>
     </div>
     <div class="pval" id="pval">0</div>
     <div class="barwrap">
@@ -198,7 +197,7 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
     <div class="ctitle">Твои комментарии</div>
     <div class="stats">
       <div class="stat">
-        <svg class="bow" viewBox="0 0 64 42" aria-hidden="true">
+        <svg class="bow" viewBox="0 0 56 34" aria-hidden="true">
           <defs>
             <linearGradient id="bwA" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#F0604A"/><stop offset="45%" stop-color="#C62828"/><stop offset="100%" stop-color="#7A1010"/>
@@ -207,40 +206,34 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
               <stop offset="0" stop-color="#FF8A72"/><stop offset="100%" stop-color="#B32222"/>
             </linearGradient>
           </defs>
-          <path d="M32 22 C27 30 22 36 18 41 L25 39 L29 42 Z" fill="#8E1A16"/>
-          <path d="M32 22 C37 30 42 36 46 41 L39 39 L35 42 Z" fill="#8E1A16"/>
-          <path d="M32 21 C23 5 4 1 2 12 C0 23 16 31 32 21 Z" fill="url(#bwA)"/>
-          <path d="M32 21 C41 5 60 1 62 12 C64 23 48 31 32 21 Z" fill="url(#bwA)"/>
-          <path d="M28 18 C21 8 9 5 6 11 C4 16 12 21 22 20" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M36 18 C43 8 55 5 58 11 C60 16 52 21 42 20" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
-          <ellipse cx="32" cy="21" rx="6" ry="6.5" fill="url(#bwB)"/>
-          <ellipse cx="30" cy="19" rx="2.4" ry="1.8" fill="rgba(255,255,255,.55)"/>
+          <polygon points="28,17 6,4 6,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
+          <polygon points="28,17 50,4 50,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M21 12 L11 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M35 12 L45 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
+          <ellipse cx="28" cy="17" rx="5.5" ry="6" fill="url(#bwB)"/>
+          <ellipse cx="26.5" cy="15.5" rx="2" ry="1.5" fill="rgba(255,255,255,.55)"/>
         </svg>
         <b id="cWeek">0</b><span>за 7 дней</span>
       </div>
       <div class="stat">
-        <svg class="bow" viewBox="0 0 64 42" aria-hidden="true">
-          <path d="M32 22 C27 30 22 36 18 41 L25 39 L29 42 Z" fill="#8E1A16"/>
-          <path d="M32 22 C37 30 42 36 46 41 L39 39 L35 42 Z" fill="#8E1A16"/>
-          <path d="M32 21 C23 5 4 1 2 12 C0 23 16 31 32 21 Z" fill="url(#bwA)"/>
-          <path d="M32 21 C41 5 60 1 62 12 C64 23 48 31 32 21 Z" fill="url(#bwA)"/>
-          <path d="M28 18 C21 8 9 5 6 11 C4 16 12 21 22 20" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M36 18 C43 8 55 5 58 11 C60 16 52 21 42 20" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
-          <ellipse cx="32" cy="21" rx="6" ry="6.5" fill="url(#bwB)"/>
-          <ellipse cx="30" cy="19" rx="2.4" ry="1.8" fill="rgba(255,255,255,.55)"/>
+        <svg class="bow" viewBox="0 0 56 34" aria-hidden="true">
+          <polygon points="28,17 6,4 6,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
+          <polygon points="28,17 50,4 50,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M21 12 L11 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M35 12 L45 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
+          <ellipse cx="28" cy="17" rx="5.5" ry="6" fill="url(#bwB)"/>
+          <ellipse cx="26.5" cy="15.5" rx="2" ry="1.5" fill="rgba(255,255,255,.55)"/>
         </svg>
         <b id="cMonth">0</b><span>за 30 дней</span>
       </div>
       <div class="stat">
-        <svg class="bow" viewBox="0 0 64 42" aria-hidden="true">
-          <path d="M32 22 C27 30 22 36 18 41 L25 39 L29 42 Z" fill="#8E1A16"/>
-          <path d="M32 22 C37 30 42 36 46 41 L39 39 L35 42 Z" fill="#8E1A16"/>
-          <path d="M32 21 C23 5 4 1 2 12 C0 23 16 31 32 21 Z" fill="url(#bwA)"/>
-          <path d="M32 21 C41 5 60 1 62 12 C64 23 48 31 32 21 Z" fill="url(#bwA)"/>
-          <path d="M28 18 C21 8 9 5 6 11 C4 16 12 21 22 20" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M36 18 C43 8 55 5 58 11 C60 16 52 21 42 20" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
-          <ellipse cx="32" cy="21" rx="6" ry="6.5" fill="url(#bwB)"/>
-          <ellipse cx="30" cy="19" rx="2.4" ry="1.8" fill="rgba(255,255,255,.55)"/>
+        <svg class="bow" viewBox="0 0 56 34" aria-hidden="true">
+          <polygon points="28,17 6,4 6,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
+          <polygon points="28,17 50,4 50,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M21 12 L11 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M35 12 L45 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
+          <ellipse cx="28" cy="17" rx="5.5" ry="6" fill="url(#bwB)"/>
+          <ellipse cx="26.5" cy="15.5" rx="2" ry="1.5" fill="rgba(255,255,255,.55)"/>
         </svg>
         <b id="cAll">0</b><span>всего</span>
       </div>
@@ -337,8 +330,8 @@ function previewData(){return{
     {id:4,name:"Ёлочка",chance:10,stock:3,detail:"Эксклюзивный доступ"},
     {id:5,name:"Ёлочный шар",chance:10,stock:-1,detail:"Кружок с пожеланием"},
     {id:6,name:"Колокольчик",chance:10,stock:-1,detail:"Кастомный дизайн под запрос"},
-    {id:7,name:"Варежка",chance:10,stock:-1,detail:"Выбор образа на иллюстрацию"},
-    {id:8,name:"Сердце",chance:10,stock:-1,detail:"Утешительный бонус — 50 баллов"}
+    {id:7,name:"Бенгальский огонь",chance:10,stock:-1,detail:"Выбор образа на иллюстрацию"},
+    {id:8,name:"Пряничный домик",chance:10,stock:-1,detail:"Утешительный бонус — 50 баллов"}
   ]};}
 
 const ICONS={
@@ -373,15 +366,21 @@ heart:`<svg viewBox="0 0 48 48"><defs><linearGradient id="h1" x1="0" y1="0" x2="
 <path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z" fill="url(#h1)"/>
 <ellipse cx="18" cy="22" rx="3.4" ry="2.4" fill="rgba(255,255,255,.45)" transform="rotate(-25 18 22)"/></svg>`,
 
-mitten:`<svg viewBox="0 0 48 48"><defs><linearGradient id="mt1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8452F"/><stop offset="1" stop-color="#8E1A16"/></linearGradient></defs>
-<path d="M17 16a6 6 0 0 1 12 0v9a5 5 0 0 0 5 5h1v6H17z" fill="url(#mt1)"/>
-<rect x="15" y="34" width="22" height="7" rx="3" fill="#F7ECD8"/>
-<path d="M17 16a6 6 0 0 1 12 0" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/></svg>`,
+sparkler:`<svg viewBox="0 0 48 48">
+<rect x="22" y="26" width="4" height="18" rx="2" fill="#8A6A2E"/>
+<g stroke="#FFD98A" stroke-width="2" stroke-linecap="round">
+<path d="M24 24 L24 9"/><path d="M24 24 L12 13"/><path d="M24 24 L36 13"/>
+<path d="M24 24 L8 24"/><path d="M24 24 L40 24"/>
+<path d="M24 24 L13 34"/><path d="M24 24 L35 34"/></g>
+<circle cx="24" cy="22" r="5" fill="#FFF3C4"/><circle cx="24" cy="22" r="2.4" fill="#fff"/></svg>`,
 
-sock:`<svg viewBox="0 0 48 48"><defs><linearGradient id="sk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C62828"/><stop offset="1" stop-color="#7A1515"/></linearGradient></defs>
-<rect x="18" y="8" width="12" height="22" rx="2" fill="url(#sk1)"/>
-<path d="M18 26h12v6c0 4-3 7-7 7h-1c-5 0-9-4-9-9 0-2 2-4 5-4z" fill="url(#sk1)"/>
-<rect x="17" y="8" width="14" height="6" rx="2" fill="#F7ECD8"/></svg>`,
+house:`<svg viewBox="0 0 48 48">
+<rect x="12" y="22" width="24" height="18" rx="2" fill="#B5762E"/>
+<path d="M7 24 L24 9 L41 24 Z" fill="#F7ECD8"/>
+<path d="M7 24 L24 9 L41 24" fill="none" stroke="#C62828" stroke-width="2.2" stroke-linejoin="round"/>
+<rect x="21" y="30" width="6" height="10" rx="1" fill="#8E1A16"/>
+<rect x="15" y="26" width="5" height="5" rx="1" fill="#FFE08A"/>
+<rect x="28" y="26" width="5" height="5" rx="1" fill="#FFE08A"/></svg>`,
 
 cookie:`<svg viewBox="0 0 48 48"><defs><linearGradient id="ck1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9A25A"/><stop offset="1" stop-color="#A06A2C"/></linearGradient></defs>
 <path d="M24 7l5 11 12 1.4-8.9 8.1 2.5 11.8L24 33.6 13.4 39.3l2.5-11.8L7 19.4 19 18z" fill="url(#ck1)" stroke="#7D4F1D" stroke-width="1.2" stroke-linejoin="round"/>
@@ -419,7 +418,7 @@ ginger:`<svg viewBox="0 0 48 48">
 <rect x="25" y="30" width="4" height="9" rx="2" fill="#B5762E"/>
 <circle cx="21.5" cy="12" r="1.2" fill="#FFF3E0"/><circle cx="26.5" cy="12" r="1.2" fill="#FFF3E0"/></svg>`
 };
-const ORDER=["gift","candy","star","tree","ball","bell","heart","mitten","sock","cookie","sparkle","candle","wreath","drum","ginger"];
+const ORDER=["gift","candy","star","tree","ball","bell","heart","sparkler","house","cookie","sparkle","candle","wreath","drum","ginger"];
 const iconAt=i=>ICONS[ORDER[i%ORDER.length]];
 
 function medal(n){
@@ -432,11 +431,22 @@ function medal(n){
   <text x="24" y="34" text-anchor="middle" font-family="Nunito,Arial" font-size="12" font-weight="800" fill="rgba(70,40,0,.7)">${n}</text></svg>`;
 }
 
-const SEG=["#F7ECD8","#8E1A16","#F7ECD8","#1B4A2E"];
+const SEGBASE=["#F7ECD8","#8E1A16","#F7ECD8","#1B4A2E","#F7ECD8","#B8912F"];
+function segColors(n){
+  const out=[];
+  for(let i=0;i<n;i++)out.push(SEGBASE[i%SEGBASE.length]);
+  if(n>2&&out[n-1]===out[0]){
+    const prev=out[n-2],next=out[1];
+    const alt=["#F7ECD8","#8E1A16","#1B4A2E","#B8912F"].find(c=>c!==prev&&c!==next);
+    if(alt)out[n-1]=alt;
+  }
+  return out;
+}
 function polar(cx,cy,r,d){const a=(d-90)*Math.PI/180;return[cx+r*Math.cos(a),cy+r*Math.sin(a)]}
 
 function renderWheel(list){
   const svg=$("wheel"),n=Math.max(list.length,1),seg=360/n,cx=200,cy=200,R=152;
+  const cols=segColors(n);
   let defs=`<defs>
     <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#6B4F1C"/><stop offset="30%" stop-color="#B8912F"/>
@@ -452,7 +462,7 @@ function renderWheel(list){
     const a0=i*seg,a1=(i+1)*seg;
     const [x0,y0]=polar(cx,cy,R,a0),[x1,y1]=polar(cx,cy,R,a1);
     s+=`<path d="M${cx} ${cy} L${x0.toFixed(1)} ${y0.toFixed(1)} A${R} ${R} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z"
-      fill="${SEG[i%SEG.length]}" stroke="rgba(0,0,0,.18)" stroke-width="1"/>`;
+      fill="${cols[i]}" stroke="rgba(0,0,0,.18)" stroke-width="1"/>`;
   }
   let ic="";
   for(let i=0;i<n;i++){
