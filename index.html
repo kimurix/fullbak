@@ -712,7 +712,7 @@ function toast(msg){
 }
 
 function showModal(ico, title, text){
-  $("modalIco").textContent = ico;
+   $("modalIco").innerHTML = ico;
   $("modalTitle").textContent = title;
   $("modalText").textContent = text;
   $("modal").classList.add("on");
@@ -765,8 +765,7 @@ async function doSpin(){
       const name = r.prize ? (strip(r.prize.detail) || strip(r.prize.name) || "подарок") : "подарок";
       const bonus = r.nothing_bonus ? ` Начислено ${r.nothing_bonus} баллов.` : "";
       showModal(icon, "Поздравляем", `Вам выпало: ${name}.${bonus} Остаток баллов: ${r.points}.`);
-      showModal("🎉", "Поздравляем!", `Вам выпало: ${name}.${bonus} Остаток баллов: ${r.points}.`);
-    }, 9200);
+          }, 9200);
   }catch(e){
     state.spinning = false;
     toast("Ошибка сети, попробуйте ещё раз");
