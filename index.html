@@ -3,27 +3,27 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<meta name="theme-color" content="#12281a" />
+<meta name="theme-color" content="#122016" />
 <title>Full Bak Points</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   :root{
-    --cream:#f6eeda;
-    --cream-dim:rgba(246,238,218,.68);
-    --gold:#e8c98a;
-    --gold-strong:#f3d99b;
-    --card:rgba(58,80,54,.82);
-    --card-2:rgba(40,58,40,.86);
-    --red-1:#6b1212;
-    --red-2:#8f1d1d;
-    --red-3:#a8271f;
+    --cream:#f4ecda;
+    --cream-dim:rgba(244,236,218,.70);
+    --gold:#e0c084;
+    --card-a:rgba(62,78,58,.92);
+    --card-b:rgba(44,58,44,.94);
+    --card-line:rgba(158,176,138,.32);
+    --red-a:#9c2320;
+    --red-b:#6e1212;
+    --pink:#ff5c8a;
   }
 
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
   html,body{
     margin:0; padding:0; height:100%;
-    background:#0b1a11;
+    background:#0d1a12;
     color:var(--cream);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     overscroll-behavior:none;
@@ -34,37 +34,34 @@
   #bg{
     position:fixed; inset:0; z-index:0; overflow:hidden;
     background:
-      radial-gradient(75% 40% at 50% 0%, #3a6b4a 0%, rgba(58,107,74,0) 72%),
-      radial-gradient(55% 35% at 8% 22%, #2f5c40 0%, rgba(47,92,64,0) 78%),
-      radial-gradient(55% 35% at 92% 26%, #2f5c40 0%, rgba(47,92,64,0) 78%),
-      radial-gradient(80% 30% at 50% 100%, #2a5c3e 0%, rgba(42,92,62,0) 75%),
-      linear-gradient(180deg, #1e3a28 0%, #17301f 42%, #12281a 72%, #0e2015 100%);
+      radial-gradient(70% 38% at 50% 0%, #2f5136 0%, rgba(47,81,54,0) 70%),
+      radial-gradient(50% 30% at 6% 20%, #2a4a32 0%, rgba(42,74,50,0) 78%),
+      radial-gradient(50% 30% at 94% 24%, #2a4a32 0%, rgba(42,74,50,0) 78%),
+      radial-gradient(80% 26% at 50% 100%, #2b5038 0%, rgba(43,80,56,0) 76%),
+      linear-gradient(180deg, #1b2e20 0%, #16261a 40%, #101d14 72%, #0b1610 100%);
   }
   #bg::after{
     content:"";
     position:absolute; inset:0;
-    background:radial-gradient(90% 60% at 50% 42%, rgba(0,0,0,0) 45%, rgba(0,0,0,.42) 100%);
+    background:radial-gradient(92% 62% at 50% 40%, rgba(0,0,0,0) 48%, rgba(0,0,0,.45) 100%);
     pointer-events:none;
   }
   #treeLayer{ position:absolute; inset:0; width:100%; height:100%; }
   #snowCanvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
   #bottomLayer{
     position:absolute; left:0; right:0; bottom:0;
-    height:min(46vh, 380px);
+    height:min(48vh, 400px);
     pointer-events:none;
   }
 
   .bulb{ animation:bulbTwinkle 3.4s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
   @keyframes bulbTwinkle{
-    0%,100%{ opacity:.35; filter:drop-shadow(0 0 3px rgba(255,220,150,.45)); }
-    45%{ opacity:1; filter:drop-shadow(0 0 12px rgba(255,225,160,1)); }
-    62%{ opacity:.85; filter:drop-shadow(0 0 7px rgba(255,220,150,.8)); }
+    0%,100%{ opacity:.40; filter:drop-shadow(0 0 3px rgba(255,225,160,.5)); }
+    45%{ opacity:1; filter:drop-shadow(0 0 12px rgba(255,230,170,1)); }
+    62%{ opacity:.85; filter:drop-shadow(0 0 7px rgba(255,225,160,.85)); }
   }
   .bokeh{ animation:bokehPulse 5.5s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
-  @keyframes bokehPulse{
-    0%,100%{ opacity:.30; }
-    50%{ opacity:.95; }
-  }
+  @keyframes bokehPulse{ 0%,100%{ opacity:.30; } 50%{ opacity:.95; } }
 
   /* ================= КОНТЕНТ ================= */
   #app{
@@ -72,198 +69,254 @@
     overflow-y:auto; overflow-x:hidden;
     -webkit-overflow-scrolling:touch;
     padding:
-      calc(env(safe-area-inset-top, 0px) + 24px)
-      16px
-      calc(env(safe-area-inset-bottom, 0px) + 260px);
+      calc(env(safe-area-inset-top, 0px) + 4px)
+      14px
+      calc(env(safe-area-inset-bottom, 0px) + 270px);
     scrollbar-width:none;
   }
   #app::-webkit-scrollbar{ display:none; }
-  .wrap{ max-width:460px; margin:0 auto; }
+  .wrap{ max-width:440px; margin:0 auto; }
+
+  /* ---------- статус-бар ---------- */
+  .statusbar{
+    max-width:440px; margin:0 auto 6px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 8px;
+    height:26px;
+    color:#fff;
+    font-size:15px; font-weight:600; letter-spacing:.2px;
+  }
+  .statusbar .icons{ display:flex; align-items:center; gap:6px; opacity:.95; }
+
+  /* ---------- шапка ---------- */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px; margin-bottom:14px;
+  }
+  .iconbtn{
+    width:44px; height:44px; flex:0 0 44px;
+    border-radius:50%;
+    border:none;
+    background:linear-gradient(180deg,#fbf6ea,#e8dfcc);
+    color:#2a2a24;
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; line-height:1; cursor:pointer;
+    box-shadow:0 6px 16px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.9);
+    transition:transform .15s ease;
+  }
+  .iconbtn:active{ transform:scale(.93); }
+
+  .brand{
+    flex:1 1 auto; text-align:center;
+    padding:9px 16px;
+    border-radius:18px;
+    border:1px solid rgba(224,192,132,.55);
+    background:linear-gradient(180deg, rgba(58,76,54,.92), rgba(38,52,38,.92));
+    box-shadow:0 10px 24px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.10);
+  }
+  .brand b{ display:block; font-size:16.5px; font-weight:600; letter-spacing:.2px; }
+  .brand span{ display:block; font-size:11.5px; color:var(--cream-dim); margin-top:2px; }
 
   /* ---------- карточки ---------- */
   .card{
-    border-radius:26px;
-    border:1.5px solid rgba(232,201,138,.45);
-    background:linear-gradient(180deg, var(--card), var(--card-2));
+    border-radius:24px;
+    border:1px solid var(--card-line);
+    background:linear-gradient(180deg, var(--card-a), var(--card-b));
     backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-    box-shadow:
-      0 18px 40px rgba(0,0,0,.50),
-      0 0 0 1px rgba(0,0,0,.18),
-      inset 0 1px 0 rgba(255,255,255,.12);
-    padding:18px;
-    margin-bottom:16px;
+    box-shadow:0 16px 36px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.10);
+    padding:16px;
+    margin-bottom:14px;
   }
 
   /* приветствие */
   .hello{
-    background:linear-gradient(155deg, var(--red-3) 0%, var(--red-2) 46%, var(--red-1) 100%);
-    border-color:rgba(232,201,138,.55);
-    box-shadow:0 20px 44px rgba(70,6,6,.60), inset 0 1px 0 rgba(255,255,255,.20);
+    background:linear-gradient(160deg, #a8271f 0%, var(--red-a) 45%, var(--red-b) 100%);
+    border-color:rgba(224,192,132,.40);
+    box-shadow:0 18px 40px rgba(60,6,6,.55), inset 0 1px 0 rgba(255,255,255,.18);
     position:relative; overflow:hidden;
-    padding:20px 18px;
+    padding:18px;
   }
   .hello::before{
     content:"";
     position:absolute; inset:0;
     background:
-      radial-gradient(110% 90% at 88% -20%, rgba(255,255,255,.22), rgba(255,255,255,0) 62%),
-      radial-gradient(70% 60% at 0% 120%, rgba(255,120,90,.28), rgba(255,120,90,0) 70%);
+      radial-gradient(110% 90% at 88% -20%, rgba(255,255,255,.18), rgba(255,255,255,0) 62%),
+      radial-gradient(70% 60% at 0% 120%, rgba(255,130,100,.22), rgba(255,130,100,0) 70%);
     pointer-events:none;
   }
   .hello h1{
-    margin:0 0 10px;
+    margin:0 0 8px;
     font-family:Georgia,"Times New Roman",serif;
-    font-size:27px; font-weight:600; line-height:1.18;
+    font-size:25px; font-weight:600; line-height:1.2;
     color:#fff8f0;
-    text-shadow:0 2px 14px rgba(0,0,0,.45);
+    text-shadow:0 2px 12px rgba(0,0,0,.40);
     position:relative;
   }
   .hello p{
-    margin:0; font-size:13.5px; line-height:1.5;
-    color:rgba(255,240,232,.94);
-    max-width:78%;
+    margin:0; font-size:13px; line-height:1.5;
+    color:rgba(255,242,234,.95);
+    max-width:76%;
     position:relative;
   }
   .hello .flake{
-    position:absolute; right:16px; top:50%; transform:translateY(-50%);
-    opacity:.55; pointer-events:none;
+    position:absolute; right:14px; top:50%; transform:translateY(-50%);
+    opacity:.85; pointer-events:none;
   }
 
-  /* ---------- ЕДИНАЯ плашка баллов ---------- */
-  .points{ padding:0; overflow:hidden; }
+  /* ---------- плашка баллов с вырезом ---------- */
+  .points{
+    position:relative;
+    margin-top:30px;
+    padding:0;
+    border-radius:24px;
+    border:1px solid var(--card-line);
+    background:linear-gradient(180deg, var(--card-a), var(--card-b));
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 16px 36px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.10);
+    margin-bottom:14px;
+  }
+  .points-tabs{
+    position:absolute; top:-29px; left:0; right:0;
+    height:32px;
+    display:flex;
+  }
+  .ptab{
+    background:linear-gradient(180deg, rgba(66,84,62,.98), rgba(58,74,56,.98));
+    border:1px solid var(--card-line);
+    border-bottom:none;
+    padding:0 15px;
+    display:flex; align-items:center;
+    font-size:12.5px; color:var(--cream);
+    white-space:nowrap;
+  }
+  .ptab-l{ border-radius:18px 0 0 0; border-bottom-right-radius:16px; flex:0 0 auto; }
+  .ptab-r{ border-radius:0 18px 0 0; border-bottom-left-radius:16px; flex:1 1 auto; justify-content:flex-end; }
+  .ptab b{ color:var(--cream); font-weight:600; }
+
   .points-top{
     display:flex; align-items:flex-start; justify-content:space-between;
-    gap:12px; padding:18px 18px 0;
+    gap:12px; padding:14px 16px 0;
   }
-  .points-label{ font-size:13px; color:var(--cream-dim); margin-bottom:4px; }
+  .points-label{ font-size:13px; color:var(--cream-dim); margin-bottom:2px; }
   .points-value{
-    display:flex; align-items:center; gap:9px;
-    font-size:44px; font-weight:700; line-height:1;
-    letter-spacing:-1.2px;
-    text-shadow:0 4px 20px rgba(0,0,0,.55);
+    display:flex; align-items:center; gap:8px;
+    font-size:40px; font-weight:700; line-height:1;
+    letter-spacing:-1px;
+    text-shadow:0 4px 18px rgba(0,0,0,.5);
   }
-  .points-value .heart{ font-size:24px; filter:drop-shadow(0 0 12px rgba(255,70,100,.75)); }
-  .points-cost{
-    text-align:right; font-size:13px; color:var(--cream-dim);
-    padding-top:8px; white-space:nowrap;
-  }
-  .points-cost b{ color:var(--gold-strong); font-weight:600; }
+  .points-value .heart{ font-size:22px; filter:drop-shadow(0 0 10px rgba(255,70,120,.75)); }
 
   .points-mid{
-    display:flex; align-items:center; gap:12px;
-    padding:16px 18px 0;
+    display:flex; align-items:center; gap:10px;
+    padding:12px 16px 0;
   }
-  .gift-ico{ flex:0 0 auto; filter:drop-shadow(0 8px 12px rgba(0,0,0,.6)); }
+  .gift-ico{ flex:0 0 auto; filter:drop-shadow(0 6px 10px rgba(0,0,0,.55)); }
   .bar{
-    flex:1 1 auto; height:17px; border-radius:99px;
-    background:linear-gradient(180deg, rgba(20,34,24,.85), rgba(38,58,40,.85));
-    border:1px solid rgba(232,201,138,.30);
+    flex:1 1 auto; height:18px; border-radius:99px;
+    background:linear-gradient(180deg, rgba(96,110,88,.55), rgba(74,88,68,.55));
+    border:1px solid rgba(158,176,138,.30);
     overflow:hidden;
-    box-shadow:inset 0 2px 8px rgba(0,0,0,.55), 0 1px 0 rgba(255,255,255,.06);
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.40);
   }
   .bar > i{
     display:block; height:100%; width:0%;
     border-radius:99px;
-    background:linear-gradient(90deg, #e8c98a, #fff0c4 55%, #e8c98a);
-    box-shadow:0 0 18px rgba(232,201,138,.85);
+    background:linear-gradient(90deg, #e0c084, #fff0c4 55%, #e0c084);
+    box-shadow:0 0 16px rgba(224,192,132,.8);
     transition:width .8s cubic-bezier(.2,.9,.2,1);
   }
   .points-hint{
-    padding:14px 18px 18px;
+    padding:12px 16px 16px;
     font-size:12.5px; color:var(--cream-dim);
-    border-top:1px solid rgba(232,201,138,.20);
-    margin-top:16px;
+    border-top:1px solid rgba(158,176,138,.22);
+    margin-top:14px;
   }
   .points-hint b{ color:var(--cream); }
 
   /* ---------- комментарии ---------- */
   .card-title{
-    display:flex; align-items:center; gap:8px;
-    font-size:14.5px; font-weight:600; margin-bottom:14px;
+    display:flex; align-items:center; gap:7px;
+    font-size:14px; font-weight:600; margin-bottom:12px;
   }
-  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
   .stat{
-    border-radius:16px;
-    border:1px solid rgba(232,201,138,.38);
-    background:linear-gradient(180deg, rgba(92,116,82,.72), rgba(58,78,54,.72));
-    padding:13px 6px 11px;
+    border-radius:15px;
+    border:1px solid rgba(158,176,138,.35);
+    background:linear-gradient(180deg, rgba(84,104,76,.72), rgba(56,72,52,.72));
+    padding:12px 5px 10px;
     text-align:center;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.10);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
   }
-  .stat b{ display:block; font-size:24px; font-weight:700; line-height:1.1; }
-  .stat span{ display:block; font-size:10.5px; color:var(--cream-dim); margin-top:4px; }
+  .stat b{ display:block; font-size:23px; font-weight:700; line-height:1.1; }
+  .stat span{ display:block; font-size:10.5px; color:var(--cream-dim); margin-top:3px; }
 
   /* ---------- лента ---------- */
   .ribbon{
     position:relative;
-    margin:22px auto 14px;
-    max-width:320px;
-    display:flex; align-items:center; justify-content:center; gap:10px;
-    padding:11px 30px;
+    margin:20px auto 12px;
+    max-width:300px;
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    padding:9px 26px;
     font-family:Georgia,"Times New Roman",serif;
-    font-size:17.5px; letter-spacing:.3px;
+    font-size:17px; letter-spacing:.3px;
     color:#ffeecb;
-    background:linear-gradient(180deg, #a8271f, #6b1212);
-    border:1.5px solid rgba(232,201,138,.85);
-    border-radius:8px;
-    box-shadow:0 14px 30px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.18);
+    background:linear-gradient(180deg, #a8271f, #6e1212);
+    border:1.5px solid rgba(224,192,132,.90);
+    border-radius:9px;
+    box-shadow:0 12px 28px rgba(0,0,0,.55), inset 0 0 0 3px rgba(224,192,132,.18);
   }
   .ribbon::before,.ribbon::after{
     content:"";
-    position:absolute; top:0; bottom:0; width:16px;
-    background:linear-gradient(180deg, #a8271f, #6b1212);
+    position:absolute; top:0; bottom:0; width:15px;
+    background:linear-gradient(180deg, #a8271f, #6e1212);
   }
-  .ribbon::before{ left:-15px; clip-path:polygon(100% 0, 0 50%, 100% 100%); }
-  .ribbon::after{ right:-15px; clip-path:polygon(0 0, 100% 50%, 0 100%); }
-  .ribbon svg{ width:18px; height:18px; flex:0 0 auto; opacity:.95; }
+  .ribbon::before{ left:-14px; clip-path:polygon(100% 0, 0 50%, 100% 100%); }
+  .ribbon::after{ right:-14px; clip-path:polygon(0 0, 100% 50%, 0 100%); }
+  .ribbon svg{ width:17px; height:17px; flex:0 0 auto; opacity:.95; }
 
   /* ---------- колесо ---------- */
   .wheel-box{
     position:relative;
-    width:min(92vw, 400px);
-    margin:0 auto 8px;
+    width:min(94vw, 400px);
+    margin:0 auto 6px;
     aspect-ratio:1/1;
   }
-  #wheelSvg{ width:100%; height:100%; display:block; filter:drop-shadow(0 18px 34px rgba(0,0,0,.55)); }
+  #wheelSvg{ width:100%; height:100%; display:block; filter:drop-shadow(0 20px 38px rgba(0,0,0,.6)); }
   #wheelSpin{ transform-origin:50% 50%; transform:rotate(0deg); will-change:transform; }
   .rim-bulb{ animation:rimTwinkle 2.6s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
-  @keyframes rimTwinkle{
-    0%,100%{ opacity:.45; }
-    50%{ opacity:1; }
-  }
+  @keyframes rimTwinkle{ 0%,100%{ opacity:.45; } 50%{ opacity:1; } }
   .hub{
     position:absolute; left:50%; top:50%;
-    width:17%; height:17%;
+    width:16%; height:16%;
     transform:translate(-50%,-50%);
     border-radius:50%;
     border:none; padding:0;
-    background:radial-gradient(circle at 36% 30%, #ffffff 0%, #fdf2f2 55%, #e9d3d3 100%);
-    box-shadow:0 0 0 3px rgba(232,201,138,.70), 0 12px 28px rgba(0,0,0,.65);
+    background:radial-gradient(circle at 36% 30%, #e04b3a 0%, #b32222 55%, #7d1414 100%);
+    box-shadow:0 0 0 3px rgba(224,192,132,.80), 0 12px 26px rgba(0,0,0,.65);
     display:flex; align-items:center; justify-content:center;
     cursor:pointer;
     transition:transform .15s ease;
   }
   .hub:active{ transform:translate(-50%,-50%) scale(.94); }
-  .hub svg{ width:54%; height:54%; }
+  .hub svg{ width:56%; height:56%; }
 
-  /* ---------- нарядная кнопка ---------- */
+  /* ---------- кнопка ---------- */
   .spin-btn{
     position:relative;
     display:block; width:100%;
-    margin:18px 0 10px;
-    padding:19px 22px;
-    border-radius:22px;
-    border:2px solid rgba(232,201,138,.90);
-    background:linear-gradient(180deg, #b32d22 0%, #8f1d1d 52%, #6b1212 100%);
+    margin:16px 0 10px;
+    padding:18px 22px;
+    border-radius:20px;
+    border:2px solid rgba(224,192,132,.90);
+    background:linear-gradient(180deg, #b32d22 0%, #9c2320 52%, #6e1212 100%);
     color:#fff6ea;
     font-family:Georgia,"Times New Roman",serif;
     font-size:17px; font-weight:600; letter-spacing:.3px;
     text-shadow:0 2px 10px rgba(0,0,0,.5);
     box-shadow:
-      0 20px 44px rgba(70,6,6,.60),
-      0 0 0 1px rgba(0,0,0,.25),
-      inset 0 1px 0 rgba(255,255,255,.32),
-      inset 0 -3px 12px rgba(0,0,0,.45);
+      0 18px 40px rgba(60,6,6,.55),
+      inset 0 1px 0 rgba(255,255,255,.30),
+      inset 0 -3px 12px rgba(0,0,0,.42);
     cursor:pointer;
     overflow:hidden;
     transition:transform .15s ease, filter .2s ease;
@@ -271,22 +324,19 @@
   .spin-btn::before{
     content:"";
     position:absolute; inset:4px;
-    border-radius:18px;
-    border:1px solid rgba(255,225,170,.30);
+    border-radius:16px;
+    border:1px solid rgba(255,225,170,.28);
     pointer-events:none;
   }
   .spin-btn::after{
     content:"";
     position:absolute; top:-10%; bottom:-10%; width:55%;
-    background:linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.34) 50%, rgba(255,255,255,0) 100%);
+    background:linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.32) 50%, rgba(255,255,255,0) 100%);
     transform:translateX(-160%);
     animation:shimmer 4s ease-in-out infinite;
     pointer-events:none;
   }
-  @keyframes shimmer{
-    0%{ transform:translateX(-160%); }
-    55%,100%{ transform:translateX(280%); }
-  }
+  @keyframes shimmer{ 0%{ transform:translateX(-160%); } 55%,100%{ transform:translateX(280%); } }
   .spin-btn:active{ transform:scale(.985); filter:brightness(1.08); }
   .spin-btn:disabled{ opacity:.6; cursor:default; }
   .spin-btn:disabled::after{ animation:none; }
@@ -294,40 +344,40 @@
   /* ---------- призы ---------- */
   .prize-row{
     display:flex; align-items:center; gap:12px;
-    padding:11px 0;
-    border-bottom:1px solid rgba(232,201,138,.18);
+    padding:10px 0;
+    border-bottom:1px solid rgba(158,176,138,.18);
     font-size:13.5px;
   }
   .prize-row:last-child{ border-bottom:none; }
-  .prize-ico{ flex:0 0 34px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; }
+  .prize-ico{ flex:0 0 32px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; }
   .prize-ico svg{ width:100%; height:100%; }
   .prize-name{ flex:1 1 auto; min-width:0; word-break:break-word; line-height:1.4; }
   .prize-name em{ font-style:normal; color:var(--cream-dim); }
   .prize-stock{ font-size:11px; color:var(--cream-dim); }
 
   /* ---------- топы ---------- */
-  .tabs{ display:flex; gap:7px; margin-bottom:14px; }
+  .tabs{ display:flex; gap:7px; margin-bottom:12px; }
   .tab{
-    flex:1 1 0; padding:10px 4px;
-    border-radius:13px;
-    border:1px solid rgba(232,201,138,.28);
-    background:rgba(255,255,255,.06);
+    flex:1 1 0; padding:9px 4px;
+    border-radius:12px;
+    border:1px solid rgba(158,176,138,.28);
+    background:rgba(255,255,255,.05);
     color:var(--cream-dim);
     font-size:12.5px; cursor:pointer;
     transition:.2s;
   }
   .tab.on{
-    background:linear-gradient(180deg, rgba(232,201,138,.30), rgba(232,201,138,.14));
-    border-color:rgba(232,201,138,.70);
+    background:linear-gradient(180deg, rgba(224,192,132,.28), rgba(224,192,132,.12));
+    border-color:rgba(224,192,132,.65);
     color:var(--cream);
   }
   .top-row{
-    display:flex; align-items:center; gap:11px;
-    padding:10px 0; font-size:13.5px;
-    border-bottom:1px solid rgba(232,201,138,.16);
+    display:flex; align-items:center; gap:10px;
+    padding:9px 0; font-size:13.5px;
+    border-bottom:1px solid rgba(158,176,138,.16);
   }
   .top-row:last-child{ border-bottom:none; }
-  .top-row.me{ color:var(--gold-strong); }
+  .top-row.me{ color:var(--gold); }
   .top-pos{ flex:0 0 24px; text-align:center; font-weight:700; color:var(--cream-dim); }
   .top-name{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .top-c{ flex:0 0 auto; font-weight:600; }
@@ -345,22 +395,22 @@
   .modal.on{ display:flex; }
   .modal-card{
     width:100%; max-width:330px;
-    border-radius:26px;
-    border:1.5px solid rgba(232,201,138,.65);
-    background:linear-gradient(180deg, rgba(70,92,64,.98), rgba(24,38,26,.98));
+    border-radius:24px;
+    border:1.5px solid rgba(224,192,132,.60);
+    background:linear-gradient(180deg, rgba(66,84,62,.98), rgba(24,38,26,.98));
     box-shadow:0 26px 64px rgba(0,0,0,.70);
-    padding:26px 20px;
+    padding:24px 20px;
     text-align:center;
     animation:pop .35s cubic-bezier(.2,1.2,.4,1);
   }
   @keyframes pop{ from{ transform:scale(.86); opacity:0; } to{ transform:scale(1); opacity:1; } }
-  .modal-card .big{ font-size:52px; line-height:1; margin-bottom:12px; }
+  .modal-card .big{ font-size:50px; line-height:1; margin-bottom:10px; }
   .modal-card h3{ margin:0 0 8px; font-family:Georgia,serif; font-size:20px; font-weight:600; }
-  .modal-card p{ margin:0 0 20px; font-size:13.5px; color:var(--cream-dim); line-height:1.5; }
+  .modal-card p{ margin:0 0 18px; font-size:13.5px; color:var(--cream-dim); line-height:1.5; }
   .modal-card button{
-    width:100%; padding:15px; border-radius:15px;
-    border:1px solid rgba(232,201,138,.6);
-    background:linear-gradient(180deg,#a8271f,#6b1212);
+    width:100%; padding:14px; border-radius:14px;
+    border:1px solid rgba(224,192,132,.55);
+    background:linear-gradient(180deg,#a8271f,#6e1212);
     color:#fff6ea; font-size:15px; font-weight:600; cursor:pointer;
   }
 
@@ -368,10 +418,10 @@
     position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 26px);
     transform:translate(-50%, 20px);
     z-index:30;
-    padding:13px 19px;
-    border-radius:15px;
-    background:rgba(58,80,54,.98);
-    border:1px solid rgba(232,201,138,.65);
+    padding:12px 18px;
+    border-radius:14px;
+    background:rgba(58,76,54,.98);
+    border:1px solid rgba(224,192,132,.60);
     color:var(--cream); font-size:13.5px;
     box-shadow:0 14px 34px rgba(0,0,0,.60);
     opacity:0; pointer-events:none;
@@ -390,22 +440,46 @@
 <div id="bg">
   <svg id="treeLayer" preserveAspectRatio="xMidYMid slice" viewBox="0 0 390 844" aria-hidden="true"></svg>
   <canvas id="snowCanvas" aria-hidden="true"></canvas>
-  <svg id="bottomLayer" preserveAspectRatio="xMidYMax slice" viewBox="0 0 390 300" aria-hidden="true"></svg>
+  <svg id="bottomLayer" preserveAspectRatio="xMidYMax slice" viewBox="0 0 390 320" aria-hidden="true"></svg>
 </div>
 
 <div id="app">
+
+  <div class="statusbar">
+    <span>9:41</span>
+    <span class="icons">
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3.5" width="3" height="8.5" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M1 4.2a10 10 0 0 1 14 0"/><path d="M3.6 7a6.4 6.4 0 0 1 8.8 0"/><circle cx="8" cy="10" r="1.1" fill="#fff" stroke="none"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0.6" y="0.6" width="19" height="10.8" rx="3" stroke="#fff" stroke-opacity=".7" stroke-width="1.2"/><rect x="2.2" y="2.2" width="15.6" height="7.6" rx="2" fill="#fff"/><path d="M21.4 4.2v3.6c1-.3 1.6-.9 1.6-1.8s-.6-1.5-1.6-1.8z" fill="#fff" fill-opacity=".7"/></svg>
+    </span>
+  </div>
+
   <div class="wrap">
+
+    <div class="topbar">
+      <button class="iconbtn" id="btnClose" aria-label="Закрыть">✕</button>
+      <div class="brand">
+        <b>Full Bak Points</b>
+        <span>мини-приложение</span>
+      </div>
+      <button class="iconbtn" id="btnMore" aria-label="Ещё">⋯</button>
+    </div>
 
     <div class="card hello">
       <h1 id="helloTitle">Привет, @pln_bak! 💗</h1>
       <p id="helloText">Загружаем данные…</p>
-      <svg class="flake" width="54" height="54" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="1.5" stroke-linecap="round">
+      <svg class="flake" width="50" height="50" viewBox="0 0 48 48" fill="none" stroke="#e0c084" stroke-width="1.5" stroke-linecap="round">
         <path d="M24 6v36M8 15l32 18M40 15L8 33"/>
         <path d="M24 11l-4 4M24 11l4 4M24 37l-4-4M24 37l4-4M11 19l1 5M11 29l1-5M37 19l-1 5M37 29l-1-5"/>
       </svg>
     </div>
 
-    <div class="card points">
+    <div class="points">
+      <div class="points-tabs">
+        <div class="ptab ptab-l">Твои баллы</div>
+        <div class="ptab ptab-r">Вращение — <b>&nbsp;<span id="spinCostTab">100</span> баллов</b></div>
+      </div>
+
       <div class="points-top">
         <div>
           <div class="points-label">Твои баллы</div>
@@ -414,13 +488,10 @@
             <span class="heart">💗</span>
           </div>
         </div>
-        <div class="points-cost">
-          Вращение — <b><span id="spinCost">100</span> баллов</b>
-        </div>
       </div>
 
       <div class="points-mid">
-        <svg class="gift-ico" width="38" height="38" viewBox="0 0 48 48" aria-hidden="true">
+        <svg class="gift-ico" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
           <defs>
             <linearGradient id="pg1" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#f06a4f"/><stop offset="1" stop-color="#9e1f1f"/>
@@ -429,7 +500,7 @@
               <stop offset="0" stop-color="#fff0c4"/><stop offset="1" stop-color="#d4a63c"/>
             </linearGradient>
           </defs>
-          <ellipse cx="24" cy="43" rx="15" ry="3.2" fill="rgba(0,0,0,.45)"/>
+          <ellipse cx="24" cy="43" rx="14" ry="3" fill="rgba(0,0,0,.4)"/>
           <rect x="9" y="20" width="30" height="21" rx="3" fill="url(#pg1)"/>
           <rect x="9" y="20" width="30" height="6" rx="3" fill="url(#pg2)"/>
           <rect x="21" y="20" width="6" height="21" fill="url(#pg2)"/>
@@ -466,8 +537,7 @@
       <svg id="wheelSvg" viewBox="0 0 400 400" aria-hidden="true"></svg>
       <button class="hub" id="hub" aria-label="Крутить">
         <svg viewBox="0 0 48 48" aria-hidden="true">
-          <path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z" fill="#c62828"/>
-          <path d="M24 38s-10-6.6-10-13.6A6 6 0 0 1 24 20a6 6 0 0 1 10 4.4C34 31.4 24 38 24 38z" fill="#ef6a5c" opacity=".55"/>
+          <path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z" fill="#ffffff"/>
         </svg>
       </button>
     </div>
@@ -507,7 +577,7 @@
 const API = "https://tg-activity-bot.katka-69.workers.dev";
 
 const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-if (tg) { try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#12281a"); tg.setBackgroundColor && tg.setBackgroundColor("#12281a"); } catch(e){} }
+if (tg) { try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#122016"); tg.setBackgroundColor && tg.setBackgroundColor("#122016"); } catch(e){} }
 
 const initData = tg && tg.initData ? tg.initData : "";
 const PREVIEW = !initData;
@@ -550,10 +620,10 @@ function previewData() {
   };
 }
 
-/* ============ 16 уникальных новогодних иконок ============ */
+/* ============ уникальные новогодние иконки ============ */
 const ICONS = {
   gift: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ig1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f06a4f"/><stop offset="1" stop-color="#9e1f1f"/></linearGradient><linearGradient id="ig2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0c4"/><stop offset="1" stop-color="#d4a63c"/></linearGradient></defs>
-    <ellipse cx="24" cy="43" rx="14" ry="3" fill="rgba(0,0,0,.3)"/>
+    <ellipse cx="24" cy="43" rx="14" ry="3" fill="rgba(0,0,0,.25)"/>
     <rect x="10" y="20" width="28" height="20" rx="3" fill="url(#ig1)"/>
     <rect x="10" y="20" width="28" height="5.5" rx="2.5" fill="url(#ig2)"/>
     <rect x="21.5" y="20" width="5" height="20" fill="url(#ig2)"/>
@@ -563,7 +633,7 @@ const ICONS = {
     <path d="M17 41V19a7.5 7.5 0 0 1 15 0v5" fill="none" stroke="#fdf6e8" stroke-width="7.5" stroke-linecap="round"/>
     <path d="M17 41V19a7.5 7.5 0 0 1 15 0v5" fill="none" stroke="#c62828" stroke-width="7.5" stroke-linecap="round" stroke-dasharray="4.5 6.5"/></svg>`,
 
-  snow: `<svg viewBox="0 0 48 48" fill="none" stroke="#f6eeda" stroke-width="2.6" stroke-linecap="round">
+  snow: `<svg viewBox="0 0 48 48" fill="none" stroke="#f4ecda" stroke-width="2.6" stroke-linecap="round">
     <path d="M24 7v34M9 15.5l30 17M39 15.5l-30 17"/>
     <path d="M24 12l-4 4M24 12l4 4M24 36l-4-4M24 36l4-4M12 19l.5 5.5M12 29l.5-5.5M36 19l-.5 5.5M36 29l-.5-5.5"/></svg>`,
 
@@ -575,9 +645,9 @@ const ICONS = {
     <circle cx="24" cy="36" r="3.2" fill="#d4a63c"/>
     <rect x="22" y="6" width="4" height="4.5" rx="2" fill="#d4a63c"/></svg>`,
 
-  heart: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ih1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a6a"/><stop offset="1" stop-color="#9e1f1f"/></linearGradient></defs>
+  heart: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ih1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a9a"/><stop offset="1" stop-color="#c2185b"/></linearGradient></defs>
     <path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z" fill="url(#ih1)"/>
-    <ellipse cx="18" cy="22" rx="3.4" ry="2.4" fill="rgba(255,255,255,.5)" transform="rotate(-25 18 22)"/></svg>`,
+    <ellipse cx="18" cy="22" rx="3.4" ry="2.4" fill="rgba(255,255,255,.55)" transform="rotate(-25 18 22)"/></svg>`,
 
   tree: `<svg viewBox="0 0 48 48"><defs><linearGradient id="it1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d9a63"/><stop offset="1" stop-color="#14512f"/></linearGradient></defs>
     <rect x="21" y="36" width="6" height="6" rx="1.5" fill="#7a5432"/>
@@ -593,7 +663,7 @@ const ICONS = {
     <path d="M24 7l5 11 12 1.4-8.9 8.1 2.5 11.8L24 33.6 13.4 39.3l2.5-11.8L7 19.4 19 18z" fill="url(#ic1)" stroke="#7d4f1d" stroke-width="1.2" stroke-linejoin="round"/>
     <circle cx="24" cy="19" r="2" fill="#fff3e0"/><circle cx="19" cy="27" r="1.8" fill="#fff3e0"/><circle cx="29" cy="27" r="1.8" fill="#fff3e0"/></svg>`,
 
-  sparkle: `<svg viewBox="0 0 48 48"><defs><linearGradient id="isp1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffbe8"/><stop offset="1" stop-color="#e8c98a"/></linearGradient></defs>
+  sparkle: `<svg viewBox="0 0 48 48"><defs><linearGradient id="isp1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffbe8"/><stop offset="1" stop-color="#e0c084"/></linearGradient></defs>
     <path d="M22 6l3.4 9.6L35 19l-9.6 3.4L22 32l-3.4-9.6L9 19l9.6-3.4z" fill="url(#isp1)"/>
     <path d="M35 27l2 5.5 5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2z" fill="#fff0c4" opacity=".95"/></svg>`,
 
@@ -629,14 +699,14 @@ const ICONS = {
     <circle cx="24" cy="10" r="3.2" fill="#d33a2c"/>
     <circle cx="35" cy="29" r="2.4" fill="#d33a2c"/>
     <circle cx="14" cy="31" r="2.4" fill="#d33a2c"/>
-    <circle cx="33" cy="15" r="2" fill="#e8c98a"/></svg>`,
+    <circle cx="33" cy="15" r="2" fill="#e0c084"/></svg>`,
 
   drum: `<svg viewBox="0 0 48 48">
     <rect x="12" y="16" width="24" height="17" rx="2" fill="#b32222"/>
     <rect x="12" y="16" width="24" height="4" fill="#fdf6e8"/>
     <rect x="12" y="29" width="24" height="4" fill="#fdf6e8"/>
-    <path d="M12 16 L36 33 M36 16 L12 33" stroke="#e8c98a" stroke-width="1.4"/>
-    <path d="M14 12 L20 18 M34 12 L28 18" stroke="#e8c98a" stroke-width="2" stroke-linecap="round"/></svg>`,
+    <path d="M12 16 L36 33 M36 16 L12 33" stroke="#e0c084" stroke-width="1.4"/>
+    <path d="M14 12 L20 18 M34 12 L28 18" stroke="#e0c084" stroke-width="2" stroke-linecap="round"/></svg>`,
 };
 
 const ICON_ORDER = [
@@ -644,9 +714,7 @@ const ICON_ORDER = [
   "cookie", "sparkle", "candle", "mitten", "sock", "ginger", "wreath", "drum"
 ];
 
-function iconByIndex(i) {
-  return ICON_ORDER[i % ICON_ORDER.length];
-}
+function iconByIndex(i) { return ICON_ORDER[i % ICON_ORDER.length]; }
 
 function stripEmoji(s) {
   return String(s == null ? "" : s)
@@ -656,102 +724,124 @@ function stripEmoji(s) {
     .trim();
 }
 
-/* ================= ФОН: густая хвоя ================= */
+/* ================= ФОН: хвоя, шары, огни ================= */
 function buildTree() {
   const svg = $("treeLayer");
   const W = 390, H = 844;
 
   const defs = `
     <defs>
-      <linearGradient id="pineBack" x1="0" y1="0" x2="1" y2="0.6">
-        <stop offset="0" stop-color="#1d4a30"/><stop offset="1" stop-color="#0c2417"/>
+      <linearGradient id="pBack" x1="0" y1="0" x2="1" y2="0.7">
+        <stop offset="0" stop-color="#17361f"/><stop offset="1" stop-color="#0a1a10"/>
       </linearGradient>
-      <linearGradient id="pineFront" x1="0" y1="0" x2="1" y2="0.6">
-        <stop offset="0" stop-color="#3d8a58"/><stop offset="0.55" stop-color="#226b41"/><stop offset="1" stop-color="#123a24"/>
+      <linearGradient id="pMid" x1="0" y1="0" x2="1" y2="0.7">
+        <stop offset="0" stop-color="#24512f"/><stop offset="1" stop-color="#0f2a19"/>
       </linearGradient>
-      <radialGradient id="bulbGlow"><stop offset="0" stop-color="#fff0c4" stop-opacity="1"/><stop offset="1" stop-color="#ffcf6b" stop-opacity="0"/></radialGradient>
-      <radialGradient id="ornRed" cx="34%" cy="28%" r="72%">
-        <stop offset="0" stop-color="#ff9a82"/><stop offset="42%" stop-color="#c62828"/><stop offset="100%" stop-color="#6b1212"/>
+      <linearGradient id="pFront" x1="0" y1="0" x2="1" y2="0.7">
+        <stop offset="0" stop-color="#356e44"/><stop offset="1" stop-color="#153a22"/>
+      </linearGradient>
+      <radialGradient id="bulbGlow"><stop offset="0" stop-color="#fff2cc" stop-opacity="1"/><stop offset="1" stop-color="#ffcf6b" stop-opacity="0"/></radialGradient>
+      <radialGradient id="ornRed" cx="34%" cy="26%" r="74%">
+        <stop offset="0" stop-color="#ff9a82"/><stop offset="40%" stop-color="#b81f1f"/><stop offset="100%" stop-color="#5e0f0f"/>
       </radialGradient>
-      <radialGradient id="ornGold" cx="34%" cy="28%" r="72%">
-        <stop offset="0" stop-color="#fff6d6"/><stop offset="45%" stop-color="#e8c98a"/><stop offset="100%" stop-color="#9a7430"/>
+      <radialGradient id="ornGold" cx="34%" cy="26%" r="74%">
+        <stop offset="0" stop-color="#fff6d6"/><stop offset="45%" stop-color="#dcb877"/><stop offset="100%" stop-color="#8a6524"/>
       </radialGradient>
-      <radialGradient id="bokehG"><stop offset="0" stop-color="#ffe0a0" stop-opacity=".95"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>
+      <radialGradient id="bokehG"><stop offset="0" stop-color="#ffe6b0" stop-opacity=".95"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>
     </defs>`;
 
   let body = "";
 
-  // ветка: изогнутая «лапа» с снежной кромкой
-  const branch = (cx, y, len, dir, fill, snowOp) => {
-    const x1 = cx + dir * len;
-    const path = `M${cx} ${y} Q ${(cx + dir * len * 0.5).toFixed(1)} ${(y - 18).toFixed(1)} ${x1.toFixed(1)} ${(y + 10).toFixed(1)} Q ${(cx + dir * len * 0.55).toFixed(1)} ${(y + 34).toFixed(1)} ${cx} ${(y + 44).toFixed(1)} Z`;
-    return `<path d="${path}" fill="${fill}"/>` +
-      `<path d="M${cx} ${y} Q ${(cx + dir * len * 0.5).toFixed(1)} ${(y - 18).toFixed(1)} ${x1.toFixed(1)} ${(y + 10).toFixed(1)}"
-        fill="none" stroke="rgba(240,250,255,${snowOp})" stroke-width="4" stroke-linecap="round"/>`;
+  const spray = (x, y, len, dir, fill, snowOp) => {
+    const x1 = x + dir * len;
+    let d = `M${x} ${y} Q ${(x + dir * len * 0.45).toFixed(1)} ${(y - 16).toFixed(1)} ${x1.toFixed(1)} ${(y + 6).toFixed(1)}`;
+    d += ` Q ${(x + dir * len * 0.82).toFixed(1)} ${(y + 26).toFixed(1)} ${(x + dir * len * 0.62).toFixed(1)} ${(y + 30).toFixed(1)}`;
+    d += ` Q ${(x + dir * len * 0.46).toFixed(1)} ${(y + 40).toFixed(1)} ${(x + dir * len * 0.30).toFixed(1)} ${(y + 34).toFixed(1)}`;
+    d += ` Q ${(x + dir * len * 0.15).toFixed(1)} ${(y + 44).toFixed(1)} ${x} ${(y + 40).toFixed(1)} Z`;
+    return `<path d="${d}" fill="${fill}"/>` +
+      `<path d="M${x} ${y} Q ${(x + dir * len * 0.45).toFixed(1)} ${(y - 16).toFixed(1)} ${x1.toFixed(1)} ${(y + 6).toFixed(1)}"
+        fill="none" stroke="rgba(240,250,255,${snowOp})" stroke-width="3.6" stroke-linecap="round"/>`;
   };
 
-  // дальний план — темнее и короче
-  for (let i = 0; i < 14; i++) {
-    const y = 10 + i * 62;
-    body += branch(-42, y, 74 + i * 4, 1, "url(#pineBack)", 0.30);
-    body += branch(W + 42, y + 30, 74 + i * 4, -1, "url(#pineBack)", 0.30);
+  for (let i = 0; i < 15; i++) {
+    const y = 6 + i * 58;
+    body += spray(-40, y, 78 + i * 4, 1, "url(#pBack)", 0.22);
+    body += spray(W + 40, y + 26, 78 + i * 4, -1, "url(#pBack)", 0.22);
+  }
+  for (let i = 0; i < 15; i++) {
+    const y = 26 + i * 58;
+    body += spray(-44, y, 96 + i * 5, 1, "url(#pMid)", 0.38);
+    body += spray(W + 44, y + 28, 96 + i * 5, -1, "url(#pMid)", 0.38);
+  }
+  for (let i = 0; i < 15; i++) {
+    const y = 48 + i * 58;
+    body += spray(-48, y, 112 + i * 6, 1, "url(#pFront)", 0.55);
+    body += spray(W + 48, y + 30, 112 + i * 6, -1, "url(#pFront)", 0.55);
   }
 
-  // ближний план — ярче и длиннее
-  for (let i = 0; i < 14; i++) {
-    const y = 40 + i * 62;
-    body += branch(-48, y, 104 + i * 6, 1, "url(#pineFront)", 0.55);
-    body += branch(W + 48, y + 32, 104 + i * 6, -1, "url(#pineFront)", 0.55);
-  }
+  const berry = (x, y) => {
+    let s = "";
+    const pts = [[0,0],[7,-4],[-6,-5],[3,6],[-4,7]];
+    for (const [dx, dy] of pts) {
+      s += `<circle cx="${x + dx}" cy="${y + dy}" r="3.4" fill="#b81f1f"/>`;
+      s += `<circle cx="${x + dx - 1}" cy="${y + dy - 1}" r="1.1" fill="rgba(255,180,170,.7)"/>`;
+    }
+    return s;
+  };
+  body += berry(34, 300) + berry(356, 250) + berry(26, 560) + berry(364, 600) + berry(48, 720);
 
-  // тёплые огоньки в глубине
   let bokeh = "";
   const spots = [
-    [66,110,16],[148,64,12],[252,88,14],[332,140,18],[42,290,13],[352,320,16],
-    [92,450,15],[300,500,13],[58,630,17],[332,672,14],[196,40,11],[210,760,12]
+    [70,100,15],[150,58,11],[250,80,13],[330,132,17],[42,270,12],[352,300,15],
+    [92,430,14],[300,480,12],[58,610,16],[332,650,13],[196,34,10],[210,740,11]
   ];
   spots.forEach(([x, y, r], i) => {
     bokeh += `<circle cx="${x}" cy="${y}" r="${r}" fill="url(#bokehG)" class="bokeh" style="animation-delay:${(i * 0.6).toFixed(1)}s"/>`;
   });
 
-  // ёлочные шары
-  const orn = (x, y, r, grad, cap) => `
-    <line x1="${x}" y1="0" x2="${x}" y2="${y - r - 4}" stroke="rgba(232,201,138,.55)" stroke-width="1.3"/>
-    <rect x="${x - 3.5}" y="${y - r - 7}" width="7" height="8" rx="2" fill="${cap}"/>
-    <circle cx="${x}" cy="${y}" r="${r}" fill="url(#${grad})"/>
-    <ellipse cx="${(x - r * 0.34).toFixed(1)}" cy="${(y - r * 0.38).toFixed(1)}" rx="${(r * 0.3).toFixed(1)}" ry="${(r * 0.19).toFixed(1)}"
-      fill="rgba(255,255,255,.65)" transform="rotate(-30 ${(x - r * 0.34).toFixed(1)} ${(y - r * 0.38).toFixed(1)})"/>`;
+  const orn = (x, y, r, grad, cap, snowflake) => {
+    let s = `
+      <line x1="${x}" y1="0" x2="${x}" y2="${y - r - 4}" stroke="rgba(224,192,132,.55)" stroke-width="1.3"/>
+      <rect x="${x - 4}" y="${y - r - 8}" width="8" height="9" rx="2" fill="${cap}"/>
+      <circle cx="${x}" cy="${y}" r="${r}" fill="url(#${grad})"/>
+      <ellipse cx="${(x - r * 0.34).toFixed(1)}" cy="${(y - r * 0.38).toFixed(1)}" rx="${(r * 0.30).toFixed(1)}" ry="${(r * 0.19).toFixed(1)}"
+        fill="rgba(255,255,255,.62)" transform="rotate(-30 ${(x - r * 0.34).toFixed(1)} ${(y - r * 0.38).toFixed(1)})"/>`;
+    if (snowflake) {
+      s += `<g transform="translate(${x} ${y})" stroke="rgba(255,255,255,.85)" stroke-width="${(r * 0.09).toFixed(1)}" stroke-linecap="round" fill="none">
+        <path d="M0 ${-r * 0.55} V ${r * 0.55} M ${-r * 0.48} ${-r * 0.28} L ${r * 0.48} ${r * 0.28} M ${r * 0.48} ${-r * 0.28} L ${-r * 0.48} ${r * 0.28}"/>
+      </g>`;
+    }
+    return s;
+  };
 
   const ornaments =
-    orn(108, 96, 28, "ornRed", "#d4a63c") +
-    orn(316, 122, 24, "ornGold", "#d4a63c") +
-    orn(352, 214, 22, "ornRed", "#d4a63c") +
-    orn(32, 182, 17, "ornGold", "#d4a63c") +
-    orn(18, 430, 15, "ornRed", "#d4a63c") +
-    orn(374, 486, 16, "ornGold", "#d4a63c");
+    orn(112, 96, 26, "ornRed", "#d4a63c", true) +
+    orn(320, 128, 22, "ornGold", "#d4a63c", false) +
+    orn(356, 218, 24, "ornRed", "#d4a63c", true) +
+    orn(28, 186, 16, "ornGold", "#d4a63c", false) +
+    orn(16, 440, 14, "ornRed", "#d4a63c", false) +
+    orn(376, 500, 15, "ornGold", "#d4a63c", false);
 
-  // гирлянда
   const colors = ["#ffe9b0", "#fff6d6", "#ffd98a", "#fffbe8"];
   let bulbs = "";
   let k = 0;
-  for (let y = 48; y < H - 40; y += 42) {
-    const xL = 26 + Math.sin(y / 38) * 11;
-    const xR = W - 26 - Math.sin(y / 44) * 11;
-    const cL = colors[k % colors.length];
-    const cR = colors[(k + 2) % colors.length];
-    bulbs += `<circle cx="${xL.toFixed(1)}" cy="${y}" r="16" fill="url(#bulbGlow)" class="bulb" style="animation-delay:${(k * 0.31).toFixed(2)}s"/>`;
-    bulbs += `<circle cx="${xL.toFixed(1)}" cy="${y}" r="3.4" fill="${cL}" class="bulb" style="animation-delay:${(k * 0.31).toFixed(2)}s"/>`;
-    bulbs += `<circle cx="${xR.toFixed(1)}" cy="${y + 12}" r="16" fill="url(#bulbGlow)" class="bulb" style="animation-delay:${(k * 0.27 + 0.9).toFixed(2)}s"/>`;
-    bulbs += `<circle cx="${xR.toFixed(1)}" cy="${y + 12}" r="3.4" fill="${cR}" class="bulb" style="animation-delay:${(k * 0.27 + 0.9).toFixed(2)}s"/>`;
+  for (let y = 52; y < H - 40; y += 42) {
+    const xL = 24 + Math.sin(y / 38) * 10;
+    const xR = W - 24 - Math.sin(y / 44) * 10;
+    bulbs += `<circle cx="${xL.toFixed(1)}" cy="${y}" r="15" fill="url(#bulbGlow)" class="bulb" style="animation-delay:${(k * 0.31).toFixed(2)}s"/>`;
+    bulbs += `<circle cx="${xL.toFixed(1)}" cy="${y}" r="3.2" fill="${colors[k % 4]}" class="bulb" style="animation-delay:${(k * 0.31).toFixed(2)}s"/>`;
+    bulbs += `<circle cx="${xR.toFixed(1)}" cy="${y + 12}" r="15" fill="url(#bulbGlow)" class="bulb" style="animation-delay:${(k * 0.27 + 0.9).toFixed(2)}s"/>`;
+    bulbs += `<circle cx="${xR.toFixed(1)}" cy="${y + 12}" r="3.2" fill="${colors[(k + 2) % 4]}" class="bulb" style="animation-delay:${(k * 0.27 + 0.9).toFixed(2)}s"/>`;
     k++;
   }
 
   svg.innerHTML = defs + body + bokeh + bulbs + ornaments;
 }
 
-/* ================= ФОН: сугроб, подарки, фонарик ================= */
+/* ================= ФОН: сугроб, подарок слева, фонарь и подарки справа ================= */
 function buildBottom() {
   const svg = $("bottomLayer");
+
   svg.innerHTML = `
   <defs>
     <linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1">
@@ -760,14 +850,8 @@ function buildBottom() {
     <linearGradient id="gRedTop" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#ff9a82"/><stop offset="100%" stop-color="#d33a2c"/>
     </linearGradient>
-    <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#3d9a63"/><stop offset="60%" stop-color="#1c6b41"/><stop offset="100%" stop-color="#0b3320"/>
-    </linearGradient>
-    <linearGradient id="gGreenTop" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#6fc48d"/><stop offset="100%" stop-color="#2a8452"/>
-    </linearGradient>
     <linearGradient id="goldRib" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff6d6"/><stop offset="50%" stop-color="#e8c98a"/><stop offset="100%" stop-color="#9a7430"/>
+      <stop offset="0" stop-color="#fff6d6"/><stop offset="50%" stop-color="#e0c084"/><stop offset="100%" stop-color="#9a7430"/>
     </linearGradient>
     <radialGradient id="lampGlow" cx="50%" cy="50%" r="50%">
       <stop offset="0" stop-color="#ffdf9a" stop-opacity="1"/>
@@ -776,69 +860,56 @@ function buildBottom() {
     </radialGradient>
     <linearGradient id="snowDrift" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#ffffff" stop-opacity=".98"/>
-      <stop offset="100%" stop-color="#cfe2f2" stop-opacity=".90"/>
+      <stop offset="100%" stop-color="#cfe2f2" stop-opacity=".92"/>
     </linearGradient>
   </defs>
 
-  <!-- сугроб -->
-  <path d="M0 232 C 55 208 108 228 158 218 C 208 208 258 232 318 222 C 350 217 375 226 390 220 L390 300 L0 300 Z" fill="url(#snowDrift)"/>
-  <path d="M0 252 C 70 238 122 254 182 246 C 242 238 302 256 390 246 L390 300 L0 300 Z" fill="#ffffff" opacity=".75"/>
+  <path d="M0 244 C 55 218 108 240 158 230 C 208 220 258 244 318 234 C 350 229 375 238 390 232 L390 320 L0 320 Z" fill="url(#snowDrift)"/>
+  <path d="M0 266 C 70 252 122 268 182 260 C 242 252 302 270 390 260 L390 320 L0 320 Z" fill="#ffffff" opacity=".78"/>
 
-  <!-- подарок 1 -->
+  <!-- ПОДАРОК СЛЕВА -->
   <g>
-    <ellipse cx="92" cy="250" rx="64" ry="11" fill="rgba(0,0,0,.40)"/>
-    <path d="M40 164 L92 147 L144 164 L144 244 L40 244 Z" fill="url(#gRed)"/>
-    <path d="M40 164 L92 147 L144 164 L92 181 Z" fill="url(#gRedTop)"/>
-    <rect x="81" y="164" width="22" height="80" fill="url(#goldRib)"/>
-    <path d="M92 147 c-17 0-27-7-27-15s15-8 27 15c12-23 27-22 27-15s-10 15-27 15z" fill="url(#goldRib)"/>
-    <path d="M40 164 L92 181 L92 244 L40 244 Z" fill="rgba(0,0,0,.16)"/>
-    <path d="M47 173 L47 238" stroke="rgba(255,255,255,.35)" stroke-width="3.5" stroke-linecap="round"/>
+    <ellipse cx="72" cy="268" rx="62" ry="11" fill="rgba(0,0,0,.38)"/>
+    <path d="M22 186 L72 169 L122 186 L122 264 L22 264 Z" fill="url(#gRed)"/>
+    <path d="M22 186 L72 169 L122 186 L72 203 Z" fill="url(#gRedTop)"/>
+    <rect x="61" y="186" width="22" height="78" fill="url(#goldRib)"/>
+    <path d="M72 169 c-17 0-27-7-27-15s15-8 27 15c12-23 27-22 27-15s-10 15-27 15z" fill="url(#goldRib)"/>
+    <path d="M22 186 L72 203 L72 264 L22 264 Z" fill="rgba(0,0,0,.16)"/>
+    <path d="M29 195 L29 258" stroke="rgba(255,255,255,.32)" stroke-width="3.4" stroke-linecap="round"/>
   </g>
 
-  <!-- подарок 2 -->
+  <!-- ПОДАРКИ СПРАВА -->
   <g>
-    <ellipse cx="198" cy="256" rx="48" ry="9" fill="rgba(0,0,0,.38)"/>
-    <path d="M158 188 L198 175 L238 188 L238 252 L158 252 Z" fill="url(#gGreen)"/>
-    <path d="M158 188 L198 175 L238 188 L198 200 Z" fill="url(#gGreenTop)"/>
-    <rect x="189" y="188" width="18" height="64" fill="url(#goldRib)"/>
-    <path d="M198 175 c-14 0-22-6-22-12s12-6 22 12c10-18 22-17 22-12s-8 12-22 12z" fill="url(#goldRib)"/>
-    <path d="M158 188 L198 200 L198 252 L158 252 Z" fill="rgba(0,0,0,.18)"/>
-    <path d="M165 197 L165 246" stroke="rgba(255,255,255,.28)" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="286" cy="272" rx="46" ry="9" fill="rgba(0,0,0,.34)"/>
+    <path d="M248 214 L286 202 L324 214 L324 268 L248 268 Z" fill="url(#gRed)"/>
+    <path d="M248 214 L286 202 L324 214 L286 226 Z" fill="url(#gRedTop)"/>
+    <rect x="277" y="214" width="18" height="54" fill="url(#goldRib)"/>
+    <path d="M286 202 c-14 0-22-6-22-12s12-6 22 12c10-18 22-17 22-12s-8 12-22 12z" fill="url(#goldRib)"/>
+    <path d="M248 214 L286 226 L286 268 L248 268 Z" fill="rgba(0,0,0,.18)"/>
   </g>
 
-  <!-- подарок 3 -->
   <g>
-    <ellipse cx="288" cy="258" rx="36" ry="8" fill="rgba(0,0,0,.36)"/>
-    <path d="M258 208 L288 198 L318 208 L318 254 L258 254 Z" fill="#f7ecd8"/>
-    <path d="M258 208 L288 198 L318 208 L288 218 Z" fill="#fffdf6"/>
-    <rect x="281" y="208" width="14" height="46" fill="#b32222" opacity=".95"/>
-    <path d="M288 198 c-11 0-17-5-17-10s9-5 17 10c8-15 17-14 17-10s-6 10-17 10z" fill="#b32222"/>
-    <path d="M258 208 L288 218 L288 254 L258 254 Z" fill="rgba(0,0,0,.12)"/>
+    <ellipse cx="342" cy="278" rx="34" ry="7" fill="rgba(0,0,0,.32)"/>
+    <path d="M316 236 L342 227 L368 236 L368 274 L316 274 Z" fill="url(#gRed)"/>
+    <path d="M316 236 L342 227 L368 236 L342 245 Z" fill="url(#gRedTop)"/>
+    <rect x="335" y="236" width="14" height="38" fill="url(#goldRib)"/>
+    <path d="M342 227 c-10 0-16-5-16-9s9-5 16 9c7-14 16-13 16-9s-6 9-16 9z" fill="url(#goldRib)"/>
   </g>
 
-  <!-- подарок 4 (маленький) -->
+  <!-- ФОНАРЬ СПРАВА -->
   <g>
-    <ellipse cx="30" cy="262" rx="28" ry="7" fill="rgba(0,0,0,.34)"/>
-    <path d="M8 226 L30 219 L52 226 L52 258 L8 258 Z" fill="#2a8452"/>
-    <path d="M8 226 L30 219 L52 226 L30 233 Z" fill="#4fae74"/>
-    <rect x="25" y="226" width="10" height="32" fill="url(#goldRib)"/>
-    <path d="M30 219 c-8 0-13-4-13-8s7-4 13 8c6-12 13-11 13-8s-5 8-13 8z" fill="url(#goldRib)"/>
-  </g>
-
-  <!-- фонарик -->
-  <g>
-    <circle cx="340" cy="192" r="70" fill="url(#lampGlow)" opacity=".95"/>
-    <path d="M340 122 v-14" stroke="#9a7430" stroke-width="3" stroke-linecap="round"/>
-    <path d="M325 122 q15 -17 30 0" fill="none" stroke="#9a7430" stroke-width="3"/>
-    <path d="M321 126 h38 l-4 9 h-30 z" fill="#b8860b"/>
-    <path d="M323 135 h34 l6 64 h-46 z" fill="#3a2a12" opacity=".6"/>
-    <path d="M326 137 h28 l4.5 58 h-37 z" fill="#ffd98a"/>
-    <path d="M334 141 h12 l3 50 h-18 z" fill="#fffbe8"/>
-    <path d="M323 135 h34 l6 64 h-46 z" fill="none" stroke="#b8860b" stroke-width="2.6"/>
-    <path d="M340 137 v60" stroke="#b8860b" stroke-width="1.6" opacity=".75"/>
-    <path d="M317 199 h46 l-3 11 h-40 z" fill="#b8860b"/>
-    <path d="M321 210 h38 l-2 8 h-34 z" fill="#9a7430"/>
-    <ellipse cx="340" cy="230" rx="27" ry="6" fill="rgba(0,0,0,.32)"/>
+    <circle cx="352" cy="196" r="66" fill="url(#lampGlow)" opacity=".95"/>
+    <path d="M352 130 v-13" stroke="#9a7430" stroke-width="3" stroke-linecap="round"/>
+    <path d="M338 130 q14 -16 28 0" fill="none" stroke="#9a7430" stroke-width="3"/>
+    <path d="M334 134 h36 l-4 9 h-28 z" fill="#b8860b"/>
+    <path d="M336 143 h32 l6 62 h-44 z" fill="#3a2a12" opacity=".6"/>
+    <path d="M339 145 h26 l4.5 56 h-35 z" fill="#ffd98a"/>
+    <path d="M346 149 h12 l3 48 h-18 z" fill="#fffbe8"/>
+    <path d="M336 143 h32 l6 62 h-44 z" fill="none" stroke="#b8860b" stroke-width="2.6"/>
+    <path d="M352 145 v58" stroke="#b8860b" stroke-width="1.6" opacity=".75"/>
+    <path d="M330 205 h44 l-3 11 h-38 z" fill="#b8860b"/>
+    <path d="M334 216 h36 l-2 8 h-32 z" fill="#9a7430"/>
+    <ellipse cx="352" cy="236" rx="26" ry="6" fill="rgba(0,0,0,.30)"/>
   </g>
   `;
 }
@@ -929,7 +1000,7 @@ function startSnow() {
 }
 
 /* ================= КОЛЕСО ================= */
-const SEG_FILL = ["#1f4a2e", "#f7ecd8", "#8f1d1d", "#f7ecd8"];
+const SEG_FILL = ["#f7ecd8", "#8f1d1d", "#f7ecd8", "#1f4a2e"];
 
 function polar(cx, cy, r, deg) {
   const a = (deg - 90) * Math.PI / 180;
@@ -940,19 +1011,19 @@ function renderWheel(prizes) {
   const svg = $("wheelSvg");
   const n = Math.max(prizes.length, 1);
   const seg = 360 / n;
-  const cx = 200, cy = 200, R = 164;
+  const cx = 200, cy = 200, R = 162;
 
   const defs = `
     <defs>
       <radialGradient id="rimGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="82%" stop-color="#6b4a1e"/>
-        <stop offset="94%" stop-color="#c9a25e"/>
-        <stop offset="100%" stop-color="#3a2410"/>
+        <stop offset="80%" stop-color="#5e3f16"/>
+        <stop offset="92%" stop-color="#c9a25e"/>
+        <stop offset="100%" stop-color="#2e1c08"/>
       </radialGradient>
       <radialGradient id="wheelShade" cx="42%" cy="32%" r="74%">
-        <stop offset="0" stop-color="rgba(255,255,255,.20)"/>
+        <stop offset="0" stop-color="rgba(255,255,255,.18)"/>
         <stop offset="58%" stop-color="rgba(0,0,0,0)"/>
-        <stop offset="100%" stop-color="rgba(0,0,0,.42)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,.38)"/>
       </radialGradient>
     </defs>`;
 
@@ -963,31 +1034,31 @@ function renderWheel(prizes) {
     const [x1, y1] = polar(cx, cy, R, a1);
     const large = seg > 180 ? 1 : 0;
     segs += `<path d="M${cx} ${cy} L${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z"
-      fill="${SEG_FILL[i % SEG_FILL.length]}" stroke="rgba(0,0,0,.18)" stroke-width="1"/>`;
+      fill="${SEG_FILL[i % SEG_FILL.length]}" stroke="rgba(0,0,0,.14)" stroke-width="1"/>`;
   }
 
   let icons = "";
   for (let i = 0; i < n; i++) {
     const mid = i * seg + seg / 2;
-    const [ix, iy] = polar(cx, cy, R * 0.64, mid);
+    const [ix, iy] = polar(cx, cy, R * 0.63, mid);
     const kind = iconByIndex(i);
-    const size = Math.min(50, Math.max(32, 230 / n + 24));
+    const size = Math.min(46, Math.max(30, 210 / n + 22));
     icons += `<g transform="translate(${ix.toFixed(2)} ${iy.toFixed(2)}) rotate(${mid.toFixed(2)}) translate(${-size / 2} ${-size / 2})">
       <svg width="${size}" height="${size}" viewBox="0 0 48 48" overflow="visible">${ICONS[kind]}</svg>
     </g>`;
   }
 
   let rim = "";
-  const bulbs = 28;
+  const bulbs = 26;
   for (let i = 0; i < bulbs; i++) {
-    const [bx, by] = polar(cx, cy, R + 13, (360 / bulbs) * i);
-    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="9" fill="rgba(255,224,160,.35)" class="rim-bulb" style="animation-delay:${(i * 0.09).toFixed(2)}s"/>`;
-    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="3.2" fill="#fff0c4" class="rim-bulb" style="animation-delay:${(i * 0.09).toFixed(2)}s"/>`;
+    const [bx, by] = polar(cx, cy, R + 14, (360 / bulbs) * i);
+    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="10" fill="rgba(255,224,160,.40)" class="rim-bulb" style="animation-delay:${(i * 0.09).toFixed(2)}s"/>`;
+    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="3.6" fill="#fff2cc" class="rim-bulb" style="animation-delay:${(i * 0.09).toFixed(2)}s"/>`;
   }
 
   svg.innerHTML = defs + `
-    <circle cx="${cx}" cy="${cy}" r="${R + 24}" fill="url(#rimGrad)"/>
-    <circle cx="${cx}" cy="${cy}" r="${R + 20}" fill="none" stroke="rgba(255,232,180,.85)" stroke-width="2"/>
+    <circle cx="${cx}" cy="${cy}" r="${R + 26}" fill="url(#rimGrad)"/>
+    <circle cx="${cx}" cy="${cy}" r="${R + 21}" fill="none" stroke="rgba(255,236,190,.90)" stroke-width="2"/>
     <g id="wheelSpin">
       <circle cx="${cx}" cy="${cy}" r="${R}" fill="#12291a"/>
       ${segs}
@@ -1025,7 +1096,7 @@ function renderAll() {
     : "Кампания сейчас не идёт: баллы пока не начисляются";
 
   $("pointsVal").textContent = points;
-  $("spinCost").textContent = cost;
+  $("spinCostTab").textContent = cost;
 
   const pct = Math.max(0, Math.min(100, Math.round((points / cost) * 100)));
   $("pointsBar").style.width = pct + "%";
@@ -1183,6 +1254,19 @@ $("spinBtn").addEventListener("click", doSpin);
 $("hub").addEventListener("click", doSpin);
 $("modalClose").addEventListener("click", () => $("modal").classList.remove("on"));
 $("modal").addEventListener("click", (e) => { if (e.target.id === "modal") $("modal").classList.remove("on"); });
+
+$("btnClose").addEventListener("click", () => { if (tg && tg.close) tg.close(); else history.back(); });
+$("btnMore").addEventListener("click", () => {
+  if (tg && tg.showPopup) {
+    tg.showPopup({
+      title: "Full Bak Points",
+      message: "Пишите комментарии под постами — получайте баллы и крутите колесо призов.",
+      buttons: [{ type: "close" }],
+    });
+  } else {
+    toast("Пишите комментарии — получайте баллы 🎁");
+  }
+});
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
