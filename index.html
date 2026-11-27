@@ -16,8 +16,7 @@
 html,body{margin:0;padding:0;height:100%;background:#16261A;color:var(--cream);
 font-family:'Nunito',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 overscroll-behavior:none;-webkit-font-smoothing:antialiased}
-#bg{position:fixed;inset:0;z-index:0;
-background:#16261A url('bg.png') center bottom / cover no-repeat}
+#bg{position:fixed;inset:0;z-index:0;background:#16261A url('bg.png') center bottom/cover no-repeat}
 #bg::after{content:"";position:absolute;inset:0;pointer-events:none;
 background:radial-gradient(95% 70% at 50% 40%,rgba(0,0,0,0) 50%,rgba(0,0,0,.35) 100%)}
 #snow{position:fixed;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
@@ -110,7 +109,7 @@ border-bottom:1px solid rgba(232,201,138,.13);font-size:13px;line-height:1.45}
 .pico svg{width:26px;height:26px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
 .pname{flex:1 1 auto;min-width:0}
 .dash{display:inline-block;width:16px;color:rgba(247,236,216,.7)}
-.pdesc{color:rgba(247,236,216,.66);margin-left:8px}
+.pdesc{color:inherit;margin-left:8px}
 .tabs{display:flex;gap:6px;margin:12px 0}
 .tab{flex:1;padding:9px 4px;border-radius:12px;border:1.5px solid rgba(232,201,138,.3);
 background:rgba(255,255,255,.04);color:rgba(247,236,216,.65);font-size:12px;cursor:pointer;font-family:inherit}
@@ -218,14 +217,14 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
             </filter>
           </defs>
           <g filter="url(#bwSh)">
-            <path d="M88 85 C78 45 50 18 22 20 C8 21 4 40 4 85 C4 130 8 149 22 150 C50 152 78 125 88 85 Z" fill="url(#bwW)"/>
-            <path d="M112 85 C122 45 150 18 178 20 C192 21 196 40 196 85 C196 130 192 149 178 150 C150 152 122 125 112 85 Z" fill="url(#bwW)"/>
+            <path d="M90.4 85 C82.4 53 60 31.4 37.6 33 C26.4 33.8 23.2 49 23.2 85 C23.2 121 26.4 136.2 37.6 137 C60 138.6 82.4 117 90.4 85 Z" fill="url(#bwW)"/>
+            <path d="M109.6 85 C117.6 53 140 31.4 162.4 33 C173.6 33.8 176.8 49 176.8 85 C176.8 121 173.6 136.2 162.4 137 C140 138.6 117.6 117 109.6 85 Z" fill="url(#bwW)"/>
             <path d="M84 110 L98 110 L94 186 L80 176 L66 186 Z" fill="url(#bwT)"/>
             <path d="M102 110 L116 110 L134 186 L120 176 L106 186 Z" fill="url(#bwT)"/>
-            <ellipse cx="55" cy="62" rx="18" ry="10" fill="rgba(255,255,255,.16)" transform="rotate(-25 55 62)"/>
-            <ellipse cx="145" cy="62" rx="18" ry="10" fill="rgba(255,255,255,.16)" transform="rotate(25 145 62)"/>
-            <rect x="82" y="52" width="36" height="66" rx="17" fill="url(#bwK)"/>
-            <ellipse cx="92" cy="66" rx="7" ry="10" fill="rgba(255,255,255,.28)"/>
+            <ellipse cx="64" cy="66.6" rx="14.4" ry="8" fill="rgba(255,255,255,.16)" transform="rotate(-25 64 66.6)"/>
+            <ellipse cx="136" cy="66.6" rx="14.4" ry="8" fill="rgba(255,255,255,.16)" transform="rotate(25 136 66.6)"/>
+            <rect x="85.6" y="58.6" width="28.8" height="52.8" rx="13.6" fill="url(#bwK)"/>
+            <ellipse cx="93.6" cy="69.8" rx="5.6" ry="8" fill="rgba(255,255,255,.28)"/>
           </g>
         </svg>
         <b id="cWeek">0</b><span>за 7 дней</span>
@@ -233,14 +232,14 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
       <div class="stat">
         <svg class="bow" viewBox="0 0 200 190" aria-hidden="true">
           <g filter="url(#bwSh)">
-            <path d="M88 85 C78 45 50 18 22 20 C8 21 4 40 4 85 C4 130 8 149 22 150 C50 152 78 125 88 85 Z" fill="url(#bwW)"/>
-            <path d="M112 85 C122 45 150 18 178 20 C192 21 196 40 196 85 C196 130 192 149 178 150 C150 152 122 125 112 85 Z" fill="url(#bwW)"/>
+            <path d="M90.4 85 C82.4 53 60 31.4 37.6 33 C26.4 33.8 23.2 49 23.2 85 C23.2 121 26.4 136.2 37.6 137 C60 138.6 82.4 117 90.4 85 Z" fill="url(#bwW)"/>
+            <path d="M109.6 85 C117.6 53 140 31.4 162.4 33 C173.6 33.8 176.8 49 176.8 85 C176.8 121 173.6 136.2 162.4 137 C140 138.6 117.6 117 109.6 85 Z" fill="url(#bwW)"/>
             <path d="M84 110 L98 110 L94 186 L80 176 L66 186 Z" fill="url(#bwT)"/>
             <path d="M102 110 L116 110 L134 186 L120 176 L106 186 Z" fill="url(#bwT)"/>
-            <ellipse cx="55" cy="62" rx="18" ry="10" fill="rgba(255,255,255,.16)" transform="rotate(-25 55 62)"/>
-            <ellipse cx="145" cy="62" rx="18" ry="10" fill="rgba(255,255,255,.16)" transform="rotate(25 145 62)"/>
-            <rect x="82" y="52" width="36" height="66" rx="17" fill="url(#bwK)"/>
-            <ellipse cx="92" cy="66" rx="7" ry="10" fill="rgba(255,255,255,.28)"/>
+            <ellipse cx="64" cy="66.6" rx="14.4" ry="8" fill="rgba(255,255,255,.16)" transform="rotate(-25 64 66.6)"/>
+            <ellipse cx="136" cy="66.6" rx="14.4" ry="8" fill="rgba(255,255,255,.16)" transform="rotate(25 136 66.6)"/>
+            <rect x="85.6" y="58.6" width="28.8" height="52.8" rx="13.6" fill="url(#bwK)"/>
+            <ellipse cx="93.6" cy="69.8" rx="5.6" ry="8" fill="rgba(255,255,255,.28)"/>
           </g>
         </svg>
         <b id="cMonth">0</b><span>за 30 дней</span>
@@ -248,14 +247,14 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
       <div class="stat">
         <svg class="bow" viewBox="0 0 200 190" aria-hidden="true">
           <g filter="url(#bwSh)">
-            <path d="M88 85 C78 45 50 18 22 20 C8 21 4 40 4 85 C4 130 8 149 22 150 C50 152 78 125 88 85 Z" fill="url(#bwW)"/>
-            <path d="M112 85 C122 45 150 18 178 20 C192 21 196 40 196 85 C196 130 192 149 178 150 C150 152 122 125 112 85 Z" fill="url(#bwW)"/>
+            <path d="M90.4 85 C82.4 53 60 31.4 37.6 33 C26.4 33.8 23.2 49 23.2 85 C23.2 121 26.4 136.2 37.6 137 C60 138.6 82.4 117 90.4 85 Z" fill="url(#bwW)"/>
+            <path d="M109.6 85 C117.6 53 140 31.4 162.4 33 C173.6 33.8 176.8 49 176.8 85 C176.8 121 173.6 136.2 162.4 137 C140 138.6 117.6 117 109.6 85 Z" fill="url(#bwW)"/>
             <path d="M84 110 L98 110 L94 186 L80 176 L66 186 Z" fill="url(#bwT)"/>
             <path d="M102 110 L116 110 L134 186 L120 176 L106 186 Z" fill="url(#bwT)"/>
-            <ellipse cx="55" cy="62" rx="18" ry="10" fill="rgba(255,255,255,.16)" transform="rotate(-25 55 62)"/>
-            <ellipse cx="145" cy="62" rx="18" ry="10" fill="rgba(255,255,255,.16)" transform="rotate(25 145 62)"/>
-            <rect x="82" y="52" width="36" height="66" rx="17" fill="url(#bwK)"/>
-            <ellipse cx="92" cy="66" rx="7" ry="10" fill="rgba(255,255,255,.28)"/>
+            <ellipse cx="64" cy="66.6" rx="14.4" ry="8" fill="rgba(255,255,255,.16)" transform="rotate(-25 64 66.6)"/>
+            <ellipse cx="136" cy="66.6" rx="14.4" ry="8" fill="rgba(255,255,255,.16)" transform="rotate(25 136 66.6)"/>
+            <rect x="85.6" y="58.6" width="28.8" height="52.8" rx="13.6" fill="url(#bwK)"/>
+            <ellipse cx="93.6" cy="69.8" rx="5.6" ry="8" fill="rgba(255,255,255,.28)"/>
           </g>
         </svg>
         <b id="cAll">0</b><span>всего</span>
@@ -361,81 +360,105 @@ function previewData(){return{
     {id:12,name:"",chance:10,stock:-1,detail:"Секретный бонус от Full Bak"}
   ]};}
 
-/* ===== единый стиль иконок: золото + тёмная обводка ===== */
-const GOLD="#F2C75C", DARK="#2E1C08";
-const mono=inner=>`<svg viewBox="0 0 48 48" fill="${GOLD}" stroke="${DARK}" stroke-width="2.2"
-stroke-linejoin="round" stroke-linecap="round">${inner}</svg>`;
-
 const ICONS={
-heart:mono('<path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z"/>'),
+gift:`<svg viewBox="0 0 48 48"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8452F"/><stop offset="1" stop-color="#7A1515"/></linearGradient></defs>
+<rect x="10" y="20" width="28" height="20" rx="3" fill="url(#g1)"/><rect x="10" y="20" width="28" height="5.5" rx="2.5" fill="#B8912F"/>
+<rect x="21.5" y="20" width="5" height="20" fill="#C9A227"/>
+<path d="M24 20c-6 0-10-2.8-10-5.8S19.5 11 24 20c4.5-9 10-8.6 10-5.8S30 20 24 20z" fill="#C9A227"/></svg>`,
 
-house:mono('<path d="M6 25 L24 9 L42 25 L42 41 L6 41 Z"/><rect x="20" y="30" width="8" height="11" fill="'+DARK+'" stroke="none"/>'),
+candy:`<svg viewBox="0 0 48 48"><defs><mask id="cm"><path d="M17 41V20a7 7 0 0 1 14 0v5" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round"/></mask></defs>
+<g mask="url(#cm)"><rect x="0" y="0" width="48" height="48" fill="#FFFFFF"/>
+<g transform="rotate(-40 24 24)"><rect x="-10" y="2" width="70" height="5" fill="#C62828"/><rect x="-10" y="12" width="70" height="5" fill="#C62828"/>
+<rect x="-10" y="22" width="70" height="5" fill="#C62828"/><rect x="-10" y="32" width="70" height="5" fill="#C62828"/>
+<rect x="-10" y="42" width="70" height="5" fill="#C62828"/></g></g></svg>`,
 
-star:mono('<path d="M24 6l5.3 11.6 12.7 1.5-9.4 8.6 2.6 12.5L24 34.3 12.8 40.2l2.6-12.5L6 19.1l12.7-1.5z"/>'),
+star:`<svg viewBox="0 0 48 48"><defs><linearGradient id="s1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#D99B1F"/></linearGradient></defs>
+<path d="M24 6l5.3 11.6 12.7 1.5-9.4 8.6 2.6 12.5L24 34.3 12.8 40.2l2.6-12.5L6 19.1l12.7-1.5z" fill="url(#s1)" stroke="#A8761A" stroke-width="1.2" stroke-linejoin="round"/></svg>`,
 
-candy:`<svg viewBox="0 0 48 48" fill="none" stroke-linecap="round">
-<path d="M17 41V20a7 7 0 0 1 14 0v5" stroke="${DARK}" stroke-width="12"/>
-<path d="M17 41V20a7 7 0 0 1 14 0v5" stroke="${GOLD}" stroke-width="7.5"/>
-<path d="M17 41V20a7 7 0 0 1 14 0v5" stroke="${DARK}" stroke-width="7.5" stroke-dasharray="1.6 5.4" opacity=".55"/>
-</svg>`,
+tree:`<svg viewBox="0 0 48 48"><defs><linearGradient id="t1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3E8C4A"/><stop offset="1" stop-color="#14401F"/></linearGradient></defs>
+<rect x="20" y="37" width="8" height="7" rx="2" fill="#6B4A2A"/>
+<path d="M24 4l9 12h-5l8 11h-5.5l8.5 12H9l8.5-12H12l8-11h-5z" fill="url(#t1)" stroke="#0D3A22" stroke-width="1.2"/>
+<circle cx="24" cy="12" r="2" fill="#F2D79C"/><circle cx="19" cy="25" r="1.8" fill="#E04B3A"/><circle cx="29" cy="27" r="1.8" fill="#F2D79C"/></svg>`,
 
-gift:mono('<rect x="9" y="19" width="30" height="22" rx="2"/>'+
-'<rect x="9" y="19" width="30" height="6" fill="'+DARK+'" stroke="none"/>'+
-'<rect x="21" y="19" width="6" height="22" fill="'+DARK+'" stroke="none"/>'+
-'<path d="M24 19c-6 0-10-2.8-10-5.8S19.5 11 24 20c4.5-9 10-8.6 10-5.8S30 19 24 19z"/>'),
+ball:`<svg viewBox="0 0 48 48"><defs><radialGradient id="b1" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#FF8A80"/><stop offset="45%" stop-color="#C62828"/><stop offset="100%" stop-color="#5E0F0F"/></radialGradient></defs>
+<rect x="21" y="8" width="6" height="5" rx="1.5" fill="#E8C98A"/><circle cx="24" cy="27" r="13" fill="url(#b1)"/>
+<ellipse cx="19" cy="22" rx="4" ry="2.8" fill="rgba(255,255,255,.5)" transform="rotate(-30 19 22)"/></svg>`,
 
-ball:mono('<rect x="21" y="7" width="6" height="5" rx="1.5" fill="'+DARK+'" stroke="none"/>'+
-'<circle cx="24" cy="27" r="13"/>'+
-'<path d="M17 21a8 8 0 0 1 6-5" stroke="rgba(255,255,255,.75)" stroke-width="2.2" fill="none"/>'),
+bell:`<svg viewBox="0 0 48 48"><defs><linearGradient id="bl1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#C98F1C"/></linearGradient></defs>
+<path d="M24 10a10 10 0 0 0-10 10v8l-3.6 5.8h27.2L34 28v-8a10 10 0 0 0-10-10z" fill="url(#bl1)" stroke="#A8761A" stroke-width="1.2"/>
+<circle cx="24" cy="37" r="3.6" fill="#C98F1C"/><rect x="21.5" y="4.5" width="5" height="5" rx="2.5" fill="#C98F1C"/></svg>`,
 
-tree:mono('<path d="M24 5l8 11h-4.5l7 10h-5l7.5 11H11l7.5-11h-5l7-10H16z"/>'+
-'<rect x="21" y="37" width="6" height="6" fill="'+DARK+'" stroke="none"/>'),
+heart:`<svg viewBox="0 0 48 48"><defs><linearGradient id="h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0604A"/><stop offset="50%" stop-color="#C62828"/><stop offset="1" stop-color="#7A1010"/></linearGradient></defs>
+<path d="M24 42s-14-8.8-14-18.4A8.4 8.4 0 0 1 24 18a8.4 8.4 0 0 1 14 5.6C38 33.2 24 42 24 42z" fill="url(#h1)"/>
+<ellipse cx="18" cy="22" rx="3.6" ry="2.6" fill="rgba(255,255,255,.5)" transform="rotate(-25 18 22)"/></svg>`,
 
-bell:mono('<path d="M24 10a10 10 0 0 0-10 10v8l-3.6 5.8h27.2L34 28v-8a10 10 0 0 0-10-10z"/>'+
-'<circle cx="24" cy="37" r="3.6"/><rect x="21.5" y="4.5" width="5" height="5" rx="2.5"/>'),
+sparkler:`<svg viewBox="0 0 48 48">
+<rect x="22" y="26" width="4" height="18" rx="2" fill="#8A6A2E"/>
+<g stroke="#FFD98A" stroke-width="2" stroke-linecap="round">
+<path d="M24 24 L24 9"/><path d="M24 24 L12 13"/><path d="M24 24 L36 13"/>
+<path d="M24 24 L8 24"/><path d="M24 24 L40 24"/>
+<path d="M24 24 L13 34"/><path d="M24 24 L35 34"/></g>
+<circle cx="24" cy="22" r="5" fill="#FFF3C4"/><circle cx="24" cy="22" r="2.4" fill="#fff"/></svg>`,
 
-sparkler:mono('<rect x="22" y="26" width="4" height="18" rx="2" fill="'+DARK+'" stroke="none"/>'+
-'<path d="M24 24 L24 9M24 24 L12 13M24 24 L36 13M24 24 L8 24M24 24 L40 24M24 24 L13 34M24 24 L35 34"/>'+
-'<circle cx="24" cy="22" r="5"/>'),
+house:`<svg viewBox="0 0 48 48">
+<rect x="11" y="22" width="26" height="19" rx="2" fill="#B5762E"/>
+<path d="M6 24 L24 8 L42 24 Z" fill="#F7ECD8"/>
+<path d="M6 24 L24 8 L42 24" fill="none" stroke="#C62828" stroke-width="2.4" stroke-linejoin="round"/>
+<rect x="21" y="30" width="6" height="11" rx="1" fill="#8E1A16"/>
+<rect x="14" y="26" width="5.5" height="5.5" rx="1" fill="#FFF3C4"/>
+<rect x="28.5" y="26" width="5.5" height="5.5" rx="1" fill="#FFF3C4"/></svg>`,
 
-cookie:mono('<path d="M24 7l5 11 12 1.4-8.9 8.1 2.5 11.8L24 33.6 13.4 39.3l2.5-11.8L7 19.4 19 18z"/>'),
+cookie:`<svg viewBox="0 0 48 48"><defs><linearGradient id="ck1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9A25A"/><stop offset="1" stop-color="#A06A2C"/></linearGradient></defs>
+<path d="M24 7l5 11 12 1.4-8.9 8.1 2.5 11.8L24 33.6 13.4 39.3l2.5-11.8L7 19.4 19 18z" fill="url(#ck1)" stroke="#7D4F1D" stroke-width="1.2" stroke-linejoin="round"/>
+<circle cx="24" cy="19" r="2" fill="#FFF3E0"/><circle cx="19" cy="27" r="1.8" fill="#FFF3E0"/><circle cx="29" cy="27" r="1.8" fill="#FFF3E0"/></svg>`,
 
-sparkle:mono('<path d="M22 6l3.4 9.6L35 19l-9.6 3.4L22 32l-3.4-9.6L9 19l9.6-3.4z"/>'+
-'<path d="M35 27l2 5.5 5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2z"/>'),
+sparkle:`<svg viewBox="0 0 48 48"><defs><linearGradient id="sp1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6D6"/><stop offset="1" stop-color="#E8C98A"/></linearGradient></defs>
+<path d="M22 6l3.4 9.6L35 19l-9.6 3.4L22 32l-3.4-9.6L9 19l9.6-3.4z" fill="url(#sp1)"/>
+<path d="M35 27l2 5.5 5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2z" fill="#FFE08A"/></svg>`,
 
-candle:mono('<rect x="18" y="19" width="12" height="22" rx="2.5"/>'+
-'<path d="M24 6c3.6 4.6 3.6 9 0 11.5C20.4 15 20.4 10.6 24 6z"/>'+
-'<rect x="16" y="41" width="16" height="3" rx="1.5" fill="'+DARK+'" stroke="none"/>'),
+candle:`<svg viewBox="0 0 48 48">
+<rect x="18" y="19" width="12" height="22" rx="2.5" fill="#F3E5D0"/>
+<rect x="18" y="19" width="4" height="22" rx="2" fill="rgba(255,255,255,.6)"/>
+<path d="M24 6c3.6 4.6 3.6 9 0 11.5C20.4 15 20.4 10.6 24 6z" fill="#FFB300"/>
+<path d="M24 9.5c1.8 2.4 1.8 4.6 0 6-1.8-1.4-1.8-3.6 0-6z" fill="#FFF3C4"/>
+<rect x="16" y="41" width="16" height="3" rx="1.5" fill="#C9B79A"/></svg>`,
 
-wreath:mono('<circle cx="24" cy="24" r="13" fill="none" stroke="'+GOLD+'" stroke-width="7"/>'+
-'<circle cx="24" cy="24" r="13" fill="none" stroke="'+DARK+'" stroke-width="9.5" opacity=".9"/>'+
-'<circle cx="24" cy="24" r="13" fill="none" stroke="'+GOLD+'" stroke-width="6"/>'+
-'<circle cx="24" cy="10" r="3.4"/>'),
+wreath:`<svg viewBox="0 0 48 48">
+<circle cx="24" cy="24" r="13" fill="none" stroke="#1B4A2E" stroke-width="7"/>
+<circle cx="24" cy="24" r="13" fill="none" stroke="#2F7D4F" stroke-width="3" stroke-dasharray="3 4"/>
+<circle cx="24" cy="11" r="3" fill="#C62828"/>
+<circle cx="35" cy="28" r="2" fill="#C62828"/>
+<circle cx="14" cy="30" r="2" fill="#C62828"/></svg>`,
 
-drum:mono('<rect x="12" y="16" width="24" height="16" rx="2"/>'+
-'<path d="M12 20h24M12 28h24" stroke="'+DARK+'" stroke-width="2.6"/>'+
-'<path d="M12 16L36 32M36 16L12 32" stroke="'+DARK+'" stroke-width="1.6"/>'),
+drum:`<svg viewBox="0 0 48 48">
+<rect x="12" y="16" width="24" height="16" rx="2" fill="#B32222"/>
+<rect x="12" y="16" width="24" height="4" fill="#F7ECD8"/>
+<rect x="12" y="28" width="24" height="4" fill="#F7ECD8"/>
+<path d="M12 16L36 32M36 16L12 32" stroke="#E8C98A" stroke-width="1.4"/></svg>`,
 
-ginger:mono('<circle cx="24" cy="13" r="6.5"/><rect x="21" y="19" width="6" height="12" rx="3"/>'+
-'<rect x="12" y="21" width="24" height="5" rx="2.5"/>'+
-'<rect x="19" y="30" width="4" height="9" rx="2"/><rect x="25" y="30" width="4" height="9" rx="2"/>')
+ginger:`<svg viewBox="0 0 48 48">
+<circle cx="24" cy="13" r="6.5" fill="#B5762E"/>
+<rect x="21" y="19" width="6" height="12" rx="3" fill="#B5762E"/>
+<rect x="12" y="21" width="24" height="5" rx="2.5" fill="#B5762E"/>
+<rect x="19" y="30" width="4" height="9" rx="2" fill="#B5762E"/>
+<rect x="25" y="30" width="4" height="9" rx="2" fill="#B5762E"/>
+<circle cx="21.5" cy="12" r="1.2" fill="#FFF3E0"/><circle cx="26.5" cy="12" r="1.2" fill="#FFF3E0"/></svg>`
 };
 
-/* 12 позиций: красный → зелёный → кремовый, повтор */
-const RED="#C41E3A", GREEN="#1A5F3A", CREAM="#F8F0E3";
+const RED="#8E1A16", GREEN="#1B4A2E", CREAM="#F5E7CC", CHAMP="#E8D4A8";
 const FIXED=[
-  {c:RED,   i:"heart"},
-  {c:GREEN, i:"house"},
-  {c:CREAM, i:"star"},
-  {c:RED,   i:"candy"},
+  {c:GREEN, i:"heart"},
+  {c:CREAM, i:"house"},
+  {c:RED,   i:"star"},
+  {c:CHAMP, i:"candy"},
   {c:GREEN, i:"gift"},
   {c:CREAM, i:"ball"},
   {c:RED,   i:"star"},
-  {c:GREEN, i:"tree"},
-  {c:CREAM, i:"bell"},
-  {c:RED,   i:"ball"},
-  {c:GREEN, i:"star"},
-  {c:CREAM, i:"gift"}
+  {c:CHAMP, i:"tree"},
+  {c:GREEN, i:"bell"},
+  {c:CREAM, i:"ball"},
+  {c:RED,   i:"star"},
+  {c:CHAMP, i:"gift"}
 ];
 const slot=i=>FIXED[i%FIXED.length];
 const iconAt=i=>ICONS[slot(i).i];
@@ -558,7 +581,7 @@ function renderPrizes(){
     const nm=strip(p.name),dt=strip(p.detail);
     const body=(nm&&dt)
       ?`${esc(nm)}<span class="pdesc">${esc(dt)}</span>`
-      :esc(nm||dt||"—");
+      :`<span class="pdesc">${esc(nm||dt||"—")}</span>`;
     return `<div class="prow"><span class="pico">${iconAt(i)}</span>
       <span class="pname"><span class="dash">—</span>${body}</span></div>`;
   }).join("");
