@@ -3,314 +3,322 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<meta name="theme-color" content="#0b1a12" />
+<meta name="theme-color" content="#0d1710" />
 <title>Full Bak Points</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   :root{
-    --pine-1:#0a1a12;
-    --pine-2:#0f2418;
-    --pine-3:#143020;
-    --cream:#f3ead8;
-    --cream-dim:rgba(243,234,216,.62);
-    --gold:#f6c453;
-    --gold-soft:#e8b64a;
-    --red-1:#8e1b1b;
-    --red-2:#b32222;
-    --red-3:#d33a2c;
-    --glass:rgba(18,44,30,.62);
-    --glass-2:rgba(12,32,22,.55);
-    --stroke:rgba(246,196,83,.28);
-    --stroke-soft:rgba(255,255,255,.10);
+    --cream:#f2e9d6;
+    --cream-dim:rgba(242,233,214,.62);
+    --gold:#d9b877;
+    --gold-soft:rgba(217,184,119,.38);
+    --card:rgba(46,60,44,.74);
+    --card-2:rgba(34,46,34,.80);
+    --red-1:#5e1010;
+    --red-2:#7d1a1a;
+    --red-3:#93211f;
   }
 
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
   html,body{
-    margin:0; padding:0;
-    height:100%;
-    background:#08130d;
+    margin:0; padding:0; height:100%;
+    background:#08110b;
     color:var(--cream);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     overscroll-behavior:none;
     -webkit-font-smoothing:antialiased;
   }
 
+  /* ================= ФОН ================= */
   #bg{
-    position:fixed; inset:0; z-index:0;
-    overflow:hidden;
+    position:fixed; inset:0; z-index:0; overflow:hidden;
     background:
-      radial-gradient(120% 70% at 50% 0%, #1b3a26 0%, #102619 42%, #08160f 78%, #050d09 100%);
+      radial-gradient(70% 45% at 50% 8%, #2a4030 0%, rgba(42,64,48,0) 70%),
+      radial-gradient(60% 40% at 12% 30%, #24382a 0%, rgba(36,56,42,0) 75%),
+      radial-gradient(60% 40% at 88% 34%, #24382a 0%, rgba(36,56,42,0) 75%),
+      linear-gradient(180deg, #16241a 0%, #101c14 45%, #0a130d 100%);
   }
   #bg::after{
     content:"";
     position:absolute; inset:0;
-    background:radial-gradient(90% 60% at 50% 42%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
+    background:radial-gradient(85% 55% at 50% 45%, rgba(0,0,0,0) 35%, rgba(0,0,0,.55) 100%);
     pointer-events:none;
   }
   #treeLayer{ position:absolute; inset:0; width:100%; height:100%; }
   #snowCanvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
   #bottomLayer{
     position:absolute; left:0; right:0; bottom:0;
-    height:min(46vh, 380px);
+    height:min(44vh, 360px);
     pointer-events:none;
   }
 
-  .bulb{ animation:bulbTwinkle 3.2s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  .bulb{ animation:bulbTwinkle 3.4s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
   @keyframes bulbTwinkle{
-    0%,100%{ opacity:.35; filter:drop-shadow(0 0 2px rgba(255,214,140,.35)); }
-    45%{ opacity:1; filter:drop-shadow(0 0 9px rgba(255,214,140,.95)); }
-    60%{ opacity:.85; filter:drop-shadow(0 0 6px rgba(255,214,140,.7)); }
+    0%,100%{ opacity:.30; filter:drop-shadow(0 0 2px rgba(255,214,140,.30)); }
+    45%{ opacity:1; filter:drop-shadow(0 0 10px rgba(255,214,140,1)); }
+    62%{ opacity:.8; filter:drop-shadow(0 0 6px rgba(255,214,140,.7)); }
+  }
+  .bokeh{ animation:bokehPulse 6s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes bokehPulse{
+    0%,100%{ opacity:.25; }
+    50%{ opacity:.75; }
   }
 
+  /* ================= КОНТЕНТ ================= */
   #app{
     position:fixed; inset:0; z-index:2;
     overflow-y:auto; overflow-x:hidden;
     -webkit-overflow-scrolling:touch;
     padding:
-      calc(env(safe-area-inset-top, 0px) + 14px)
+      calc(env(safe-area-inset-top, 0px) + 22px)
       16px
       calc(env(safe-area-inset-bottom, 0px) + 250px);
     scrollbar-width:none;
   }
   #app::-webkit-scrollbar{ display:none; }
-
   .wrap{ max-width:460px; margin:0 auto; }
 
-  .topbar{
-    display:flex; align-items:center; justify-content:space-between;
-    gap:10px; margin-bottom:14px;
-  }
-  .iconbtn{
-    width:44px; height:44px; flex:0 0 44px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(255,255,255,.10);
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-    color:var(--cream);
-    display:flex; align-items:center; justify-content:center;
-    font-size:19px; line-height:1; cursor:pointer;
-    transition:transform .15s ease, background .2s ease;
-  }
-  .iconbtn:active{ transform:scale(.93); background:rgba(255,255,255,.18); }
-
-  .brand{
-    flex:1 1 auto; text-align:center;
-    padding:9px 14px;
-    border-radius:16px;
-    border:1px solid rgba(246,196,83,.30);
-    background:linear-gradient(180deg, rgba(30,64,44,.85), rgba(14,36,24,.85));
-    box-shadow:0 8px 22px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.07);
-  }
-  .brand b{ display:block; font-size:16px; font-weight:600; letter-spacing:.2px; }
-  .brand span{ display:block; font-size:11px; color:var(--cream-dim); margin-top:1px; }
-
+  /* ---------- карточки ---------- */
   .card{
-    border-radius:22px;
-    border:1px solid var(--stroke);
-    background:linear-gradient(180deg, rgba(22,52,35,.80), rgba(10,28,19,.80));
+    border-radius:26px;
+    border:1px solid var(--gold-soft);
+    background:linear-gradient(180deg, var(--card), var(--card-2));
     backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-    box-shadow:0 14px 34px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.06);
-    padding:16px;
-    margin-bottom:14px;
+    box-shadow:0 16px 36px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.07);
+    padding:18px;
+    margin-bottom:16px;
   }
 
+  /* приветствие */
   .hello{
-    background:linear-gradient(150deg, var(--red-3) 0%, var(--red-2) 45%, var(--red-1) 100%);
-    border-color:rgba(255,180,150,.35);
-    box-shadow:0 16px 36px rgba(120,10,10,.45), inset 0 1px 0 rgba(255,255,255,.18);
+    background:linear-gradient(160deg, var(--red-3) 0%, var(--red-2) 48%, var(--red-1) 100%);
+    border-color:rgba(217,184,119,.45);
+    box-shadow:0 18px 40px rgba(60,4,4,.55), inset 0 1px 0 rgba(255,255,255,.16);
     position:relative; overflow:hidden;
+    padding:20px 18px;
   }
   .hello::before{
     content:"";
     position:absolute; inset:0;
-    background:radial-gradient(120% 90% at 85% -10%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%);
+    background:radial-gradient(110% 90% at 88% -20%, rgba(255,255,255,.20), rgba(255,255,255,0) 62%);
     pointer-events:none;
   }
   .hello h1{
-    margin:0 0 8px;
+    margin:0 0 10px;
     font-family:Georgia,"Times New Roman",serif;
-    font-size:25px; font-weight:600; line-height:1.2;
-    text-shadow:0 2px 10px rgba(0,0,0,.35);
+    font-size:26px; font-weight:600; line-height:1.18;
+    color:#fff8f0;
+    text-shadow:0 2px 12px rgba(0,0,0,.4);
+    position:relative;
   }
-  .hello p{ margin:0; font-size:13.5px; line-height:1.45; color:rgba(255,240,232,.92); }
+  .hello p{
+    margin:0; font-size:13.5px; line-height:1.5;
+    color:rgba(255,238,230,.90);
+    max-width:78%;
+    position:relative;
+  }
   .hello .flake{
-    position:absolute; right:14px; top:50%; transform:translateY(-50%);
-    opacity:.35; pointer-events:none;
+    position:absolute; right:16px; top:50%; transform:translateY(-50%);
+    opacity:.42; pointer-events:none;
   }
 
-  .points{
-    padding:0;
-    overflow:hidden;
-  }
+  /* ---------- ЕДИНАЯ плашка баллов ---------- */
+  .points{ padding:0; overflow:hidden; }
   .points-top{
     display:flex; align-items:flex-start; justify-content:space-between;
-    gap:12px; padding:16px 16px 0;
+    gap:12px; padding:18px 18px 0;
   }
-  .points-label{ font-size:13px; color:var(--cream-dim); margin-bottom:2px; }
+  .points-label{ font-size:13px; color:var(--cream-dim); margin-bottom:4px; }
   .points-value{
-    display:flex; align-items:center; gap:8px;
-    font-size:40px; font-weight:700; line-height:1;
-    letter-spacing:-1px;
-    text-shadow:0 4px 18px rgba(0,0,0,.45);
+    display:flex; align-items:center; gap:9px;
+    font-size:42px; font-weight:700; line-height:1;
+    letter-spacing:-1.2px;
+    text-shadow:0 4px 18px rgba(0,0,0,.5);
   }
-  .points-value .heart{ font-size:22px; filter:drop-shadow(0 0 8px rgba(255,60,90,.6)); }
+  .points-value .heart{ font-size:23px; filter:drop-shadow(0 0 10px rgba(255,60,90,.65)); }
   .points-cost{
     text-align:right; font-size:13px; color:var(--cream-dim);
-    padding-top:6px; white-space:nowrap;
+    padding-top:8px; white-space:nowrap;
   }
-  .points-cost b{ color:var(--gold); font-weight:600; }
+  .points-cost b{ color:var(--cream); font-weight:600; }
 
   .points-mid{
     display:flex; align-items:center; gap:12px;
-    padding:14px 16px 0;
+    padding:16px 18px 0;
   }
-  .gift-ico{ flex:0 0 auto; filter:drop-shadow(0 6px 10px rgba(0,0,0,.5)); }
+  .gift-ico{ flex:0 0 auto; filter:drop-shadow(0 6px 10px rgba(0,0,0,.55)); }
   .bar{
-    flex:1 1 auto; height:14px; border-radius:99px;
-    background:rgba(0,0,0,.42);
-    border:1px solid rgba(255,255,255,.10);
+    flex:1 1 auto; height:16px; border-radius:99px;
+    background:rgba(0,0,0,.40);
+    border:1px solid rgba(217,184,119,.22);
     overflow:hidden;
-    box-shadow:inset 0 2px 6px rgba(0,0,0,.5);
+    box-shadow:inset 0 2px 7px rgba(0,0,0,.55);
   }
   .bar > i{
     display:block; height:100%; width:0%;
     border-radius:99px;
-    background:linear-gradient(90deg, #f6c453, #ffdf8a 55%, #f6c453);
-    box-shadow:0 0 14px rgba(246,196,83,.65);
+    background:linear-gradient(90deg, #d9b877, #ffe6ad 55%, #d9b877);
+    box-shadow:0 0 16px rgba(217,184,119,.7);
     transition:width .8s cubic-bezier(.2,.9,.2,1);
   }
   .points-hint{
-    padding:12px 16px 16px;
+    padding:14px 18px 18px;
     font-size:12.5px; color:var(--cream-dim);
-    border-top:1px solid rgba(255,255,255,.06);
-    margin-top:14px;
+    border-top:1px solid rgba(217,184,119,.16);
+    margin-top:16px;
   }
   .points-hint b{ color:var(--cream); }
 
+  /* ---------- комментарии ---------- */
   .card-title{
-    display:flex; align-items:center; gap:7px;
-    font-size:14px; font-weight:600; margin-bottom:12px;
+    display:flex; align-items:center; gap:8px;
+    font-size:14.5px; font-weight:600; margin-bottom:14px;
   }
-  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
   .stat{
-    border-radius:15px;
-    border:1px solid rgba(255,255,255,.10);
-    background:rgba(255,255,255,.055);
-    padding:11px 6px 9px;
+    border-radius:16px;
+    border:1px solid rgba(217,184,119,.32);
+    background:linear-gradient(180deg, rgba(72,88,66,.72), rgba(48,62,46,.72));
+    padding:13px 6px 11px;
     text-align:center;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
   }
-  .stat b{ display:block; font-size:22px; font-weight:700; line-height:1.1; }
-  .stat span{ display:block; font-size:10.5px; color:var(--cream-dim); margin-top:3px; }
+  .stat b{ display:block; font-size:23px; font-weight:700; line-height:1.1; }
+  .stat span{ display:block; font-size:10.5px; color:var(--cream-dim); margin-top:4px; }
 
+  /* ---------- лента ---------- */
   .ribbon{
     position:relative;
-    margin:20px auto 12px;
-    max-width:330px;
+    margin:22px auto 14px;
+    max-width:320px;
     text-align:center;
-    padding:9px 26px;
+    padding:10px 30px;
     font-family:Georgia,"Times New Roman",serif;
-    font-size:17px; letter-spacing:.3px;
+    font-size:17.5px; letter-spacing:.3px;
     color:#ffe9c9;
-    background:linear-gradient(180deg, #a51f1f, #7d1414);
-    border:1px solid rgba(246,196,83,.55);
-    border-radius:10px;
-    box-shadow:0 10px 26px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.16);
+    background:linear-gradient(180deg, #8c1f1f, #5e1010);
+    border:1.5px solid rgba(217,184,119,.80);
+    border-radius:8px;
+    box-shadow:0 12px 28px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.14);
   }
   .ribbon::before,.ribbon::after{
     content:"";
-    position:absolute; top:50%; width:22px; height:22px;
-    background:linear-gradient(180deg,#a51f1f,#7d1414);
-    border:1px solid rgba(246,196,83,.5);
-    transform:translateY(-50%) rotate(45deg);
-    border-radius:4px;
-    z-index:-1;
+    position:absolute; top:0; bottom:0; width:16px;
+    background:linear-gradient(180deg, #8c1f1f, #5e1010);
   }
-  .ribbon::before{ left:-11px; }
-  .ribbon::after{ right:-11px; }
-  .ribbon .snow{ opacity:.85; margin:0 6px; }
+  .ribbon::before{ left:-15px; clip-path:polygon(100% 0, 0 50%, 100% 100%); }
+  .ribbon::after{ right:-15px; clip-path:polygon(0 0, 100% 50%, 0 100%); }
+  .ribbon .snow{ opacity:.9; margin:0 7px; }
 
+  /* ---------- колесо ---------- */
   .wheel-box{
     position:relative;
-    width:min(88vw, 380px);
-    margin:0 auto 6px;
+    width:min(90vw, 390px);
+    margin:0 auto 8px;
     aspect-ratio:1/1;
   }
   #wheelSvg{ width:100%; height:100%; display:block; }
-  #wheelSpin{
-    transform-origin:50% 50%;
-    transform:rotate(0deg);
-    will-change:transform;
-  }
-  .rim-bulb{ animation:rimTwinkle 2.4s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  #wheelSpin{ transform-origin:50% 50%; transform:rotate(0deg); will-change:transform; }
+  .rim-bulb{ animation:rimTwinkle 2.6s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
   @keyframes rimTwinkle{
-    0%,100%{ opacity:.45; }
+    0%,100%{ opacity:.42; }
     50%{ opacity:1; }
   }
   .hub{
     position:absolute; left:50%; top:50%;
-    width:19%; height:19%;
+    width:17%; height:17%;
     transform:translate(-50%,-50%);
     border-radius:50%;
     border:none; padding:0;
-    background:radial-gradient(circle at 35% 30%, #fff 0%, #ffe9ea 45%, #f3c9cc 100%);
-    box-shadow:0 0 0 3px rgba(246,196,83,.55), 0 10px 26px rgba(0,0,0,.55);
+    background:radial-gradient(circle at 36% 30%, #ffffff 0%, #fdf2f2 55%, #e9d3d3 100%);
+    box-shadow:0 0 0 3px rgba(217,184,119,.55), 0 10px 26px rgba(0,0,0,.6);
     display:flex; align-items:center; justify-content:center;
     cursor:pointer;
     transition:transform .15s ease;
   }
   .hub:active{ transform:translate(-50%,-50%) scale(.94); }
-  .hub svg{ width:52%; height:52%; }
+  .hub svg{ width:54%; height:54%; }
 
+  /* ---------- нарядная кнопка ---------- */
   .spin-btn{
+    position:relative;
     display:block; width:100%;
-    margin:14px 0 6px;
-    padding:16px;
-    border-radius:18px;
-    border:1px solid rgba(246,196,83,.55);
-    background:linear-gradient(180deg, #d33a2c, #8e1b1b);
+    margin:18px 0 10px;
+    padding:19px 22px;
+    border-radius:22px;
+    border:2px solid rgba(217,184,119,.85);
+    background:linear-gradient(180deg, #a8261f 0%, #7d1a1a 52%, #5e1010 100%);
     color:#fff6ea;
-    font-size:16px; font-weight:600; letter-spacing:.2px;
-    box-shadow:0 14px 30px rgba(120,10,10,.45), inset 0 1px 0 rgba(255,255,255,.22);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:17px; font-weight:600; letter-spacing:.3px;
+    text-shadow:0 2px 8px rgba(0,0,0,.45);
+    box-shadow:
+      0 18px 40px rgba(60,4,4,.55),
+      0 0 0 1px rgba(0,0,0,.25),
+      inset 0 1px 0 rgba(255,255,255,.28),
+      inset 0 -3px 10px rgba(0,0,0,.42);
     cursor:pointer;
+    overflow:hidden;
     transition:transform .15s ease, filter .2s ease;
+  }
+  .spin-btn::before{
+    content:"";
+    position:absolute; inset:4px;
+    border-radius:18px;
+    border:1px solid rgba(255,220,160,.22);
+    pointer-events:none;
+  }
+  .spin-btn::after{
+    content:"";
+    position:absolute; top:-10%; bottom:-10%; width:55%;
+    background:linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.30) 50%, rgba(255,255,255,0) 100%);
+    transform:translateX(-160%);
+    animation:shimmer 4s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes shimmer{
+    0%{ transform:translateX(-160%); }
+    55%,100%{ transform:translateX(280%); }
   }
   .spin-btn:active{ transform:scale(.985); filter:brightness(1.08); }
   .spin-btn:disabled{ opacity:.55; cursor:default; }
+  .spin-btn:disabled::after{ animation:none; }
 
+  /* ---------- призы ---------- */
   .prize-row{
-    display:flex; align-items:center; gap:10px;
-    padding:10px 0;
-    border-bottom:1px solid rgba(255,255,255,.07);
+    display:flex; align-items:center; gap:12px;
+    padding:11px 0;
+    border-bottom:1px solid rgba(217,184,119,.14);
     font-size:13.5px;
   }
   .prize-row:last-child{ border-bottom:none; }
-  .prize-ico{ flex:0 0 30px; width:30px; height:30px; display:flex; align-items:center; justify-content:center; }
+  .prize-ico{ flex:0 0 34px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; }
   .prize-ico svg{ width:100%; height:100%; }
-  .prize-name{ flex:1 1 auto; min-width:0; word-break:break-word; line-height:1.35; }
+  .prize-name{ flex:1 1 auto; min-width:0; word-break:break-word; line-height:1.4; }
   .prize-name em{ font-style:normal; color:var(--cream-dim); }
-  .prize-pc{ flex:0 0 auto; color:var(--gold); font-weight:600; font-size:13px; }
   .prize-stock{ font-size:11px; color:var(--cream-dim); }
 
-  .tabs{ display:flex; gap:6px; margin-bottom:12px; }
+  /* ---------- топы ---------- */
+  .tabs{ display:flex; gap:7px; margin-bottom:14px; }
   .tab{
-    flex:1 1 0; padding:9px 4px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,.10);
+    flex:1 1 0; padding:10px 4px;
+    border-radius:13px;
+    border:1px solid rgba(217,184,119,.22);
     background:rgba(255,255,255,.05);
     color:var(--cream-dim);
     font-size:12.5px; cursor:pointer;
     transition:.2s;
   }
   .tab.on{
-    background:linear-gradient(180deg, rgba(246,196,83,.22), rgba(246,196,83,.10));
-    border-color:rgba(246,196,83,.5);
+    background:linear-gradient(180deg, rgba(217,184,119,.26), rgba(217,184,119,.12));
+    border-color:rgba(217,184,119,.6);
     color:var(--cream);
   }
   .top-row{
-    display:flex; align-items:center; gap:10px;
-    padding:9px 0; font-size:13.5px;
-    border-bottom:1px solid rgba(255,255,255,.06);
+    display:flex; align-items:center; gap:11px;
+    padding:10px 0; font-size:13.5px;
+    border-bottom:1px solid rgba(217,184,119,.12);
   }
   .top-row:last-child{ border-bottom:none; }
   .top-row.me{ color:var(--gold); }
@@ -320,31 +328,33 @@
 
   .empty{ font-size:13px; color:var(--cream-dim); padding:6px 0; }
 
+  /* ---------- модалка / тост ---------- */
   .modal{
     position:fixed; inset:0; z-index:20;
     display:none; align-items:center; justify-content:center;
     padding:24px;
-    background:rgba(3,10,6,.72);
+    background:rgba(4,10,6,.74);
     backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
   }
   .modal.on{ display:flex; }
   .modal-card{
     width:100%; max-width:330px;
-    border-radius:24px;
-    border:1px solid rgba(246,196,83,.45);
-    background:linear-gradient(180deg, rgba(28,62,42,.98), rgba(10,26,18,.98));
-    box-shadow:0 24px 60px rgba(0,0,0,.6);
-    padding:24px 20px;
+    border-radius:26px;
+    border:1.5px solid rgba(217,184,119,.55);
+    background:linear-gradient(180deg, rgba(56,72,52,.98), rgba(20,32,22,.98));
+    box-shadow:0 26px 64px rgba(0,0,0,.65);
+    padding:26px 20px;
     text-align:center;
     animation:pop .35s cubic-bezier(.2,1.2,.4,1);
   }
   @keyframes pop{ from{ transform:scale(.86); opacity:0; } to{ transform:scale(1); opacity:1; } }
-  .modal-card .big{ font-size:52px; line-height:1; margin-bottom:10px; }
-  .modal-card h3{ margin:0 0 6px; font-family:Georgia,serif; font-size:20px; font-weight:600; }
-  .modal-card p{ margin:0 0 18px; font-size:13.5px; color:var(--cream-dim); line-height:1.45; }
+  .modal-card .big{ font-size:52px; line-height:1; margin-bottom:12px; }
+  .modal-card h3{ margin:0 0 8px; font-family:Georgia,serif; font-size:20px; font-weight:600; }
+  .modal-card p{ margin:0 0 20px; font-size:13.5px; color:var(--cream-dim); line-height:1.5; }
   .modal-card button{
-    width:100%; padding:14px; border-radius:14px; border:none;
-    background:linear-gradient(180deg,#d33a2c,#8e1b1b);
+    width:100%; padding:15px; border-radius:15px;
+    border:1px solid rgba(217,184,119,.5);
+    background:linear-gradient(180deg,#93211f,#5e1010);
     color:#fff6ea; font-size:15px; font-weight:600; cursor:pointer;
   }
 
@@ -352,12 +362,12 @@
     position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 26px);
     transform:translate(-50%, 20px);
     z-index:30;
-    padding:12px 18px;
-    border-radius:14px;
-    background:rgba(20,44,30,.96);
-    border:1px solid rgba(246,196,83,.45);
+    padding:13px 19px;
+    border-radius:15px;
+    background:rgba(46,60,44,.97);
+    border:1px solid rgba(217,184,119,.55);
     color:var(--cream); font-size:13.5px;
-    box-shadow:0 12px 30px rgba(0,0,0,.5);
+    box-shadow:0 14px 34px rgba(0,0,0,.55);
     opacity:0; pointer-events:none;
     transition:opacity .25s ease, transform .25s ease;
     max-width:88vw; text-align:center;
@@ -369,16 +379,16 @@
     transform:translateX(-50%);
     z-index:40;
     font-size:10.5px; letter-spacing:.4px; text-transform:uppercase;
-    padding:4px 10px; border-radius:99px;
-    background:rgba(246,196,83,.18);
-    border:1px solid rgba(246,196,83,.45);
+    padding:4px 11px; border-radius:99px;
+    background:rgba(217,184,119,.18);
+    border:1px solid rgba(217,184,119,.5);
     color:var(--gold);
     display:none;
   }
   .preview-badge.on{ display:block; }
 
   @media (prefers-reduced-motion: reduce){
-    .bulb,.rim-bulb{ animation:none; opacity:.85; }
+    .bulb,.rim-bulb,.bokeh,.spin-btn::after{ animation:none; opacity:.85; }
   }
 </style>
 </head>
@@ -395,19 +405,10 @@
 <div id="app">
   <div class="wrap">
 
-    <div class="topbar">
-      <button class="iconbtn" id="btnClose" aria-label="Закрыть">✕</button>
-      <div class="brand">
-        <b>Full Bak Points</b>
-        <span>мини-приложение</span>
-      </div>
-      <button class="iconbtn" id="btnMore" aria-label="Ещё">⋯</button>
-    </div>
-
     <div class="card hello">
-      <h1 id="helloTitle">Привет! 💗</h1>
+      <h1 id="helloTitle">Привет, @pln_bak! 💗</h1>
       <p id="helloText">Загружаем данные…</p>
-      <svg class="flake" width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round">
+      <svg class="flake" width="52" height="52" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="1.5" stroke-linecap="round">
         <path d="M24 6v36M8 15l32 18M40 15L8 33"/>
         <path d="M24 11l-4 4M24 11l4 4M24 37l-4-4M24 37l4-4M11 19l1 5M11 29l1-5M37 19l-1 5M37 29l-1-5"/>
       </svg>
@@ -428,17 +429,20 @@
       </div>
 
       <div class="points-mid">
-        <svg class="gift-ico" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
+        <svg class="gift-ico" width="36" height="36" viewBox="0 0 48 48" aria-hidden="true">
           <defs>
             <linearGradient id="pg1" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#e04b3a"/><stop offset="1" stop-color="#8e1b1b"/>
+              <stop offset="0" stop-color="#e8553f"/><stop offset="1" stop-color="#8e1b1b"/>
+            </linearGradient>
+            <linearGradient id="pg2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#c99a2e"/>
             </linearGradient>
           </defs>
-          <ellipse cx="24" cy="43" rx="15" ry="3.4" fill="rgba(0,0,0,.45)"/>
-          <rect x="9" y="19" width="30" height="22" rx="3" fill="url(#pg1)"/>
-          <rect x="9" y="19" width="30" height="6" rx="3" fill="#f0c05a"/>
-          <rect x="21" y="19" width="6" height="22" fill="#f6d365"/>
-          <path d="M24 19c-6.5 0-11-3-11-6.2S19.5 9 24 19c4.5-10 11-9.2 11-6.2S30.5 19 24 19z" fill="#f6d365"/>
+          <ellipse cx="24" cy="43" rx="15" ry="3.2" fill="rgba(0,0,0,.45)"/>
+          <rect x="9" y="20" width="30" height="21" rx="3" fill="url(#pg1)"/>
+          <rect x="9" y="20" width="30" height="6" rx="3" fill="url(#pg2)"/>
+          <rect x="21" y="20" width="6" height="21" fill="url(#pg2)"/>
+          <path d="M24 20c-6.5 0-11-3-11-6.2S19.5 10 24 20c4.5-10 11-9.2 11-6.2S30.5 20 24 20z" fill="url(#pg2)"/>
         </svg>
         <div class="bar"><i id="pointsBar"></i></div>
       </div>
@@ -463,18 +467,13 @@
       <svg id="wheelSvg" viewBox="0 0 400 400" aria-hidden="true"></svg>
       <button class="hub" id="hub" aria-label="Крутить">
         <svg viewBox="0 0 48 48" aria-hidden="true">
-          <path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z" fill="#d33a2c"/>
-          <path d="M24 38s-10-6.6-10-13.6A6 6 0 0 1 24 20a6 6 0 0 1 10 4.4C34 31.4 24 38 24 38z" fill="#f26a5c" opacity=".55"/>
+          <path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z" fill="#c62828"/>
+          <path d="M24 38s-10-6.6-10-13.6A6 6 0 0 1 24 20a6 6 0 0 1 10 4.4C34 31.4 24 38 24 38z" fill="#ef6a5c" opacity=".55"/>
         </svg>
       </button>
     </div>
 
     <button class="spin-btn" id="spinBtn">Крутить колесо — 100 баллов</button>
-
-    <div class="card">
-      <div class="card-title">🎁 Призы и шансы</div>
-      <div id="prizeList"><div class="empty">Загружаем…</div></div>
-    </div>
 
     <div class="card">
       <div class="card-title">🏆 Самые активные</div>
@@ -484,6 +483,11 @@
         <button class="tab" data-period="all">Всё время</button>
       </div>
       <div id="topList"><div class="empty">Загружаем…</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎁 Призы</div>
+      <div id="prizeList"><div class="empty">Загружаем…</div></div>
     </div>
 
   </div>
@@ -504,20 +508,14 @@
 const API = "https://tg-activity-bot.katka-69.workers.dev";
 
 const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-if (tg) { try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#0b1a12"); tg.setBackgroundColor && tg.setBackgroundColor("#0b1a12"); } catch(e){} }
+if (tg) { try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#0d1710"); tg.setBackgroundColor && tg.setBackgroundColor("#0d1710"); } catch(e){} }
 
 const initData = tg && tg.initData ? tg.initData : "";
 const PREVIEW = !initData;
 
 const $ = (id) => document.getElementById(id);
 
-const state = {
-  data: null,
-  period: "week",
-  spinning: false,
-  wheelAngle: 0,
-  prizes: [],
-};
+const state = { data: null, period: "week", spinning: false, wheelAngle: 0, prizes: [] };
 
 async function api(path, body) {
   const res = await fetch(API + path, {
@@ -541,53 +539,54 @@ function previewData() {
       all: [{ name: "@anya", count: 96, me: false }, { name: "@pln_bak", count: 61, me: true }],
     },
     prizes: [
-      { id: 1, name: "🎁", chance: 20, stock: 5, detail: "Промокод на 10% на любой заказ" },
-      { id: 2, name: "🍬", chance: 15, stock: -1, detail: "Скидка 500 ₽ на следующий заказ" },
-      { id: 3, name: "❄", chance: 15, stock: -1, detail: "Подписка +1 неделя" },
-      { id: 4, name: "⭐", chance: 10, stock: 3, detail: "Эксклюзивный доступ" },
-      { id: 5, name: "🔔", chance: 10, stock: -1, detail: "Кружок с пожеланием" },
-      { id: 6, name: "🍪", chance: 10, stock: -1, detail: "Кастомный дизайн под запрос" },
-      { id: 7, name: "🎄", chance: 10, stock: -1, detail: "Выбор образа на иллюстрацию" },
-      { id: 8, name: "+50", chance: 10, stock: -1, detail: "Утешительный бонус — 50 баллов" },
+      { id: 1, name: "Промокод 10%", chance: 20, stock: 5, detail: "на любой заказ" },
+      { id: 2, name: "Скидка 500 ₽", chance: 15, stock: -1, detail: "на следующий заказ" },
+      { id: 3, name: "Подписка", chance: 15, stock: -1, detail: "+1 неделя" },
+      { id: 4, name: "Эксклюзив", chance: 10, stock: 3, detail: "доступ в закрытый канал" },
+      { id: 5, name: "Кружок", chance: 10, stock: -1, detail: "с пожеланием" },
+      { id: 6, name: "Кастом", chance: 10, stock: -1, detail: "дизайн под запрос" },
+      { id: 7, name: "Выбор образа", chance: 10, stock: -1, detail: "на иллюстрацию" },
+      { id: 8, name: "+50 баллов", chance: 10, stock: -1, detail: "утешительный бонус" },
     ],
   };
 }
 
+/* ============ 16 уникальных новогодних иконок ============ */
 const ICONS = {
-  gift: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ig1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e04b3a"/><stop offset="1" stop-color="#8e1b1b"/></linearGradient></defs>
-    <ellipse cx="24" cy="43" rx="14" ry="3" fill="rgba(0,0,0,.35)"/>
+  gift: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ig1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8553f"/><stop offset="1" stop-color="#8e1b1b"/></linearGradient><linearGradient id="ig2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#c99a2e"/></linearGradient></defs>
+    <ellipse cx="24" cy="43" rx="14" ry="3" fill="rgba(0,0,0,.3)"/>
     <rect x="10" y="20" width="28" height="20" rx="3" fill="url(#ig1)"/>
-    <rect x="10" y="20" width="28" height="5.5" rx="2.5" fill="#f0c05a"/>
-    <rect x="21.5" y="20" width="5" height="20" fill="#f6d365"/>
-    <path d="M24 20c-6 0-10-2.8-10-5.8S19.5 11 24 20c4.5-9 10-8.6 10-5.8S30 20 24 20z" fill="#f6d365"/></svg>`,
+    <rect x="10" y="20" width="28" height="5.5" rx="2.5" fill="url(#ig2)"/>
+    <rect x="21.5" y="20" width="5" height="20" fill="url(#ig2)"/>
+    <path d="M24 20c-6 0-10-2.8-10-5.8S19.5 11 24 20c4.5-9 10-8.6 10-5.8S30 20 24 20z" fill="url(#ig2)"/></svg>`,
 
   candy: `<svg viewBox="0 0 48 48">
     <path d="M17 41V19a7.5 7.5 0 0 1 15 0v5" fill="none" stroke="#f7f2e6" stroke-width="7.5" stroke-linecap="round"/>
-    <path d="M17 41V19a7.5 7.5 0 0 1 15 0v5" fill="none" stroke="#d33a2c" stroke-width="7.5" stroke-linecap="round" stroke-dasharray="4.5 6.5"/></svg>`,
+    <path d="M17 41V19a7.5 7.5 0 0 1 15 0v5" fill="none" stroke="#b32222" stroke-width="7.5" stroke-linecap="round" stroke-dasharray="4.5 6.5"/></svg>`,
 
-  snow: `<svg viewBox="0 0 48 48" fill="none" stroke="#dff3ff" stroke-width="2.4" stroke-linecap="round">
+  snow: `<svg viewBox="0 0 48 48" fill="none" stroke="#f3ead8" stroke-width="2.4" stroke-linecap="round">
     <path d="M24 7v34M9 15.5l30 17M39 15.5l-30 17"/>
     <path d="M24 12l-4 4M24 12l4 4M24 36l-4-4M24 36l4-4M12 19l.5 5.5M12 29l.5-5.5M36 19l-.5 5.5M36 29l-.5-5.5"/></svg>`,
 
-  star: `<svg viewBox="0 0 48 48"><defs><linearGradient id="is1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#e0a92e"/></linearGradient></defs>
-    <path d="M24 6l5.3 11.6 12.7 1.5-9.4 8.6 2.6 12.5L24 34.3 12.8 40.2l2.6-12.5L6 19.1l12.7-1.5z" fill="url(#is1)" stroke="#b8860b" stroke-width="1.2" stroke-linejoin="round"/></svg>`,
+  star: `<svg viewBox="0 0 48 48"><defs><linearGradient id="is1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#c99a2e"/></linearGradient></defs>
+    <path d="M24 6l5.3 11.6 12.7 1.5-9.4 8.6 2.6 12.5L24 34.3 12.8 40.2l2.6-12.5L6 19.1l12.7-1.5z" fill="url(#is1)" stroke="#a8761a" stroke-width="1.2" stroke-linejoin="round"/></svg>`,
 
-  bell: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ib1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#d99b1f"/></linearGradient></defs>
+  bell: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ib1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#c99a2e"/></linearGradient></defs>
     <path d="M24 11a9 9 0 0 0-9 9v7l-3.2 5.2h24.4L33 27v-7a9 9 0 0 0-9-9z" fill="url(#ib1)" stroke="#a8761a" stroke-width="1.1"/>
     <circle cx="24" cy="36" r="3.2" fill="#c98f1c"/>
     <rect x="22" y="6" width="4" height="4.5" rx="2" fill="#c98f1c"/></svg>`,
 
-  heart: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ih1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset="1" stop-color="#b32222"/></linearGradient></defs>
+  heart: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ih1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ef6a5c"/><stop offset="1" stop-color="#8e1b1b"/></linearGradient></defs>
     <path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z" fill="url(#ih1)"/>
     <ellipse cx="18" cy="22" rx="3.4" ry="2.4" fill="rgba(255,255,255,.45)" transform="rotate(-25 18 22)"/></svg>`,
 
   tree: `<svg viewBox="0 0 48 48"><defs><linearGradient id="it1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f7d4f"/><stop offset="1" stop-color="#124a2c"/></linearGradient></defs>
     <rect x="21" y="36" width="6" height="6" rx="1.5" fill="#6b4a2a"/>
     <path d="M24 5l8 11h-4.5l7 10h-5l7.5 11H11l7.5-11h-5l7-10H16z" fill="url(#it1)" stroke="#0d3a22" stroke-width="1"/>
-    <circle cx="24" cy="12" r="1.8" fill="#f6c453"/><circle cx="19" cy="24" r="1.6" fill="#e04b3a"/><circle cx="29" cy="26" r="1.6" fill="#f6c453"/><circle cx="24" cy="33" r="1.6" fill="#e04b3a"/></svg>`,
+    <circle cx="24" cy="12" r="1.8" fill="#e9c46a"/><circle cx="19" cy="24" r="1.6" fill="#c62828"/><circle cx="29" cy="26" r="1.6" fill="#e9c46a"/><circle cx="24" cy="33" r="1.6" fill="#c62828"/></svg>`,
 
-  ball: `<svg viewBox="0 0 48 48"><defs><radialGradient id="io1" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ff8a80"/><stop offset="45%" stop-color="#c62828"/><stop offset="100%" stop-color="#6d0f0f"/></radialGradient></defs>
-    <rect x="21" y="8" width="6" height="5" rx="1.5" fill="#f6c453"/>
+  ball: `<svg viewBox="0 0 48 48"><defs><radialGradient id="io1" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ef6a5c"/><stop offset="45%" stop-color="#a51f1f"/><stop offset="100%" stop-color="#5e1010"/></radialGradient></defs>
+    <rect x="21" y="8" width="6" height="5" rx="1.5" fill="#c99a2e"/>
     <circle cx="24" cy="27" r="13" fill="url(#io1)"/>
     <ellipse cx="19" cy="22" rx="4" ry="2.8" fill="rgba(255,255,255,.55)" transform="rotate(-30 19 22)"/></svg>`,
 
@@ -595,14 +594,9 @@ const ICONS = {
     <path d="M24 7l5 11 12 1.4-8.9 8.1 2.5 11.8L24 33.6 13.4 39.3l2.5-11.8L7 19.4 19 18z" fill="url(#ic1)" stroke="#7d4f1d" stroke-width="1.2" stroke-linejoin="round"/>
     <circle cx="24" cy="19" r="2" fill="#fff3e0"/><circle cx="19" cy="27" r="1.8" fill="#fff3e0"/><circle cx="29" cy="27" r="1.8" fill="#fff3e0"/></svg>`,
 
-  sparkle: `<svg viewBox="0 0 48 48"><defs><linearGradient id="isp1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff6d6"/><stop offset="1" stop-color="#f6c453"/></linearGradient></defs>
+  sparkle: `<svg viewBox="0 0 48 48"><defs><linearGradient id="isp1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff6d6"/><stop offset="1" stop-color="#d9b877"/></linearGradient></defs>
     <path d="M22 6l3.4 9.6L35 19l-9.6 3.4L22 32l-3.4-9.6L9 19l9.6-3.4z" fill="url(#isp1)"/>
-    <path d="M35 27l2 5.5 5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2z" fill="#ffe08a" opacity=".9"/></svg>`,
-
-  coin: `<svg viewBox="0 0 48 48"><defs><radialGradient id="ico1" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ffe9a8"/><stop offset="60%" stop-color="#f0b93c"/><stop offset="100%" stop-color="#b8860b"/></radialGradient></defs>
-    <circle cx="24" cy="24" r="15" fill="url(#ico1)" stroke="#a8761a" stroke-width="1.4"/>
-    <circle cx="24" cy="24" r="11" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2"/>
-    <text x="24" y="29" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#7a5308">+50</text></svg>`,
+    <path d="M35 27l2 5.5 5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2z" fill="#ffe9a8" opacity=".9"/></svg>`,
 
   candle: `<svg viewBox="0 0 48 48">
     <rect x="18" y="19" width="12" height="22" rx="2.5" fill="#f3e5d0"/>
@@ -611,46 +605,81 @@ const ICONS = {
     <path d="M24 9.5c1.8 2.4 1.8 4.6 0 6-1.8-1.4-1.8-3.6 0-6z" fill="#fff3c4"/>
     <rect x="16" y="41" width="16" height="3" rx="1.5" fill="#c9b79a"/></svg>`,
 
-  mitten: `<svg viewBox="0 0 48 48"><defs><linearGradient id="im1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e04b3a"/><stop offset="1" stop-color="#8e1b1b"/></linearGradient></defs>
+  mitten: `<svg viewBox="0 0 48 48"><defs><linearGradient id="im1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8553f"/><stop offset="1" stop-color="#8e1b1b"/></linearGradient></defs>
     <path d="M16 16a6 6 0 0 1 12 0v9a5 5 0 0 0 5 5h1v6H16z" fill="url(#im1)"/>
     <rect x="14" y="34" width="22" height="7" rx="3" fill="#f7f2e6"/>
     <path d="M16 16a6 6 0 0 1 12 0" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6"/></svg>`,
+
+  sock: `<svg viewBox="0 0 48 48"><defs><linearGradient id="isk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c62828"/><stop offset="1" stop-color="#7d1a1a"/></linearGradient></defs>
+    <path d="M19 9h11v20c0 5 3 8 7 8s7-3 7-8v-3h-6v3c0 1.4-.6 2.2-1.4 2.2S35 30.4 35 29V9z" fill="url(#isk1)"/>
+    <rect x="18" y="8" width="13" height="6" rx="2" fill="#f7f2e6"/>
+    <circle cx="24.5" cy="24" r="2" fill="#f7f2e6" opacity=".8"/></svg>`,
+
+  ginger: `<svg viewBox="0 0 48 48">
+    <circle cx="24" cy="13" r="6.5" fill="#b5762e"/>
+    <rect x="21" y="19" width="6" height="12" rx="3" fill="#b5762e"/>
+    <rect x="12" y="21" width="24" height="5" rx="2.5" fill="#b5762e"/>
+    <rect x="19" y="30" width="4" height="9" rx="2" fill="#b5762e"/>
+    <rect x="25" y="30" width="4" height="9" rx="2" fill="#b5762e"/>
+    <circle cx="21.5" cy="12" r="1.2" fill="#fff3e0"/><circle cx="26.5" cy="12" r="1.2" fill="#fff3e0"/>
+    <circle cx="24" cy="23" r="1" fill="#fff3e0"/><circle cx="24" cy="27" r="1" fill="#fff3e0"/></svg>`,
+
+  wreath: `<svg viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="13" fill="none" stroke="#1f5c38" stroke-width="7"/>
+    <circle cx="24" cy="24" r="13" fill="none" stroke="#2f7d4f" stroke-width="3" stroke-dasharray="3 4"/>
+    <circle cx="24" cy="10" r="3.2" fill="#c62828"/>
+    <circle cx="35" cy="29" r="2.4" fill="#c62828"/>
+    <circle cx="14" cy="31" r="2.4" fill="#c62828"/>
+    <circle cx="33" cy="15" r="2" fill="#d9b877"/></svg>`,
+
+  drum: `<svg viewBox="0 0 48 48">
+    <rect x="12" y="16" width="24" height="17" rx="2" fill="#a51f1f"/>
+    <rect x="12" y="16" width="24" height="4" fill="#f7f2e6"/>
+    <rect x="12" y="29" width="24" height="4" fill="#f7f2e6"/>
+    <path d="M12 16 L36 33 M36 16 L12 33" stroke="#d9b877" stroke-width="1.4"/>
+    <path d="M14 12 L20 18 M34 12 L28 18" stroke="#d9b877" stroke-width="2" stroke-linecap="round"/></svg>`,
 };
 
-const ICON_ORDER = ["gift","candy","snow","star","bell","heart","tree","ball","cookie","sparkle","candle","mitten"];
+/* порядок уникальных иконок — без повторов */
+const ICON_ORDER = [
+  "gift", "candy", "snow", "star", "bell", "heart", "tree", "ball",
+  "cookie", "sparkle", "candle", "mitten", "sock", "ginger", "wreath", "drum"
+];
 
-function iconFor(prize, index) {
-  const n = String(prize.name || "").toLowerCase();
-  const d = String(prize.detail || "").toLowerCase();
-  const s = n + " " + d;
-  if (/\+50|бонус|утешит|coin|монет/.test(s)) return "coin";
-  if (/промокод|скидк|подар|gift|🎁/.test(s)) return "gift";
-  if (/конфет|candy|карамел|🍬|леден/.test(s)) return "candy";
-  if (/снеж|snow|❄|❅|❆/.test(s)) return "snow";
-  if (/звезд|star|⭐|🌟/.test(s)) return "star";
-  if (/колокол|bell|🔔/.test(s)) return "bell";
-  if (/сердц|heart|💗|❤/.test(s)) return "heart";
-  if (/ёлк|елк|tree|🎄|ель/.test(s)) return "tree";
-  if (/шар|ball|игрушк|🎈/.test(s)) return "ball";
-  if (/печен|cookie|пряник|🍪/.test(s)) return "cookie";
-  if (/искр|sparkle|✨|блеск/.test(s)) return "sparkle";
-  if (/свеч|candle|фонар|🕯/.test(s)) return "candle";
-  if (/вареж|mitten|рукавиц|🧤/.test(s)) return "mitten";
-  return ICON_ORDER[index % ICON_ORDER.length];
+function iconByIndex(i) {
+  return ICON_ORDER[i % ICON_ORDER.length];
 }
 
+/* убираем эмодзи из названий призов */
+function stripEmoji(s) {
+  return String(s == null ? "" : s)
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{2190}-\u{21FF}]/gu, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/^[\s\-—–:•]+|[\s\-—–:•]+$/g, "")
+    .trim();
+}
+
+/* ================= ФОН: ветки, шары, гирлянда ================= */
 function buildTree() {
   const svg = $("treeLayer");
   const W = 390, H = 844;
-  let defs = `
+
+  const defs = `
     <defs>
       <linearGradient id="pineA" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#1c4a30"/><stop offset="1" stop-color="#0a1d13"/>
+        <stop offset="0" stop-color="#1f4a31"/><stop offset="1" stop-color="#0a1d13"/>
       </linearGradient>
       <linearGradient id="pineB" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#245c3b"/><stop offset="1" stop-color="#0d2417"/>
+        <stop offset="0" stop-color="#2a5c3d"/><stop offset="1" stop-color="#0d2417"/>
       </linearGradient>
       <radialGradient id="bulbGlow"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".95"/><stop offset="1" stop-color="#ffcf6b" stop-opacity="0"/></radialGradient>
+      <radialGradient id="ornRed" cx="34%" cy="28%" r="72%">
+        <stop offset="0" stop-color="#ff8a72"/><stop offset="42%" stop-color="#b32222"/><stop offset="100%" stop-color="#5e1010"/>
+      </radialGradient>
+      <radialGradient id="ornGold" cx="34%" cy="28%" r="72%">
+        <stop offset="0" stop-color="#ffeec2"/><stop offset="45%" stop-color="#d9b877"/><stop offset="100%" stop-color="#8a6a2e"/>
+      </radialGradient>
+      <radialGradient id="bokehG"><stop offset="0" stop-color="#ffd98a" stop-opacity=".85"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>
     </defs>`;
 
   let body = "";
@@ -658,52 +687,74 @@ function buildTree() {
   const frond = (x, y, rot, sc, fill) =>
     `<path d="M0 0 C 14 -7 30 -6 46 -1 C 30 4 14 6 0 0 Z"
       transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${sc.toFixed(2)})"
-      fill="${fill}" opacity=".95"/>`;
+      fill="${fill}" opacity=".96"/>`;
 
   const snowCap = (x, y, rot, sc) =>
     `<path d="M2 -1 C 14 -6 30 -5 44 -1 C 30 0.5 14 1.5 2 -1 Z"
       transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${sc.toFixed(2)})"
-      fill="rgba(235,245,255,.55)"/>`;
+      fill="rgba(238,246,255,.62)"/>`;
 
-  for (let y = -10; y < H + 20; y += 24) {
-    const wob = Math.sin(y / 42) * 6;
-    const sc = 0.75 + ((Math.sin(y / 30) + 1) / 2) * 0.55;
+  for (let y = -10; y < H + 20; y += 22) {
+    const wob = Math.sin(y / 42) * 7;
+    const sc = 0.78 + ((Math.sin(y / 30) + 1) / 2) * 0.6;
     const rot = -18 + Math.sin(y / 55) * 14;
-    body += frond(-16 + wob, y, rot, sc, "url(#pineA)");
-    body += snowCap(-16 + wob, y, rot, sc);
-    body += frond(W + 16 - wob, y, 180 - rot, sc, "url(#pineB)");
-    body += snowCap(W + 16 - wob, y, 180 - rot, sc);
+    body += frond(-18 + wob, y, rot, sc, "url(#pineA)");
+    body += snowCap(-18 + wob, y, rot, sc);
+    body += frond(W + 18 - wob, y, 180 - rot, sc, "url(#pineB)");
+    body += snowCap(W + 18 - wob, y, 180 - rot, sc);
   }
 
-  for (let i = 0; i < 6; i++) {
-    body += frond(-10 + i * 3, 30 + i * 16, -30 + i * 4, 1.15, "url(#pineB)");
-    body += frond(W + 10 - i * 3, 26 + i * 16, 210 - i * 4, 1.15, "url(#pineA)");
+  for (let i = 0; i < 7; i++) {
+    body += frond(-12 + i * 3, 24 + i * 15, -32 + i * 4, 1.2, "url(#pineB)");
+    body += frond(W + 12 - i * 3, 20 + i * 15, 212 - i * 4, 1.2, "url(#pineA)");
   }
+
+  let bokeh = "";
+  const spots = [[70,120],[150,70],[250,95],[330,150],[45,300],[350,330],[90,470],[300,520],[60,650],[330,690]];
+  spots.forEach(([x, y], i) => {
+    bokeh += `<circle cx="${x}" cy="${y}" r="${12 + (i % 3) * 6}" fill="url(#bokehG)" class="bokeh" style="animation-delay:${(i * 0.7).toFixed(1)}s"/>`;
+  });
+
+  const orn = (x, y, r, grad, cap) => `
+    <line x1="${x}" y1="0" x2="${x}" y2="${y - r - 4}" stroke="rgba(217,184,119,.45)" stroke-width="1.2"/>
+    <rect x="${x - 3.5}" y="${y - r - 7}" width="7" height="8" rx="2" fill="${cap}"/>
+    <circle cx="${x}" cy="${y}" r="${r}" fill="url(#${grad})"/>
+    <ellipse cx="${(x - r * 0.34).toFixed(1)}" cy="${(y - r * 0.38).toFixed(1)}" rx="${(r * 0.3).toFixed(1)}" ry="${(r * 0.19).toFixed(1)}"
+      fill="rgba(255,255,255,.55)" transform="rotate(-30 ${(x - r * 0.34).toFixed(1)} ${(y - r * 0.38).toFixed(1)})"/>`;
+
+  const ornaments =
+    orn(112, 92, 27, "ornRed", "#c99a2e") +
+    orn(312, 118, 23, "ornGold", "#c99a2e") +
+    orn(348, 208, 21, "ornRed", "#c99a2e") +
+    orn(34, 176, 16, "ornGold", "#c99a2e") +
+    orn(20, 420, 14, "ornRed", "#c99a2e") +
+    orn(372, 470, 15, "ornGold", "#c99a2e");
 
   const colors = ["#ffd98a", "#ffe9b0", "#ffc46b", "#fff2cc"];
   let bulbs = "";
   let k = 0;
-  for (let y = 40; y < H - 40; y += 46) {
-    const xL = 22 + Math.sin(y / 38) * 10;
-    const xR = W - 22 - Math.sin(y / 44) * 10;
+  for (let y = 44; y < H - 40; y += 44) {
+    const xL = 24 + Math.sin(y / 38) * 10;
+    const xR = W - 24 - Math.sin(y / 44) * 10;
     const cL = colors[k % colors.length];
     const cR = colors[(k + 2) % colors.length];
-    bulbs += `<circle cx="${xL.toFixed(1)}" cy="${y}" r="13" fill="url(#bulbGlow)" class="bulb" style="animation-delay:${(k * 0.31).toFixed(2)}s"/>`;
-    bulbs += `<circle cx="${xL.toFixed(1)}" cy="${y}" r="3.1" fill="${cL}" class="bulb" style="animation-delay:${(k * 0.31).toFixed(2)}s"/>`;
-    bulbs += `<circle cx="${xR.toFixed(1)}" cy="${y + 14}" r="13" fill="url(#bulbGlow)" class="bulb" style="animation-delay:${(k * 0.27 + 0.9).toFixed(2)}s"/>`;
-    bulbs += `<circle cx="${xR.toFixed(1)}" cy="${y + 14}" r="3.1" fill="${cR}" class="bulb" style="animation-delay:${(k * 0.27 + 0.9).toFixed(2)}s"/>`;
+    bulbs += `<circle cx="${xL.toFixed(1)}" cy="${y}" r="14" fill="url(#bulbGlow)" class="bulb" style="animation-delay:${(k * 0.31).toFixed(2)}s"/>`;
+    bulbs += `<circle cx="${xL.toFixed(1)}" cy="${y}" r="3.2" fill="${cL}" class="bulb" style="animation-delay:${(k * 0.31).toFixed(2)}s"/>`;
+    bulbs += `<circle cx="${xR.toFixed(1)}" cy="${y + 12}" r="14" fill="url(#bulbGlow)" class="bulb" style="animation-delay:${(k * 0.27 + 0.9).toFixed(2)}s"/>`;
+    bulbs += `<circle cx="${xR.toFixed(1)}" cy="${y + 12}" r="3.2" fill="${cR}" class="bulb" style="animation-delay:${(k * 0.27 + 0.9).toFixed(2)}s"/>`;
     k++;
   }
 
-  svg.innerHTML = defs + body + bulbs;
+  svg.innerHTML = defs + body + bokeh + bulbs + ornaments;
 }
 
+/* ================= ФОН: подарки и фонарик ================= */
 function buildBottom() {
   const svg = $("bottomLayer");
   svg.innerHTML = `
   <defs>
     <linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#e8553f"/><stop offset="55%" stop-color="#b32222"/><stop offset="100%" stop-color="#6d0f0f"/>
+      <stop offset="0" stop-color="#e8553f"/><stop offset="55%" stop-color="#a51f1f"/><stop offset="100%" stop-color="#5e1010"/>
     </linearGradient>
     <linearGradient id="gRedTop" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#ff8a72"/><stop offset="100%" stop-color="#c93a2a"/>
@@ -715,7 +766,7 @@ function buildBottom() {
       <stop offset="0" stop-color="#5aa877"/><stop offset="100%" stop-color="#1c6b41"/>
     </linearGradient>
     <linearGradient id="goldRib" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffe9a8"/><stop offset="50%" stop-color="#f0b93c"/><stop offset="100%" stop-color="#a8761a"/>
+      <stop offset="0" stop-color="#ffe9a8"/><stop offset="50%" stop-color="#d9b877"/><stop offset="100%" stop-color="#8a6a2e"/>
     </linearGradient>
     <radialGradient id="lampGlow" cx="50%" cy="50%" r="50%">
       <stop offset="0" stop-color="#ffd27a" stop-opacity=".95"/>
@@ -728,8 +779,8 @@ function buildBottom() {
     </linearGradient>
   </defs>
 
-  <path d="M0 250 C 60 232 110 246 160 238 C 210 230 260 248 320 240 C 350 236 375 242 390 238 L390 300 L0 300 Z" fill="url(#snowDrift)" opacity=".9"/>
-  <path d="M0 262 C 70 250 120 262 180 256 C 240 250 300 264 390 256 L390 300 L0 300 Z" fill="#ffffff" opacity=".55"/>
+  <path d="M0 250 C 60 232 110 246 160 238 C 210 230 260 248 320 240 C 350 236 375 242 390 238 L390 300 L0 300 Z" fill="url(#snowDrift)" opacity=".92"/>
+  <path d="M0 262 C 70 250 120 262 180 256 C 240 250 300 264 390 256 L390 300 L0 300 Z" fill="#ffffff" opacity=".6"/>
 
   <g>
     <ellipse cx="96" cy="252" rx="62" ry="10" fill="rgba(0,0,0,.45)"/>
@@ -755,19 +806,19 @@ function buildBottom() {
     <ellipse cx="286" cy="258" rx="34" ry="7" fill="rgba(0,0,0,.4)"/>
     <path d="M258 210 L286 201 L314 210 L314 254 L258 254 Z" fill="#efe3cc"/>
     <path d="M258 210 L286 201 L314 210 L286 219 Z" fill="#fff8ec"/>
-    <rect x="280" y="210" width="12" height="44" fill="#c62828" opacity=".9"/>
-    <path d="M286 201 c-10 0-16-5-16-9s8-5 16 9c8-14 16-13 16-9s-6 9-16 9z" fill="#c62828"/>
+    <rect x="280" y="210" width="12" height="44" fill="#a51f1f" opacity=".92"/>
+    <path d="M286 201 c-10 0-16-5-16-9s8-5 16 9c8-14 16-13 16-9s-6 9-16 9z" fill="#a51f1f"/>
     <path d="M258 210 L286 219 L286 254 L258 254 Z" fill="rgba(0,0,0,.10)"/>
   </g>
 
   <g>
-    <circle cx="336" cy="196" r="62" fill="url(#lampGlow)" opacity=".85"/>
+    <circle cx="336" cy="196" r="62" fill="url(#lampGlow)" opacity=".9"/>
     <path d="M336 128 v-14" stroke="#8a6a2e" stroke-width="3" stroke-linecap="round"/>
     <path d="M322 128 q14 -16 28 0" fill="none" stroke="#8a6a2e" stroke-width="3"/>
     <path d="M318 132 h36 l-4 8 h-28 z" fill="#a8761a"/>
     <path d="M320 140 h32 l6 62 h-44 z" fill="#3a2a12" opacity=".55"/>
-    <path d="M323 142 h26 l4.5 56 h-35 z" fill="#ffcf7a" opacity=".92"/>
-    <path d="M330 146 h12 l3 48 h-18 z" fill="#fff3c4" opacity=".85"/>
+    <path d="M323 142 h26 l4.5 56 h-35 z" fill="#ffcf7a" opacity=".94"/>
+    <path d="M330 146 h12 l3 48 h-18 z" fill="#fff3c4" opacity=".88"/>
     <path d="M320 140 h32 l6 62 h-44 z" fill="none" stroke="#a8761a" stroke-width="2.5"/>
     <path d="M336 142 v56" stroke="#a8761a" stroke-width="1.6" opacity=".7"/>
     <path d="M314 202 h44 l-3 10 h-38 z" fill="#a8761a"/>
@@ -777,6 +828,7 @@ function buildBottom() {
   `;
 }
 
+/* ================= СНЕГ И БЛЁСТКИ ================= */
 function startSnow() {
   const cv = $("snowCanvas");
   const ctx = cv.getContext("2d");
@@ -861,7 +913,8 @@ function startSnow() {
   requestAnimationFrame(frame);
 }
 
-const SEG_FILL = ["#0f3a24", "#f3ead8", "#8e1b1b", "#f3ead8", "#0f3a24", "#f3ead8", "#8e1b1b", "#f3ead8"];
+/* ================= КОЛЕСО ================= */
+const SEG_FILL = ["#1f3a26", "#f0e6d2", "#7d1a1a", "#f0e6d2"];
 
 function polar(cx, cy, r, deg) {
   const a = (deg - 90) * Math.PI / 180;
@@ -872,18 +925,18 @@ function renderWheel(prizes) {
   const svg = $("wheelSvg");
   const n = Math.max(prizes.length, 1);
   const seg = 360 / n;
-  const cx = 200, cy = 200, R = 168;
+  const cx = 200, cy = 200, R = 164;
 
-  let defs = `
+  const defs = `
     <defs>
       <radialGradient id="rimGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="86%" stop-color="#3a2410"/>
+        <stop offset="84%" stop-color="#4a3218"/>
         <stop offset="100%" stop-color="#1b1006"/>
       </radialGradient>
-      <radialGradient id="wheelShade" cx="42%" cy="34%" r="72%">
-        <stop offset="0" stop-color="rgba(255,255,255,.16)"/>
-        <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
-        <stop offset="100%" stop-color="rgba(0,0,0,.42)"/>
+      <radialGradient id="wheelShade" cx="42%" cy="32%" r="74%">
+        <stop offset="0" stop-color="rgba(255,255,255,.18)"/>
+        <stop offset="58%" stop-color="rgba(0,0,0,0)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,.45)"/>
       </radialGradient>
     </defs>`;
 
@@ -893,35 +946,34 @@ function renderWheel(prizes) {
     const [x0, y0] = polar(cx, cy, R, a0);
     const [x1, y1] = polar(cx, cy, R, a1);
     const large = seg > 180 ? 1 : 0;
-    const fill = SEG_FILL[i % SEG_FILL.length];
     segs += `<path d="M${cx} ${cy} L${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z"
-      fill="${fill}" stroke="rgba(0,0,0,.22)" stroke-width="1"/>`;
+      fill="${SEG_FILL[i % SEG_FILL.length]}" stroke="rgba(0,0,0,.20)" stroke-width="1"/>`;
   }
 
   let icons = "";
   for (let i = 0; i < n; i++) {
     const mid = i * seg + seg / 2;
-    const [ix, iy] = polar(cx, cy, R * 0.66, mid);
-    const kind = iconFor(prizes[i] || {}, i);
-    const size = Math.min(46, Math.max(30, 210 / n + 22));
+    const [ix, iy] = polar(cx, cy, R * 0.64, mid);
+    const kind = iconByIndex(i);
+    const size = Math.min(48, Math.max(30, 220 / n + 22));
     icons += `<g transform="translate(${ix.toFixed(2)} ${iy.toFixed(2)}) rotate(${mid.toFixed(2)}) translate(${-size / 2} ${-size / 2})">
-      <svg width="${size}" height="${size}" viewBox="0 0 48 48" overflow="visible">${ICONS[kind] || ICONS.snow}</svg>
+      <svg width="${size}" height="${size}" viewBox="0 0 48 48" overflow="visible">${ICONS[kind]}</svg>
     </g>`;
   }
 
   let rim = "";
-  const bulbs = 24;
+  const bulbs = 26;
   for (let i = 0; i < bulbs; i++) {
-    const [bx, by] = polar(cx, cy, R + 12, (360 / bulbs) * i);
-    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="6.5" fill="rgba(255,214,140,.28)" class="rim-bulb" style="animation-delay:${(i * 0.11).toFixed(2)}s"/>`;
-    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="2.8" fill="#ffe6ad" class="rim-bulb" style="animation-delay:${(i * 0.11).toFixed(2)}s"/>`;
+    const [bx, by] = polar(cx, cy, R + 13, (360 / bulbs) * i);
+    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="8" fill="rgba(255,214,140,.30)" class="rim-bulb" style="animation-delay:${(i * 0.10).toFixed(2)}s"/>`;
+    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="3" fill="#ffe6ad" class="rim-bulb" style="animation-delay:${(i * 0.10).toFixed(2)}s"/>`;
   }
 
   svg.innerHTML = defs + `
-    <circle cx="${cx}" cy="${cy}" r="${R + 22}" fill="url(#rimGrad)"/>
-    <circle cx="${cx}" cy="${cy}" r="${R + 18}" fill="none" stroke="rgba(246,196,83,.55)" stroke-width="2"/>
+    <circle cx="${cx}" cy="${cy}" r="${R + 24}" fill="url(#rimGrad)"/>
+    <circle cx="${cx}" cy="${cy}" r="${R + 20}" fill="none" stroke="rgba(217,184,119,.65)" stroke-width="2"/>
     <g id="wheelSpin">
-      <circle cx="${cx}" cy="${cy}" r="${R}" fill="#0b2417"/>
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="#12291a"/>
       ${segs}
       ${icons}
       <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#wheelShade)" pointer-events="none"/>
@@ -942,6 +994,7 @@ function spinTo(index, n) {
   el.style.transform = `rotate(${target}deg)`;
 }
 
+/* ================= РЕНДЕР ================= */
 function renderAll() {
   const d = state.data;
   if (!d) return;
@@ -990,12 +1043,13 @@ function renderPrizes() {
   const list = state.prizes;
   if (!list.length) { box.innerHTML = `<div class="empty">Призы пока не добавлены.</div>`; return; }
   box.innerHTML = list.map((p, i) => {
-    const kind = iconFor(p, i);
+    const kind = iconByIndex(i);
+    const name = stripEmoji(p.name) || "Приз";
+    const detail = stripEmoji(p.detail);
     return `<div class="prize-row">
-      <span class="prize-ico">${ICONS[kind] || ICONS.snow}</span>
-      <span class="prize-name">${escapeHtml(p.name)}${p.detail ? ` — <em>${escapeHtml(p.detail)}</em>` : ""}
+      <span class="prize-ico">${ICONS[kind]}</span>
+      <span class="prize-name">${escapeHtml(name)}${detail ? ` — <em>${escapeHtml(detail)}</em>` : ""}
         ${p.stock > 0 ? `<span class="prize-stock"> · осталось ${p.stock}</span>` : ""}</span>
-      <span class="prize-pc">${p.chance}%</span>
     </div>`;
   }).join("");
 }
@@ -1076,7 +1130,7 @@ async function doSpin() {
       state.spinning = false;
       $("spinBtn").disabled = false;
       const p = state.prizes[idx];
-      showModal("🎉", "Демо-режим", `Выпало: ${p ? p.name : "—"}. В Telegram здесь будет настоящий приз.`);
+      showModal("🎉", "Демо-режим", `Выпало: ${p ? stripEmoji(p.name) : "—"}. В Telegram здесь будет настоящий приз.`);
     }, 4800);
     return;
   }
@@ -1099,7 +1153,7 @@ async function doSpin() {
       if (r.points != null && state.data) state.data.user.points = r.points;
       if (r.prizes) state.prizes = r.prizes;
       renderAll();
-      const name = r.prize ? r.prize.name : "—";
+      const name = stripEmoji(r.prize ? r.prize.name : "") || "Приз";
       const bonus = r.nothing_bonus ? ` Начислено +${r.nothing_bonus} баллов.` : "";
       showModal("🎉", "Поздравляем!", `Вам выпало: ${name}.${bonus} Остаток баллов: ${r.points}.`);
     }, 4800);
@@ -1114,19 +1168,6 @@ $("spinBtn").addEventListener("click", doSpin);
 $("hub").addEventListener("click", doSpin);
 $("modalClose").addEventListener("click", () => $("modal").classList.remove("on"));
 $("modal").addEventListener("click", (e) => { if (e.target.id === "modal") $("modal").classList.remove("on"); });
-
-$("btnClose").addEventListener("click", () => { if (tg && tg.close) tg.close(); else history.back(); });
-$("btnMore").addEventListener("click", () => {
-  if (tg && tg.showPopup) {
-    tg.showPopup({
-      title: "Full Bak Points",
-      message: "Пишите комментарии под постами — получайте баллы и крутите колесо призов.",
-      buttons: [{ type: "close" }],
-    });
-  } else {
-    toast("Пишите комментарии — получайте баллы 🎁");
-  }
-});
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
