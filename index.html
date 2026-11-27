@@ -116,28 +116,6 @@ border:1px solid rgba(232,201,138,.7)}
 .links{display:flex;justify-content:center;gap:18px;margin:8px 0 4px}
 .links button{background:none;border:none;padding:6px;font-family:inherit;font-size:12px;
 color:rgba(247,236,216,.6);text-decoration:underline;cursor:pointer}
-.pay{position:fixed;inset:0;z-index:26;display:none;align-items:center;justify-content:center;
-padding:22px;background:rgba(4,14,8,.82);backdrop-filter:blur(6px)}
-.pay.on{display:flex}
-.pay-card{width:100%;max-width:320px;border-radius:24px;border:1.5px solid rgba(232,201,138,.7);
-background:linear-gradient(180deg,#16301F,#0A1A11);padding:22px 20px;
-box-shadow:0 24px 60px rgba(0,0,0,.75);text-align:center}
-.pay-card h3{margin:0 0 4px;font-size:18px;font-weight:800;color:#fff}
-.pay-card .sum{font-size:32px;font-weight:800;color:var(--gold);margin:8px 0 14px}
-.pay-row{display:flex;align-items:center;justify-content:space-between;gap:10px;
-padding:11px 14px;border-radius:14px;margin-bottom:8px;
-background:rgba(255,255,255,.05);border:1.5px solid rgba(232,201,138,.28)}
-.pay-row span{font-size:11px;color:rgba(247,236,216,.6);display:block;text-align:left}
-.pay-row b{font-size:14px;color:#fff;font-weight:800;display:block;text-align:left}
-.pay-row button{background:none;border:none;color:var(--gold);font-size:12px;
-font-weight:800;cursor:pointer;font-family:inherit;padding:4px}
-.pay-card .go{width:100%;margin-top:14px;padding:15px;border-radius:16px;
-border:2px solid rgba(232,201,138,.9);background:linear-gradient(180deg,#B92E22,#6E1212);
-color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit}
-.pay-card .cancel{width:100%;margin-top:8px;padding:11px;border-radius:14px;
-border:1.5px solid rgba(232,201,138,.3);background:none;color:rgba(247,236,216,.7);
-font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
-.pay-card .wait{font-size:13px;color:rgba(247,236,216,.8);line-height:1.5;margin:10px 0 0}
 .sheet{position:fixed;inset:0;z-index:25;display:none;background:rgba(4,14,8,.8);
 backdrop-filter:blur(6px)}
 .sheet.on{display:block}
@@ -423,32 +401,6 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
         <li>Продавец: <b>ИП / ООО, ИНН, ОГРН</b></li>
       </ul>
       <div class="muted">Замените выделенные поля на свои реквизиты и контакты. Перед запуском покажите этот текст юристу.</div>
-    </div>
-  </div>
-</div>
-
-<div class="pay" id="paySheet">
-  <div class="pay-card">
-    <h3>Оплата по СБП</h3>
-    <div class="sum" id="paySum">350 ₽</div>
-    <div id="payForm">
-      <div class="pay-row">
-        <div><span>Перевод по номеру</span><b id="payPhone">+7 999 000-00-00</b></div>
-        <button id="copyPhone">копировать</button>
-      </div>
-      <div class="pay-row">
-        <div><span>Получатель</span><b id="payName">Имя Фамилия</b></div>
-      </div>
-      <div class="pay-row">
-        <div><span>Комментарий к переводу</span><b id="payComment">FB-0000</b></div>
-        <button id="copyComment">копировать</button>
-      </div>
-      <button class="go" id="payDone">Я оплатил</button>
-      <button class="cancel" id="payCancel">Отмена</button>
-    </div>
-    <div id="payWait" style="display:none">
-      <p class="wait">Ожидайте подтверждения платежа.<br>Обычно это занимает до 30 минут.</p>
-      <button class="cancel" id="payClose">Закрыть</button>
     </div>
   </div>
 </div>
@@ -831,45 +783,11 @@ async function doSpin(){
     toast("Ошибка сети, попробуйте ещё раз");
   }
 }
-
-let payPoints = 0;
-
 document.querySelectorAll(".pack").forEach(b => {
   b.addEventListener("click", () => {
-    payPoints = parseInt(b.dataset.p, 10);
-    $("paySum").textContent = payPoints + " ₽";
-    $("payComment").textContent = "FB-" + Math.floor(Math.random() * 9000 + 1000);
-    $("payForm").style.display = "block";
-    $("payWait").style.display = "none";
-    $("paySheet").classList.add("on");
+    if (window.openPayScreen) window.openPayScreen(b.dataset.p);
   });
 });
-
-$("copyPhone").addEventListener("click", () => {
-  navigator.clipboard.writeText($("payPhone").textContent);
-  toast("Номер скопирован");
-});
-$("copyComment").addEventListener("click", () => {
-  navigator.clipboard.writeText($("payComment").textContent);
-  toast("Комментарий скопирован");
-});
-$("payCancel").addEventListener("click", () => $("paySheet").classList.remove("on"));
-$("payClose").addEventListener("click", () => $("paySheet").classList.remove("on"));
-
-$("payDone").addEventListener("click", async () => {
-  if (PREVIEW){ $("payForm").style.display = "none"; $("payWait").style.display = "block"; return; }
-  try{
-    const r = await api("/api/topup", {
-      initData: initData,
-      points: payPoints,
-      comment: $("payComment").textContent
-    });
-    if (r.error){ toast("Не удалось создать заявку"); return; }
-    $("payForm").style.display = "none";
-    $("payWait").style.display = "block";
-  }catch(e){ toast("Ошибка сети"); }
-});
-
 $("btnRules").addEventListener("click", () => $("rulesSheet").classList.add("on"));
 $("rulesClose").addEventListener("click", () => $("rulesSheet").classList.remove("on"));
 
@@ -1025,8 +943,8 @@ load();
 </style>
 
 <script>
-(function () {
-  const API_BASE = "https://tg-activity-bot.katka-69.workers.dev"; // ← проверьте адрес
+(function () {  const API_BASE = "https://tg-activity-bot.katka-69.workers.dev";
+  const SBP_LINK = "https://www.sberbank.com/sms/pbpn?requisiteNumber=79125124780";
 
   const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
   const initData = tg ? tg.initData : "";
@@ -1142,10 +1060,8 @@ load();
   });
 
   $("payOpenBank").addEventListener("click", () => {
-    const link = currentOrder && currentOrder.sbpLink;
-    if (!link) { alert("Ссылка на оплату ещё не настроена"); return; }
-    if (tg && tg.openLink) tg.openLink(link);
-    else window.open(link, "_blank");
+    if (tg && tg.openLink) tg.openLink(SBP_LINK);
+    else window.location.href = SBP_LINK;
   });
 
   $("payClaim").addEventListener("click", () => {
@@ -1168,11 +1084,16 @@ load();
     screen.hidden = true;
   });
 
-  window.openPayScreen = function () {
+  window.openPayScreen = function (packId) {
     screen.hidden = false;
     show("packs");
     api("/api/packs").then((res) => {
-      if (res.ok) renderPacks(res.packs);
+      if (!res.ok) return;
+      renderPacks(res.packs);
+      if (packId) {
+        var hit = res.packs.filter(function (p) { return String(p.amount) === String(packId); })[0];
+        if (hit) createOrder(hit.id);
+      }
     });
   };
 })();
