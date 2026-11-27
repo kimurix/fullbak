@@ -937,5 +937,245 @@ function startSnow(){
 startSnow();
 load();
 </script>
+  <div id="payScreen" class="pay-wrap" hidden>
+  <div class="pay-head">
+    <button class="pay-back" id="payBack">←</button>
+    <div class="pay-title">Пополнение баллов</div>
+  </div>
+
+  <div id="payStepPacks">
+    <div class="pay-packs" id="payPacks"></div>
+  </div>
+
+  <div id="payStepOrder" hidden>
+    <div class="pay-card">
+      <div class="pay-amount" id="payAmount">—</div>
+      <div class="pay-points" id="payPoints">—</div>
+
+      <div class="pay-code-row">
+        <div>
+          <div class="pay-code-label">Код перевода</div>
+          <div class="pay-code" id="payCode">—</div>
+        </div>
+        <button class="pay-copy" id="payCopy">Скопировать</button>
+      </div>
+
+      <div class="pay-hint">
+        Укажите этот код в комментарии к переводу — так мы найдём ваш платёж сразу.
+      </div>
+
+      <div class="pay-timer" id="payTimer">—</div>
+
+      <button class="pay-btn pay-btn-primary" id="payOpenBank">Открыть банк</button>
+      <button class="pay-btn" id="payClaim">Я оплатил(а)</button>
+      <button class="pay-link" id="payForgot">Забыл(а) указать код</button>
+    </div>
+  </div>
+
+  <div id="payStepWait" hidden>
+    <div class="pay-card pay-center">
+      <div class="pay-spinner"></div>
+      <div class="pay-wait-title">Проверяем оплату</div>
+      <div class="pay-wait-sub" id="payWaitSub">Обычно это занимает до 15 минут</div>
+    </div>
+  </div>
+</div>
+
+<style>
+.pay-wrap{position:fixed;inset:0;z-index:9999;background:#0e1016;color:#f2f4f8;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.pay-wrap[hidden]{display:none}
+.pay-head{display:flex;align-items:center;gap:12px}
+.pay-back{background:none;border:0;color:#f2f4f8;font-size:22px;padding:4px 8px;cursor:pointer}
+.pay-title{font-size:18px;font-weight:600}
+.pay-packs{display:flex;flex-direction:column;gap:10px}
+.pay-pack{display:flex;justify-content:space-between;align-items:center;
+  background:#171a23;border:1px solid #232838;border-radius:14px;padding:16px;cursor:pointer;
+  transition:border-color .15s,transform .1s}
+.pay-pack:active{transform:scale(.99);border-color:#3d7dff}
+.pay-pack-left{display:flex;flex-direction:column;gap:4px}
+.pay-pack-points{font-size:17px;font-weight:600}
+.pay-pack-label{font-size:12px;color:#8b93a7}
+.pay-pack-price{font-size:17px;font-weight:600;color:#3d7dff}
+.pay-card{background:#171a23;border:1px solid #232838;border-radius:16px;padding:18px;
+  display:flex;flex-direction:column;gap:14px}
+.pay-amount{font-size:34px;font-weight:700;text-align:center;letter-spacing:-.5px}
+.pay-points{text-align:center;color:#8b93a7;font-size:14px;margin-top:-8px}
+.pay-code-row{display:flex;justify-content:space-between;align-items:center;
+  background:#0e1016;border:1px dashed #2f3648;border-radius:12px;padding:12px 14px}
+.pay-code-label{font-size:11px;color:#8b93a7;text-transform:uppercase;letter-spacing:.5px}
+.pay-code{font-size:20px;font-weight:700;letter-spacing:1px;font-family:ui-monospace,monospace}
+.pay-copy{background:#232838;border:0;color:#f2f4f8;border-radius:9px;padding:9px 13px;
+  font-size:13px;cursor:pointer}
+.pay-hint{font-size:12.5px;color:#8b93a7;line-height:1.45}
+.pay-timer{text-align:center;font-size:13px;color:#e0a83d}
+.pay-btn{background:#232838;border:0;color:#f2f4f8;border-radius:12px;padding:15px;
+  font-size:15px;font-weight:600;cursor:pointer}
+.pay-btn-primary{background:#3d7dff}
+.pay-btn:active{opacity:.85}
+.pay-link{background:none;border:0;color:#8b93a7;font-size:13px;text-decoration:underline;
+  cursor:pointer;padding:4px}
+.pay-center{align-items:center;text-align:center;padding:34px 18px}
+.pay-spinner{width:34px;height:34px;border:3px solid #232838;border-top-color:#3d7dff;
+  border-radius:50%;animation:paySpin .9s linear infinite}
+@keyframes paySpin{to{transform:rotate(360deg)}}
+.pay-wait-title{font-size:16px;font-weight:600}
+.pay-wait-sub{font-size:13px;color:#8b93a7}
+</style>
+
+<script>
+(function () {
+  const API_BASE = "https://tg-activity-bot.katka-69.workers.dev"; // ← проверьте адрес
+
+  const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+  const initData = tg ? tg.initData : "";
+
+  const $ = (id) => document.getElementById(id);
+  const screen = $("payScreen");
+  const stepPacks = $("payStepPacks");
+  const stepOrder = $("payStepOrder");
+  const stepWait = $("payStepWait");
+
+  let currentOrder = null;
+  let timerId = null;
+  let pollId = null;
+
+  function api(path, body) {
+    return fetch(API_BASE + path, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(Object.assign({ initData: initData }, body || {}))
+    }).then((r) => r.json());
+  }
+
+  function show(step) {
+    stepPacks.hidden = step !== "packs";
+    stepOrder.hidden = step !== "order";
+    stepWait.hidden = step !== "wait";
+  }
+
+  function rub(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+  }
+
+  function renderPacks(packs) {
+    const box = $("payPacks");
+    box.innerHTML = "";
+    packs.forEach((p) => {
+      const el = document.createElement("div");
+      el.className = "pay-pack";
+      el.innerHTML =
+        '<div class="pay-pack-left">' +
+          '<div class="pay-pack-points">' + p.points + " баллов</div>" +
+          '<div class="pay-pack-label">' + (p.label || "") + "</div>" +
+        "</div>" +
+        '<div class="pay-pack-price">' + rub(p.amount) + "</div>";
+      el.addEventListener("click", () => createOrder(p.id));
+      box.appendChild(el);
+    });
+  }
+
+  function createOrder(packId) {
+    api("/api/order", { packId: packId }).then((res) => {
+      if (!res.ok) { alert("Не удалось создать заявку"); return; }
+      currentOrder = res.order;
+      renderOrder();
+      show("order");
+    });
+  }
+
+  function renderOrder() {
+    const o = currentOrder;
+    $("payAmount").textContent = rub(o.amount);
+    $("payPoints").textContent = o.points + " баллов";
+    $("payCode").textContent = o.code;
+    startTimer(o.expiresAt);
+    if (o.status === "claimed" || o.status === "review") {
+      show("wait");
+      startPolling();
+    }
+  }
+
+  function startTimer(expiresAt) {
+    if (timerId) clearInterval(timerId);
+    const tick = () => {
+      const left = expiresAt - Math.floor(Date.now() / 1000);
+      if (left <= 0) {
+        $("payTimer").textContent = "Заявка истекла — создайте новую";
+        clearInterval(timerId);
+        return;
+      }
+      const m = Math.floor(left / 60), s = left % 60;
+      $("payTimer").textContent = "Осталось " + m + ":" + String(s).padStart(2, "0");
+    };
+    tick();
+    timerId = setInterval(tick, 1000);
+  }
+
+  function startPolling() {
+    if (pollId) clearInterval(pollId);
+    pollId = setInterval(() => {
+      api("/api/order/status").then((res) => {
+        if (!res.ok || !res.order) return;
+        const o = res.order;
+        if (o.status === "confirmed") {
+          clearInterval(pollId);
+          $("payWaitSub").textContent = "Готово! Начислено " + o.points + " баллов";
+          setTimeout(() => { screen.hidden = true; location.reload(); }, 1800);
+        } else if (o.status === "rejected") {
+          clearInterval(pollId);
+          $("payWaitSub").textContent = "Заявка отклонена. Напишите в поддержку.";
+        } else if (o.status === "expired") {
+          clearInterval(pollId);
+          $("payWaitSub").textContent = "Заявка истекла. Создайте новую.";
+        }
+      });
+    }, 5000);
+  }
+
+  $("payCopy").addEventListener("click", () => {
+    const code = currentOrder ? currentOrder.code : "";
+    if (navigator.clipboard) navigator.clipboard.writeText(code);
+    $("payCopy").textContent = "Скопировано";
+    setTimeout(() => { $("payCopy").textContent = "Скопировать"; }, 1500);
+  });
+
+  $("payOpenBank").addEventListener("click", () => {
+    const link = currentOrder && currentOrder.sbpLink;
+    if (!link) { alert("Ссылка на оплату ещё не настроена"); return; }
+    if (tg && tg.openLink) tg.openLink(link);
+    else window.open(link, "_blank");
+  });
+
+  $("payClaim").addEventListener("click", () => {
+    api("/api/order/claim").then((res) => {
+      if (!res.ok) { alert("Не удалось отправить заявку"); return; }
+      currentOrder = res.order;
+      show("wait");
+      startPolling();
+    });
+  });
+
+  $("payForgot").addEventListener("click", () => {
+    alert("Отправьте скриншот перевода прямо в чат с ботом — заявка уйдёт на проверку.");
+    if (tg && tg.close) tg.close();
+  });
+
+  $("payBack").addEventListener("click", () => {
+    if (timerId) clearInterval(timerId);
+    if (pollId) clearInterval(pollId);
+    screen.hidden = true;
+  });
+
+  window.openPayScreen = function () {
+    screen.hidden = false;
+    show("packs");
+    api("/api/packs").then((res) => {
+      if (res.ok) renderPacks(res.packs);
+    });
+  };
+})();
+</script>
 </body>
 </html>
