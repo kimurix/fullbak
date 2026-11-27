@@ -1177,5 +1177,16 @@ load();
   };
 })();
 </script>
+  <script>
+document.addEventListener("click", function (e) {
+  var el = e.target.closest("button, a, [role='button'], .btn, .button");
+  if (!el) return;
+  var t = (el.textContent || "").trim().toLowerCase();
+  if (t.indexOf("пополнить") !== -1) {
+    e.preventDefault();
+    if (window.openPayScreen) window.openPayScreen();
+  }
+});
+</script>
 </body>
 </html>
