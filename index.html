@@ -16,11 +16,11 @@
 html,body{margin:0;padding:0;height:100%;background:#16261A;color:var(--cream);
 font-family:'Nunito',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 overscroll-behavior:none;-webkit-font-smoothing:antialiased}
-#bg{position:PICKS;inset:0;z-index:0;background:#16261A url('bg.png') center bottom/cover no-repeat}
+#bg{position:fixed;inset:0;z-index:0;background:#16261A url('bg.png') center bottom/cover no-repeat}
 #bg::after{content:"";position:absolute;inset:0;pointer-events:none;
 background:radial-gradient(95% 70% at 50% 40%,rgba(0,0,0,0) 50%,rgba(0,0,0,.35) 100%)}
-#snow{position:PICKS;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
-#app{position:PICKS;inset:0;z-index:2;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+#snow{position:fixed;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
+#app{position:fixed;inset:0;z-index:2;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
 padding:calc(env(safe-area-inset-top,0px) + 20px) 26px calc(env(safe-area-inset-bottom,0px) + 40px);
 scrollbar-width:none}
 #app::-webkit-scrollbar{display:none}
@@ -116,7 +116,7 @@ border:1px solid rgba(232,201,138,.7)}
 .links{display:flex;justify-content:center;gap:18px;margin:8px 0 4px}
 .links button{background:none;border:none;padding:6px;font-family:inherit;font-size:12px;
 color:rgba(247,236,216,.6);text-decoration:underline;cursor:pointer}
-.sheet{position:PICKS;inset:0;z-index:25;display:none;background:rgba(4,14,8,.8);
+.sheet{position:fixed;inset:0;z-index:25;display:none;background:rgba(4,14,8,.8);
 backdrop-filter:blur(6px)}
 .sheet.on{display:block}
 .sheet-in{position:absolute;inset:0;display:flex;flex-direction:column;
@@ -136,7 +136,7 @@ font-size:13px;line-height:1.6;color:rgba(247,236,216,.85)}
 .sheet-body ul{margin:0;padding-left:18px}
 .sheet-body li{margin-bottom:5px}
 .sheet-body .muted{color:rgba(247,236,216,.5);font-size:11.5px;margin-top:20px}
-.bonus{position:PICKS;left:0;right:0;z-index:4;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);
+.bonus{position:fixed;left:0;right:0;z-index:4;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);
 padding:0 26px;display:none;justify-content:center}
 .bbtn{width:100%;max-width:330px;display:flex;align-items:center;gap:12px;padding:15px 20px;
 border-radius:22px;border:1.5px solid rgba(232,201,138,.85);
@@ -169,7 +169,7 @@ border-bottom:1px solid rgba(232,201,138,.1)}
 .thint{margin-top:10px;padding-top:10px;border-top:1px solid rgba(232,201,138,.15);
 font-size:11px;color:rgba(247,236,216,.55);text-align:center}
 .empty{font-size:13px;color:rgba(247,236,216,.55);padding:6px 0}
-.modal{position:PICKS;inset:0;z-index:20;display:none;align-items:center;justify-content:center;
+.modal{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;
 padding:24px;background:rgba(4,14,8,.75);backdrop-filter:blur(6px)}
 .modal.on{display:flex}
 .mcard{width:100%;max-width:300px;border-radius:24px;border:1.5px solid rgba(232,201,138,.7);
@@ -183,7 +183,7 @@ animation:pop .35s cubic-bezier(.2,1.2,.4,1)}
 .mcard button{width:100%;padding:14px;border-radius:14px;border:1.5px solid rgba(232,201,138,.7);
 background:linear-gradient(180deg,#B92E22,#6E1212);color:#fff;font-size:15px;font-weight:700;
 cursor:pointer;font-family:inherit}
-.toast{position:PICKS;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 26px);
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 26px);
 transform:translate(-50%,20px);z-index:30;padding:12px 18px;border-radius:14px;
 background:rgba(16,40,24,.97);border:1.5px solid rgba(232,201,138,.55);color:var(--cream);
 font-size:13px;font-weight:600;box-shadow:0 12px 30px rgba(0,0,0,.55);opacity:0;pointer-events:none;
@@ -894,7 +894,7 @@ load();
 </div>
 
 <style>
-.pay-wrap{position:PICKS;inset:0;z-index:9999;background:#0e1016;color:#f2f4f8;
+.pay-wrap{position:fixed;inset:0;z-index:9999;background:#0e1016;color:#f2f4f8;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
 .pay-wrap[hidden]{display:none}
