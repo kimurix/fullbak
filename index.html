@@ -244,22 +244,14 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
   <div class="card">
     <div class="ctitle">Пополнить</div>
     <div class="packs">
-      <button class="pack" data-p="350">
-        <span class="pp">350</span><span class="pl">баллов</span>
-        <span class="ps">3 вращения + 50 в остаток</span><span class="pb">350 ₽</span>
+      <button class="pack" data-p="199">
+        <span class="pp">100</span><span class="pl">баллов</span>
+        <span class="ps">+ 20 баллов бонусом</span><span class="pb">199 ₽</span>
       </button>
-      <button class="pack" data-p="750">
-        <span class="pp">750</span><span class="pl">баллов</span>
-        <span class="ps">7 вращений + 50 в остаток</span><span class="pb">750 ₽</span>
-      </button>
-      <button class="pack best" data-p="1600">
+      <button class="pack best" data-p="599">
         <span class="tag">ВЫГОДНО</span>
-        <span class="pp">1 600</span><span class="pl">баллов</span>
-        <span class="ps">16 вращений без остатка</span><span class="pb">1 600 ₽</span>
-      </button>
-      <button class="pack" data-p="3300">
-        <span class="pp">3 300</span><span class="pl">баллов</span>
-        <span class="ps">33 вращения без остатка</span><span class="pb">3 300 ₽</span>
+        <span class="pp">300</span><span class="pl">баллов</span>
+        <span class="ps">+ 90 баллов бонусом</span><span class="pb">599 ₽</span>
       </button>
     </div>
     <div class="packs-note">Перевод по СБП, подтверждение вручную</div>
@@ -917,6 +909,7 @@ load();
 .pay-pack-left{display:flex;flex-direction:column;gap:4px}
 .pay-pack-points{font-size:17px;font-weight:600}
 .pay-pack-label{font-size:12px;color:#8b93a7}
+.pay-pack-bonus{font-size:12px;color:#3d7dff;font-weight:600}
 .pay-pack-price{font-size:17px;font-weight:600;color:#3d7dff}
 .pay-card{background:#171a23;border:1px solid #232838;border-radius:16px;padding:18px;
   display:flex;flex-direction:column;gap:14px}
@@ -1029,7 +1022,7 @@ load();
     });
   }
 
-  function renderPacks(packs) {
+   function renderPacks(packs) {
     var box = $("payPacks");
     box.innerHTML = "";
     if (!packs.length) {
@@ -1041,13 +1034,14 @@ load();
       el.className = "pay-pack";
       el.innerHTML =
         '<div class="pay-pack-left">' +
-          '<div class="pay-pack-points">' + p.points + " баллов</div>" +
-          '<div class="pay-pack-label">' + (p.label || "") + "</div>" +
+          '<div class="pay-pack-points">' + (p.base || p.points) + " баллов</div>" +
+          '<div class="pay-pack-bonus">+ ' + (p.bonus || 0) + " баллов бонусом</div>" +
         "</div>" +
         '<div class="pay-pack-price">' + rub(p.amount) + "</div>";
       el.addEventListener("click", function () { createOrder(p.id); });
       box.appendChild(el);
     });
+  }
   }
 
   function createOrder(packId) {
