@@ -16,7 +16,8 @@
 html,body{margin:0;padding:0;height:100%;background:#16261A;color:var(--cream);
 font-family:'Nunito',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 overscroll-behavior:none;-webkit-font-smoothing:antialiased}
-#bg{position:fixed;inset:0;z-index:0;background:#16261A url('bg.png') center top/cover no-repeat}
+#bg{position:fixed;inset:0;z-index:0;
+background:#16261A url('bg.png') center bottom / cover no-repeat}
 #bg::after{content:"";position:absolute;inset:0;pointer-events:none;
 background:radial-gradient(95% 70% at 50% 40%,rgba(0,0,0,0) 50%,rgba(0,0,0,.35) 100%)}
 #snow{position:fixed;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
@@ -62,7 +63,7 @@ font-size:12px;color:rgba(247,236,216,.72);text-align:center}
 .stat{position:relative;border-radius:16px;border:1.5px solid rgba(232,201,138,.38);
 background:linear-gradient(180deg,rgba(28,58,36,.55),rgba(14,36,22,.55));
 padding:22px 5px 11px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
-.stat .bow{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:44px;height:27px;
+.stat .bow{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:44px;height:36px;
 filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
 .stat b{display:block;font-size:24px;font-weight:800;line-height:1.1;color:#fff}
 .stat span{display:block;font-size:10.5px;color:rgba(247,236,216,.7);margin-top:3px}
@@ -99,13 +100,14 @@ backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
 box-shadow:0 16px 36px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.12);
 color:var(--cream);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
 .bbtn .t{flex:1 1 auto;text-align:left}
-.prow{display:flex;align-items:center;gap:10px;padding:9px 0;
-border-bottom:1px solid rgba(232,201,138,.13);font-size:13px}
+.prow{display:flex;align-items:center;gap:10px;padding:11px 0;
+border-bottom:1px solid rgba(232,201,138,.13);font-size:13px;line-height:1.45}
 .prow:last-child{border-bottom:none}
-.pico{flex:0 0 28px;width:28px;height:28px}
-.pico svg{width:100%;height:100%}
-.pname{flex:1 1 auto;min-width:0;line-height:1.35}
-.pname em{font-style:normal;color:rgba(247,236,216,.62)}
+.pico{flex:0 0 30px;width:30px;height:30px;display:flex;align-items:center;justify-content:center}
+.pico svg{width:26px;height:26px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.pname{flex:1 1 auto;min-width:0}
+.dash{display:inline-block;width:16px;color:rgba(247,236,216,.7)}
+.pdesc{color:rgba(247,236,216,.66);margin-left:8px}
 .tabs{display:flex;gap:6px;margin:12px 0}
 .tab{flex:1;padding:9px 4px;border-radius:12px;border:1.5px solid rgba(232,201,138,.3);
 background:rgba(255,255,255,.04);color:rgba(247,236,216,.65);font-size:12px;cursor:pointer;font-family:inherit}
@@ -197,7 +199,7 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
     <div class="ctitle">Твои комментарии</div>
     <div class="stats">
       <div class="stat">
-        <svg class="bow" viewBox="0 0 56 34" aria-hidden="true">
+        <svg class="bow" viewBox="0 0 64 52" aria-hidden="true">
           <defs>
             <linearGradient id="bwA" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#F0604A"/><stop offset="45%" stop-color="#C62828"/><stop offset="100%" stop-color="#7A1010"/>
@@ -206,34 +208,40 @@ transition:opacity .25s,transform .25s;max-width:80vw;text-align:center}
               <stop offset="0" stop-color="#FF8A72"/><stop offset="100%" stop-color="#B32222"/>
             </linearGradient>
           </defs>
-          <polygon points="28,17 6,4 6,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
-          <polygon points="28,17 50,4 50,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
-          <path d="M21 12 L11 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
-          <path d="M35 12 L45 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
-          <ellipse cx="28" cy="17" rx="5.5" ry="6" fill="url(#bwB)"/>
-          <ellipse cx="26.5" cy="15.5" rx="2" ry="1.5" fill="rgba(255,255,255,.55)"/>
+          <path d="M30 26 C27 33 23 40 19 48 L26 46 L28 50 L34 32 Z" fill="#8E1A16"/>
+          <path d="M34 26 C37 33 41 40 45 48 L38 46 L36 50 L30 32 Z" fill="#8E1A16"/>
+          <path d="M32 20 C23 5 5 3 3 14 C1 25 20 31 32 20 Z" fill="url(#bwA)"/>
+          <path d="M32 20 C41 5 59 3 61 14 C63 25 44 31 32 20 Z" fill="url(#bwA)"/>
+          <path d="M26 16 C21 9 12 7 8 12" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M38 16 C43 9 52 7 56 12" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="32" cy="20" rx="6" ry="6.5" fill="url(#bwB)"/>
+          <ellipse cx="30.5" cy="18.5" rx="2.2" ry="1.6" fill="rgba(255,255,255,.55)"/>
         </svg>
         <b id="cWeek">0</b><span>за 7 дней</span>
       </div>
       <div class="stat">
-        <svg class="bow" viewBox="0 0 56 34" aria-hidden="true">
-          <polygon points="28,17 6,4 6,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
-          <polygon points="28,17 50,4 50,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
-          <path d="M21 12 L11 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
-          <path d="M35 12 L45 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
-          <ellipse cx="28" cy="17" rx="5.5" ry="6" fill="url(#bwB)"/>
-          <ellipse cx="26.5" cy="15.5" rx="2" ry="1.5" fill="rgba(255,255,255,.55)"/>
+        <svg class="bow" viewBox="0 0 64 52" aria-hidden="true">
+          <path d="M30 26 C27 33 23 40 19 48 L26 46 L28 50 L34 32 Z" fill="#8E1A16"/>
+          <path d="M34 26 C37 33 41 40 45 48 L38 46 L36 50 L30 32 Z" fill="#8E1A16"/>
+          <path d="M32 20 C23 5 5 3 3 14 C1 25 20 31 32 20 Z" fill="url(#bwA)"/>
+          <path d="M32 20 C41 5 59 3 61 14 C63 25 44 31 32 20 Z" fill="url(#bwA)"/>
+          <path d="M26 16 C21 9 12 7 8 12" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M38 16 C43 9 52 7 56 12" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="32" cy="20" rx="6" ry="6.5" fill="url(#bwB)"/>
+          <ellipse cx="30.5" cy="18.5" rx="2.2" ry="1.6" fill="rgba(255,255,255,.55)"/>
         </svg>
         <b id="cMonth">0</b><span>за 30 дней</span>
       </div>
       <div class="stat">
-        <svg class="bow" viewBox="0 0 56 34" aria-hidden="true">
-          <polygon points="28,17 6,4 6,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
-          <polygon points="28,17 50,4 50,30" fill="url(#bwA)" stroke="url(#bwA)" stroke-width="5" stroke-linejoin="round"/>
-          <path d="M21 12 L11 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
-          <path d="M35 12 L45 8" stroke="rgba(255,255,255,.35)" stroke-width="1.8" stroke-linecap="round"/>
-          <ellipse cx="28" cy="17" rx="5.5" ry="6" fill="url(#bwB)"/>
-          <ellipse cx="26.5" cy="15.5" rx="2" ry="1.5" fill="rgba(255,255,255,.55)"/>
+        <svg class="bow" viewBox="0 0 64 52" aria-hidden="true">
+          <path d="M30 26 C27 33 23 40 19 48 L26 46 L28 50 L34 32 Z" fill="#8E1A16"/>
+          <path d="M34 26 C37 33 41 40 45 48 L38 46 L36 50 L30 32 Z" fill="#8E1A16"/>
+          <path d="M32 20 C23 5 5 3 3 14 C1 25 20 31 32 20 Z" fill="url(#bwA)"/>
+          <path d="M32 20 C41 5 59 3 61 14 C63 25 44 31 32 20 Z" fill="url(#bwA)"/>
+          <path d="M26 16 C21 9 12 7 8 12" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M38 16 C43 9 52 7 56 12" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="32" cy="20" rx="6" ry="6.5" fill="url(#bwB)"/>
+          <ellipse cx="30.5" cy="18.5" rx="2.2" ry="1.6" fill="rgba(255,255,255,.55)"/>
         </svg>
         <b id="cAll">0</b><span>всего</span>
       </div>
@@ -324,14 +332,17 @@ function previewData(){return{
   {name:"@neopasha",count:1,me:false},{name:"Александр",count:1,me:false},{name:"@Erid2025",count:1,me:false}],
   month:[],all:[]},
   prizes:[
-    {id:1,name:"Подарок",chance:20,stock:5,detail:"Промокод на 10% на любой заказ"},
-    {id:2,name:"Леденец",chance:15,stock:-1,detail:"Скидка 500 ₽ на следующий заказ"},
-    {id:3,name:"Звезда",chance:15,stock:-1,detail:"Подписка +1 неделя"},
-    {id:4,name:"Ёлочка",chance:10,stock:3,detail:"Эксклюзивный доступ"},
-    {id:5,name:"Ёлочный шар",chance:10,stock:-1,detail:"Кружок с пожеланием"},
-    {id:6,name:"Колокольчик",chance:10,stock:-1,detail:"Кастомный дизайн под запрос"},
-    {id:7,name:"Бенгальский огонь",chance:10,stock:-1,detail:"Выбор образа на иллюстрацию"},
-    {id:8,name:"Пряничный домик",chance:10,stock:-1,detail:"Утешительный бонус — 50 баллов"}
+    {id:1,name:"",chance:20,stock:5,detail:"Кастомное видео на 5 минут"},
+    {id:2,name:"",chance:15,stock:-1,detail:"Продление подписки на приват +7 дней"},
+    {id:3,name:"",chance:15,stock:-1,detail:"Эксклюзивное фото в красивом образе"},
+    {id:4,name:"",chance:10,stock:3,detail:"Утренний кружочек с бубсами"},
+    {id:5,name:"",chance:10,stock:-1,detail:"Участие в выборе образа для следующей съёмки"},
+    {id:6,name:"",chance:10,stock:-1,detail:"Скидка 15% на приватный канал"},
+    {id:7,name:"",chance:10,stock:-1,detail:"Скидка 15% на заказ кастомного видео"},
+    {id:8,name:"",chance:10,stock:-1,detail:"Фото с твоим именем"},
+    {id:9,name:"",chance:10,stock:-1,detail:"Бонус к балансу +50 баллов"},
+    {id:10,name:"",chance:10,stock:-1,detail:"Голосовое с пожеланием на ночь"},
+    {id:11,name:"",chance:10,stock:-1,detail:"Самое горячее фото недели из приватного канала"}
   ]};}
 
 const ICONS={
@@ -362,9 +373,9 @@ bell:`<svg viewBox="0 0 48 48"><defs><linearGradient id="bl1" x1="0" y1="0" x2="
 <path d="M24 11a9 9 0 0 0-9 9v7l-3.2 5.2h24.4L33 27v-7a9 9 0 0 0-9-9z" fill="url(#bl1)" stroke="#A8761A" stroke-width="1.1"/>
 <circle cx="24" cy="36" r="3.2" fill="#C98F1C"/><rect x="22" y="6" width="4" height="4.5" rx="2" fill="#C98F1C"/></svg>`,
 
-heart:`<svg viewBox="0 0 48 48"><defs><linearGradient id="h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF7A7A"/><stop offset="1" stop-color="#B32222"/></linearGradient></defs>
+heart:`<svg viewBox="0 0 48 48"><defs><linearGradient id="h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0604A"/><stop offset="50%" stop-color="#C62828"/><stop offset="1" stop-color="#7A1010"/></linearGradient></defs>
 <path d="M24 41s-13-8.2-13-17.2A7.8 7.8 0 0 1 24 18a7.8 7.8 0 0 1 13 5.8C37 32.8 24 41 24 41z" fill="url(#h1)"/>
-<ellipse cx="18" cy="22" rx="3.4" ry="2.4" fill="rgba(255,255,255,.45)" transform="rotate(-25 18 22)"/></svg>`,
+<ellipse cx="18" cy="22" rx="3.4" ry="2.4" fill="rgba(255,255,255,.5)" transform="rotate(-25 18 22)"/></svg>`,
 
 sparkler:`<svg viewBox="0 0 48 48">
 <rect x="22" y="26" width="4" height="18" rx="2" fill="#8A6A2E"/>
@@ -421,6 +432,30 @@ ginger:`<svg viewBox="0 0 48 48">
 const ORDER=["gift","candy","star","tree","ball","bell","heart","sparkler","house","cookie","sparkle","candle","wreath","drum","ginger"];
 const iconAt=i=>ICONS[ORDER[i%ORDER.length]];
 
+const CELL={
+  gift:"#B8912F",candy:"#1B4A2E",star:"#8E1A16",tree:"#F7ECD8",
+  ball:"#F7ECD8",bell:"#8E1A16",heart:"#F7ECD8",sparkler:"#8E1A16",
+  house:"#1B4A2E",cookie:"#8E1A16",sparkle:"#1B4A2E",candle:"#8E1A16",
+  wreath:"#F7ECD8",drum:"#F7ECD8",ginger:"#F7ECD8"
+};
+const ALLC=["#F7ECD8","#8E1A16","#1B4A2E","#B8912F"];
+
+function buildCells(n){
+  const cols=[];
+  for(let i=0;i<n;i++)cols.push(CELL[ORDER[i%ORDER.length]]||"#F7ECD8");
+  for(let pass=0;pass<4;pass++){
+    for(let i=0;i<n;i++){
+      if(i===0)continue;
+      const prev=cols[(i-1+n)%n],next=cols[(i+1)%n];
+      if(cols[i]===prev||cols[i]===next){
+        const alt=ALLC.find(c=>c!==prev&&c!==next&&c!==cols[i]);
+        if(alt)cols[i]=alt;
+      }
+    }
+  }
+  return cols;
+}
+
 function medal(n){
   const c=n===1?["#FFE08A","#C98F1C"]:n===2?["#E6ECF2","#9AA9B8"]:["#F0B27A","#A85B22"];
   return `<svg viewBox="0 0 48 48"><defs><linearGradient id="md${n}" x1="0" y1="0" x2="0" y2="1">
@@ -431,22 +466,11 @@ function medal(n){
   <text x="24" y="34" text-anchor="middle" font-family="Nunito,Arial" font-size="12" font-weight="800" fill="rgba(70,40,0,.7)">${n}</text></svg>`;
 }
 
-const SEGBASE=["#F7ECD8","#8E1A16","#F7ECD8","#1B4A2E","#F7ECD8","#B8912F"];
-function segColors(n){
-  const out=[];
-  for(let i=0;i<n;i++)out.push(SEGBASE[i%SEGBASE.length]);
-  if(n>2&&out[n-1]===out[0]){
-    const prev=out[n-2],next=out[1];
-    const alt=["#F7ECD8","#8E1A16","#1B4A2E","#B8912F"].find(c=>c!==prev&&c!==next);
-    if(alt)out[n-1]=alt;
-  }
-  return out;
-}
 function polar(cx,cy,r,d){const a=(d-90)*Math.PI/180;return[cx+r*Math.cos(a),cy+r*Math.sin(a)]}
 
 function renderWheel(list){
   const svg=$("wheel"),n=Math.max(list.length,1),seg=360/n,cx=200,cy=200,R=152;
-  const cols=segColors(n);
+  const cols=buildCells(n);
   let defs=`<defs>
     <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#6B4F1C"/><stop offset="30%" stop-color="#B8912F"/>
@@ -548,8 +572,11 @@ function renderPrizes(){
   if(!l.length){box.innerHTML='<div class="empty">Призы пока не добавлены.</div>';return}
   box.innerHTML=l.map((p,i)=>{
     const nm=strip(p.name),dt=strip(p.detail);
+    const body=(nm&&dt)
+      ?`${esc(nm)}<span class="pdesc">${esc(dt)}</span>`
+      :esc(nm||dt||"—");
     return `<div class="prow"><span class="pico">${iconAt(i)}</span>
-      <span class="pname">${esc(nm)}${dt?` — <em>${esc(dt)}</em>`:""}</span></div>`;
+      <span class="pname"><span class="dash">—</span>${body}</span></div>`;
   }).join("");
 }
 function renderTop(){
@@ -646,7 +673,7 @@ async function doSpin(){
     spinTo(idx,n);
     setTimeout(()=>{state.spinning=false;
       const p=state.prizes[idx];
-      showModal("🎉","Демо-режим",`Выпало: ${strip(p?p.name:"—")}. В Telegram здесь будет настоящий приз.`)},4800);
+      showModal("🎉","Демо-режим",`Выпало: ${strip(p?p.name:"")||strip(p?p.detail:"")||"—"}. В Telegram здесь будет настоящий приз.`)},4800);
     return;
   }
   try{
@@ -660,7 +687,7 @@ async function doSpin(){
       if(r.points!=null&&state.data)state.data.user.points=r.points;
       if(r.prizes)state.prizes=r.prizes;
       renderAll();
-      const nm=strip(r.prize?r.prize.name:"—");
+      const nm=strip(r.prize?r.prize.name:"")||strip(r.prize?r.prize.detail:"")||"—";
       const b=r.nothing_bonus?` Начислено +${r.nothing_bonus} баллов.`:"";
       showModal("🎉","Поздравляем!",`Вам выпало: ${nm}.${b} Остаток баллов: ${r.points}.`);
     },4800);
