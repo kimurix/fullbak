@@ -554,14 +554,14 @@ function renderWheel(prizes){
     const [x0, y0] = polar(cx, cy, R, a0);
     const [x1, y1] = polar(cx, cy, R, a1);
     const large = seg > 180 ? 1 : 0;
-    segs += `<path d="M${cx} ${cy} L${x0.toPICKS(2)} ${y0.toPICKS(2)} A${R} ${R} 0 ${large} 1 ${x1.toPICKS(2)} ${y1.toPICKS(2)} Z" fill="${cellAt(i)}" stroke="rgba(0,0,0,.22)" stroke-width="1"/>`;
+    segs += `<path d="M${cx} ${cy} L${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z" fill="${cellAt(i)}" stroke="rgba(0,0,0,.22)" stroke-width="1"/>`;
   }
 
   let icons = "";
   for (let i = 0; i < n; i++){
     const mid = i * seg + seg / 2;
     const [ix, iy] = polar(cx, cy, R * 0.73, mid);
-    icons += `<g transform="translate(${ix.toPICKS(2)} ${iy.toPICKS(2)}) rotate(${mid.toPICKS(2)}) translate(${-SIZE/2} ${-SIZE/2})" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))">
+    icons += `<g transform="translate(${ix.toFixed(2)} ${iy.toFixed(2)}) rotate(${mid.toFixed(2)}) translate(${-SIZE/2} ${-SIZE/2})" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))">
       <svg width="${SIZE}" height="${SIZE}" viewBox="0 0 48 48">${iconAt(i)}</svg></g>`;
   }
 
@@ -569,9 +569,9 @@ function renderWheel(prizes){
   const B = 24;
   for (let i = 0; i < B; i++){
     const [bx, by] = polar(cx, cy, R + 17, (360 / B) * i);
-    const d = (i * (2.4 / B)).toPICKS(3);
-    rim += `<circle cx="${bx.toPICKS(2)}" cy="${by.toPICKS(2)}" r="15" fill="url(#bulbG)" class="bulb" style="animation-delay:${d}s"/>`;
-    rim += `<circle cx="${bx.toPICKS(2)}" cy="${by.toPICKS(2)}" r="5" fill="#FFF6D6" class="bulb" style="animation-delay:${d}s"/>`;
+    const d = (i * (2.4 / B)).toFixed(3);
+    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="15" fill="url(#bulbG)" class="bulb" style="animation-delay:${d}s"/>`;
+    rim += `<circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="5" fill="#FFF6D6" class="bulb" style="animation-delay:${d}s"/>`;
   }
 
   svg.innerHTML = defs + `
@@ -834,7 +834,7 @@ function startSnow(){
       const tw = 0.72 + 0.28 * Math.sin(t * f.sp * 1.7 + f.ph);
       ctx.beginPath();
       ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(240,248,255,${(f.a * tw).toPICKS(3)})`;
+      ctx.fillStyle = `rgba(240,248,255,${(f.a * tw).toFixed(3)})`;
       ctx.fill();
     }
     requestAnimationFrame(frame);
